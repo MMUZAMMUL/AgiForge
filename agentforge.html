@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>AgentForge</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2535;--border:#2a3145;
+  --text:#e2e8f0;--text2:#94a3b8;--accent:#f59e0b;--accent2:#fbbf24;
+  --green:#22c55e;--red:#ef4444;--orange:#f59e0b;--purple:#a855f7;--radius:10px;
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:15px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* Header */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo{font-size:17px;font-weight:700}.logo span{color:var(--accent2)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0;transition:background .3s}
+.dot.ok{background:var(--green)}.dot.warn{background:var(--orange)}
+.hdr-right{margin-left:auto;display:flex;gap:6px}
+.icon-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 11px;border-radius:var(--radius);font-size:14px;cursor:pointer}
+.icon-btn.active-tab{background:var(--accent)22;border-color:var(--accent);color:var(--accent2)}
+
+/* Screens */
+.screen{display:none;flex:1;overflow:hidden;flex-direction:column}
+.screen.active{display:flex}
+
+/* ── SETUP SCREEN ── */
+.welcome{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:13px}
+.welcome-hero{text-align:center;padding:16px 0 6px}
+.welcome-hero .big{font-size:48px;margin-bottom:8px}
+.welcome-hero h1{font-size:21px;font-weight:700;margin-bottom:5px}
+.welcome-hero p{font-size:13px;color:var(--text2);line-height:1.6}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.card-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
+.field-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:var(--radius);font-size:15px;outline:none;font-family:monospace}
+.field-input:focus{border-color:var(--accent)}
+.field-hint{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5}
+.primary-btn{width:100%;padding:13px;background:var(--accent);border:none;color:#fff;font-size:15px;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-top:10px}
+.primary-btn:disabled{opacity:.5}
+.step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.step{display:flex;gap:11px;align-items:flex-start}
+.snum{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body{font-size:13px;color:var(--text2);line-height:1.6}
+.step-body b{color:var(--text);display:block;margin-bottom:1px}
+.cmd{display:block;margin-top:3px;font-family:monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);padding:6px 9px;border-radius:6px;color:var(--accent2);word-break:break-all}
+.skip-link{text-align:center;font-size:13px;color:var(--text2)}
+.skip-link span{color:var(--accent2);cursor:pointer;text-decoration:underline}
+a{color:var(--accent2)}
+
+/* ── AGENTS SCREEN ── */
+.search-bar{padding:10px 12px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:var(--radius);font-size:15px;outline:none}
+.search-input:focus{border-color:var(--accent)}
+.div-scroll{display:flex;gap:5px;padding:7px 12px;overflow-x:auto;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.div-scroll::-webkit-scrollbar{height:0}
+.div-tab{white-space:nowrap;padding:4px 12px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;flex-shrink:0}
+.div-tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.agent-list{flex:1;overflow-y:auto;padding:8px}
+.agent-item{display:flex;align-items:center;gap:11px;padding:11px;border-radius:var(--radius);cursor:pointer;margin-bottom:3px;-webkit-tap-highlight-color:transparent;position:relative}
+.agent-item:active{background:var(--bg3)}
+.agent-item.in-pipeline{border:1px solid var(--purple);background:var(--purple)11}
+.agi-emoji{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.agi-info{min-width:0;flex:1}
+.agi-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agi-div{font-size:11px;color:var(--text2);margin-top:1px}
+.agi-desc{font-size:12px;color:var(--text2);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pipeline-badge{background:var(--purple);color:#fff;font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ── CHAT SCREEN ── */
+.chat-header{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0}
+.back-btn{background:none;border:none;color:var(--accent2);font-size:24px;cursor:pointer;padding:0;line-height:1}
+.ch-emoji{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ch-name{font-weight:700;font-size:15px}
+.ch-sub{font-size:12px;color:var(--text2)}
+.messages{flex:1;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:11px}
+.msg{display:flex;gap:8px;max-width:92%}
+.msg.user{flex-direction:row-reverse;align-self:flex-end}
+.msg-av{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--bg3)}
+.msg.user .msg-av{background:var(--accent);color:#fff;font-size:10px;font-weight:700}
+.bubble{padding:10px 13px;border-radius:var(--radius);background:var(--bg3);border:1px solid var(--border);font-size:14px;line-height:1.65;word-break:break-word}
+.msg.user .bubble{background:var(--accent);border-color:var(--accent);color:#fff}
+.msg-meta{font-size:11px;color:var(--text2);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+.msg.user .msg-meta{justify-content:flex-end}
+.tool-call{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text2);margin:4px 0;font-family:monospace}
+.tool-call b{color:var(--orange)}
+.cursor{animation:blink 1s step-end infinite;color:var(--accent2)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.input-row{display:flex;gap:8px;padding:10px 12px;background:var(--bg2);border-top:1px solid var(--border);flex-shrink:0}
+.msg-input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:15px;font-family:inherit;outline:none;resize:none;min-height:44px;max-height:120px}
+.msg-input:focus{border-color:var(--accent)}
+.send-btn{background:var(--accent);border:none;color:#fff;padding:0 16px;border-radius:var(--radius);font-size:19px;cursor:pointer;font-weight:700}
+.send-btn:disabled{opacity:.4}
+
+/* ── PIPELINE SCREEN ── */
+.pipeline-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.pipeline-top{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.pipeline-goal{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:var(--radius);font-size:15px;font-family:inherit;outline:none;resize:none;min-height:70px}
+.pipeline-goal:focus{border-color:var(--accent)}
+.pipeline-queue{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.pq-item{display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);padding:10px 12px;border-radius:var(--radius)}
+.pq-num{width:22px;height:22px;border-radius:50%;background:var(--purple);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pq-emoji{font-size:18px;flex-shrink:0}
+.pq-info{flex:1;min-width:0}
+.pq-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pq-div{font-size:11px;color:var(--text2)}
+.pq-remove{background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
+.pipeline-hint{font-size:12px;color:var(--text2);text-align:center;padding:4px 0}
+.run-btn{width:100%;padding:14px;background:var(--purple);border:none;color:#fff;font-size:15px;font-weight:700;border-radius:var(--radius);cursor:pointer}
+.run-btn:disabled{opacity:.5}
+
+/* Pipeline execution */
+.exec-screen{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.exec-agent-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.exec-agent-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border)}
+.exec-agent-status{margin-left:auto;font-size:12px;color:var(--text2)}
+.exec-agent-status.running{color:var(--orange)}
+.exec-agent-status.done{color:var(--green)}
+.exec-output{padding:12px 14px;font-size:13px;line-height:1.7;color:var(--text);max-height:300px;overflow-y:auto}
+.exec-output.collapsed{max-height:80px;overflow:hidden;position:relative}
+.expand-btn{width:100%;padding:7px;background:var(--bg3);border:none;border-top:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer}
+.final-output{background:var(--bg2);border:2px solid var(--green);border-radius:var(--radius);padding:14px}
+.final-output h3{color:var(--green);margin-bottom:10px;font-size:15px}
+.copy-btn{width:100%;padding:10px;background:var(--green)22;border:1px solid var(--green)44;color:var(--green);font-size:13px;font-weight:600;border-radius:var(--radius);cursor:pointer;margin-top:10px}
+.save-btn2{width:100%;padding:10px;background:var(--accent)22;border:1px solid var(--accent)44;color:var(--accent2);font-size:13px;font-weight:600;border-radius:var(--radius);cursor:pointer;margin-top:6px}
+
+/* ── MEMORY SCREEN ── */
+.memory-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.memory-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.memory-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.memory-preview{font-size:12px;color:var(--text2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5}
+.memory-meta{font-size:11px;color:var(--text2);margin-top:6px;display:flex;gap:10px}
+.memory-actions{display:flex;gap:8px;margin-top:8px}
+.mem-btn{flex:1;padding:6px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:12px;border-radius:7px;cursor:pointer}
+.mem-btn.danger{color:var(--red);border-color:var(--red)44}
+.empty-memory{text-align:center;padding:40px 20px;color:var(--text2);font-size:13px}
+
+/* ── SETTINGS SCREEN ── */
+.settings-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.prov-row{display:flex;gap:7px}
+.prov-btn{flex:1;padding:9px 5px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:12px;cursor:pointer;text-align:center;line-height:1.4}
+.prov-btn.on{border-color:var(--accent);background:var(--accent)22;color:var(--accent2);font-weight:600}
+.model-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.mchip{padding:5px 11px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:12px;cursor:pointer}
+.mchip.on{border-color:var(--accent);background:var(--accent)22;color:var(--accent2)}
+
+/* Markdown */
+pre{background:#0d1117;border:1px solid var(--border);border-radius:7px;padding:10px;overflow-x:auto;margin:6px 0;font-size:12px}
+code{font-family:monospace;font-size:12px;background:rgba(0,0,0,.3);padding:1px 4px;border-radius:3px}
+pre code{background:none;padding:0}strong{color:var(--text)}
+ul,ol{padding-left:18px;margin:4px 0}li{margin-bottom:2px}
+h1,h2,h3{margin:8px 0 4px;color:var(--text)}p{margin-bottom:5px}p:last-child{margin-bottom:0}
+hr{border:none;border-top:1px solid var(--border);margin:10px 0}
+
+/* ── CODE RUNNER ── */
+.code-block-wrap{position:relative;margin:6px 0}
+.run-code-btn{position:absolute;top:5px;right:5px;background:var(--green)22;border:1px solid var(--green)44;color:var(--green);font-size:11px;padding:3px 8px;border-radius:5px;cursor:pointer;font-weight:600}
+.run-code-btn:disabled{opacity:.5;cursor:not-allowed}
+.code-output{background:#0a1a0a;border:1px solid var(--green)33;border-top:none;border-radius:0 0 7px 7px;padding:8px 10px;font-size:12px;font-family:monospace;color:var(--green);white-space:pre-wrap;max-height:200px;overflow-y:auto}
+.code-output.err{color:var(--red);border-color:var(--red)33}
+
+/* ── MIC + ATTACH BUTTONS ── */
+.mic-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);width:44px;border-radius:var(--radius);font-size:19px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.mic-btn.on{background:var(--red)22;border-color:var(--red);color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.attach-chip{display:flex;align-items:center;gap:8px;margin:0 12px 8px;padding:7px 11px;background:var(--accent)11;border:1px solid var(--accent)44;border-radius:8px;font-size:12px;color:var(--accent2)}
+.attach-chip .ac-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.attach-chip .ac-x{background:none;border:none;color:var(--text2);font-size:16px;cursor:pointer;padding:0 2px;line-height:1}
+
+/* ── DEBATE SCREEN ── */
+.debate-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.debate-select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:var(--radius);font-size:13px;outline:none}
+.debate-select:focus{border-color:var(--accent)}
+.debate-round-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.debate-round-header{padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);font-weight:600;font-size:13px}
+.debate-round-body{padding:12px 14px;font-size:13px;line-height:1.7}
+.role-badge{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700}
+.role-a{background:var(--accent)22;color:var(--accent2);border:1px solid var(--accent)44}
+.role-b{background:var(--orange)22;color:var(--orange);border:1px solid var(--orange)44}
+
+/* ── BENCHMARK SCREEN ── */
+.bench-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bench-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px}
+.bench-item-hdr{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.bench-score{margin-left:auto;font-size:13px;font-weight:700;color:var(--accent2)}
+.bench-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:7px}
+.bench-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .6s ease}
+.bench-winner{border-color:var(--green)!important;background:var(--green)08!important}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="logo">Agent<span>Forge</span></div>
+    <div id="hdr-dot" class="dot warn"></div>
+    <span id="hdr-txt" style="font-size:11px;color:var(--text2)">setup</span>
+    <div class="hdr-right">
+      <button class="icon-btn" id="tab-agents" onclick="showScreen('agents')" title="Agents">🏠</button>
+      <button class="icon-btn" id="tab-pipeline" onclick="showScreen('pipeline')" title="Pipeline">⛓️</button>
+      <button class="icon-btn" id="tab-memory" onclick="showScreen('memory')" title="Memory">🧠</button>
+      <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
+      <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
+      <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ SETUP ═══════════ -->
+  <div id="screen-setup" class="screen active">
+    <div class="welcome">
+      <div class="welcome-hero">
+        <div class="big">🏢</div>
+        <h1>AgentForge</h1>
+        <p>217 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ Connect Free AI — 2 minutes on mobile</div>
+        <div class="step-list">
+          <div class="step"><div class="snum">1</div><div class="step-body"><b>Open console.groq.com</b>Sign up free — Google login, no card.</div></div>
+          <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API Key</b>API Keys → Create → copy it.</div></div>
+          <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below</b></div></div>
+        </div>
+        <input class="field-input" id="setup-key" type="password" placeholder="gsk_…" autocomplete="off"/>
+        <button class="primary-btn" id="setup-btn" onclick="connectGroq()">Connect & Start →</button>
+      </div>
+      <div class="skip-link">Already set up? <span onclick="showScreen('agents')">Go to agents →</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ AGENTS ═══════════ -->
+  <div id="screen-agents" class="screen">
+    <div class="search-bar" style="display:flex;gap:8px">
+      <input class="search-input" id="search" placeholder="Search 217 specialists…" oninput="renderList()" style="flex:1"/>
+      <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
+    </div>
+    <div id="pipeline-bar" style="display:none;padding:8px 12px;background:var(--purple)11;border-bottom:1px solid var(--purple)44;font-size:13px;color:var(--purple);display:flex;align-items:center;gap:8px">
+      <span>Pipeline mode: tap agents to add</span>
+      <span id="pl-count" style="background:var(--purple);color:#fff;padding:1px 8px;border-radius:99px;font-size:11px;font-weight:700">0</span>
+      <button onclick="goToPipeline()" style="margin-left:auto;background:var(--purple);border:none;color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer">Build →</button>
+    </div>
+    <div class="div-scroll" id="div-tabs"></div>
+    <div class="agent-list" id="agent-list"></div>
+  </div>
+
+  <!-- ═══════════ CHAT ═══════════ -->
+  <div id="screen-chat" class="screen">
+    <div class="chat-header">
+      <button class="back-btn" onclick="showScreen('agents')">‹</button>
+      <div id="ch-emoji" class="ch-emoji"></div>
+      <div style="min-width:0;flex:1">
+        <div id="ch-name" class="ch-name"></div>
+        <div id="ch-sub" class="ch-sub"></div>
+      </div>
+      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="saveToMemory()">💾</button>
+      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="downloadChat()" title="Export chat">⬇️</button>
+      <button class="icon-btn" style="padding:5px 9px" onclick="clearChat()">✕</button>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div id="attach-chip-wrap"></div>
+    <input type="file" id="file-input" style="display:none" onchange="onFilePicked(event)"
+      accept=".txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.yaml,.yml,.java,.go,.rs,.rb,.php,.c,.cpp,.h,.sql,.sh,.log,text/*"/>
+    <div class="input-row">
+      <button class="mic-btn" id="attach-btn" onclick="document.getElementById('file-input').click()" title="Attach file">📎</button>
+      <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice input">🎤</button>
+      <textarea class="msg-input" id="msg-input" placeholder="Message…" rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMsg()">↑</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ PIPELINE ═══════════ -->
+  <div id="screen-pipeline" class="screen">
+    <div id="pipeline-build" class="pipeline-body">
+      <div class="pipeline-top">
+        <div class="card-title">🎯 Project Goal</div>
+        <textarea class="pipeline-goal" id="pl-goal" placeholder="Describe what you want to build or solve…&#10;e.g. Build a SaaS landing page for a project management tool" rows="3"></textarea>
+        <button class="run-btn" id="auto-build-btn" onclick="autoBuildTeam()" style="background:linear-gradient(135deg,var(--accent),var(--purple));margin-top:10px">✨ Auto-Build Team</button>
+        <div id="auto-build-status" style="font-size:12px;color:var(--text2);text-align:center;min-height:16px;margin-top:5px"></div>
+        <div style="margin-top:12px">
+          <div class="card-title" style="margin-bottom:8px">⛓️ Agent Pipeline <span style="color:var(--text2);font-size:11px">(in order)</span></div>
+          <div id="pipeline-queue" class="pipeline-queue">
+            <div class="pipeline-hint" id="pl-empty-hint">← Go to 🏠 Agents and tap ⛓️ Add to build your pipeline</div>
+          </div>
+        </div>
+        <button class="run-btn" id="run-btn" onclick="runPipeline()" disabled>▶ Run Pipeline</button>
+      </div>
+      <div class="card" style="opacity:.8">
+        <div class="card-title">💡 Example Pipelines</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+          <div onclick="loadExample('saas')" style="padding:10px;background:var(--bg3);border-radius:8px;cursor:pointer;border:1px solid var(--border)">
+            <b>🚀 SaaS Product Launch</b>
+            <div style="color:var(--text2);font-size:12px;margin-top:2px">Product Manager → Frontend Dev → Brand Guardian → Marketing</div>
+          </div>
+          <div onclick="loadExample('security')" style="padding:10px;background:var(--bg3);border-radius:8px;cursor:pointer;border:1px solid var(--border)">
+            <b>🔒 Security Audit</b>
+            <div style="color:var(--text2);font-size:12px;margin-top:2px">Security Architect → AppSec Engineer → QA Tester</div>
+          </div>
+          <div onclick="loadExample('content')" style="padding:10px;background:var(--bg3);border-radius:8px;cursor:pointer;border:1px solid var(--border)">
+            <b>✍️ Content Campaign</b>
+            <div style="color:var(--text2);font-size:12px;margin-top:2px">Brand Guardian → Content Strategist → SEO Specialist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Execution view -->
+    <div id="pipeline-exec" style="display:none;flex:1;overflow:hidden;flex-direction:column">
+      <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <button class="back-btn" onclick="stopPipeline()">‹</button>
+        <div style="font-weight:700;font-size:14px">Pipeline Running</div>
+        <div id="exec-progress" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
+      </div>
+      <div class="exec-screen" id="exec-screen"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ MEMORY ═══════════ -->
+  <div id="screen-memory" class="screen">
+    <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+      <span style="font-weight:600;font-size:15px">🧠 Saved Memory</span>
+      <button class="icon-btn" onclick="clearAllMemory()" style="font-size:12px;color:var(--red)">Clear all</button>
+    </div>
+    <div class="memory-body" id="memory-body"></div>
+  </div>
+
+  <!-- ═══════════ SETTINGS ═══════════ -->
+  <div id="screen-settings" class="screen">
+    <div class="settings-body">
+      <div class="card" style="padding:11px 14px;display:flex;align-items:center;gap:10px">
+        <div id="set-dot" class="dot warn"></div>
+        <span id="set-txt" style="font-size:13px;flex:1">Not connected</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Provider</div>
+        <div class="prov-row" style="margin-bottom:12px">
+          <button class="prov-btn" id="prov-groq" onclick="setProvider('groq')">⚡ Groq<br><small>Free·Fast</small></button>
+          <button class="prov-btn" id="prov-ollama" onclick="setProvider('ollama')">🦙 Ollama<br><small>Local·PC</small></button>
+          <button class="prov-btn" id="prov-demo" onclick="setProvider('demo')">👁 Demo<br><small>No AI</small></button>
+        </div>
+        <div id="s-groq">
+          <div class="card-title">Groq API Key</div>
+          <input class="field-input" id="s-groq-key" type="password" placeholder="gsk_…"/>
+          <div class="field-hint">Free at <a href="https://console.groq.com" target="_blank">console.groq.com</a></div>
+          <div style="margin-top:10px">
+            <div class="card-title">Model</div>
+            <div class="model-chips" id="groq-models">
+              <span class="mchip on" data-m="llama-3.1-8b-instant">llama3.1-8b ⚡</span>
+              <span class="mchip" data-m="llama-3.3-70b-versatile">llama3.3-70b 🧠</span>
+              <span class="mchip" data-m="mixtral-8x7b-32768">mixtral-8x7b</span>
+              <span class="mchip" data-m="gemma2-9b-it">gemma2-9b</span>
+            </div>
+          </div>
+        </div>
+        <div id="s-ollama" style="display:none">
+          <div class="card-title">Ollama Host</div>
+          <input class="field-input" id="s-ollama-host" placeholder="http://192.168.1.x:11434"/>
+        </div>
+        <button class="primary-btn" onclick="saveSettings()" style="margin-top:12px">Save & Test →</button>
+        <div id="save-result" style="margin-top:7px;text-align:center;font-size:13px;min-height:18px"></div>
+      </div>
+
+      <!-- Web Search -->
+      <div class="card">
+        <div class="card-title">🌐 Web Search (optional)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div id="search-dot" class="dot warn" style="width:8px;height:8px"></div>
+          <span id="search-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+        </div>
+        <input class="field-input" id="s-brave-key" type="password" placeholder="BSA…  (Brave Search API key)"/>
+        <div class="field-hint">
+          Free 2000 searches/month at <a href="https://api.search.brave.com" target="_blank">api.search.brave.com</a><br>
+          When set, agents automatically search the web for real-time info.
+        </div>
+        <button class="primary-btn" onclick="saveBraveKey()" style="margin-top:8px;background:var(--orange);font-size:13px;padding:10px">Save Search Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ DEBATE ═══════════ -->
+  <div id="screen-debate" class="screen">
+    <div id="debate-setup" class="debate-body">
+      <div class="card">
+        <div class="card-title">⚔️ Agent vs Agent Debate</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Two specialists argue and refine until a production-ready answer emerges.</p>
+        <div class="card-title" style="margin-bottom:5px">Agent A — Proposer</div>
+        <select class="debate-select" id="debate-a" style="margin-bottom:10px"><option value="">Select agent…</option></select>
+        <div class="card-title" style="margin-bottom:5px">Agent B — Critic</div>
+        <select class="debate-select" id="debate-b" style="margin-bottom:10px"><option value="">Select agent…</option></select>
+        <div class="card-title" style="margin-bottom:5px">Topic / Question</div>
+        <textarea class="pipeline-goal" id="debate-topic" placeholder="What should they debate?&#10;e.g. Best architecture for a scalable real-time chat app" rows="3"></textarea>
+        <div style="display:flex;align-items:center;gap:10px;margin:10px 0">
+          <div class="card-title" style="margin:0">Rounds</div>
+          <div style="display:flex;gap:5px">
+            <button class="mchip on" data-rounds="2" onclick="setDebateRounds(this,2)">2</button>
+            <button class="mchip" data-rounds="3" onclick="setDebateRounds(this,3)">3</button>
+            <button class="mchip" data-rounds="4" onclick="setDebateRounds(this,4)">4</button>
+          </div>
+        </div>
+        <button class="run-btn" id="debate-run-btn" onclick="runDebate()">⚔️ Start Debate</button>
+      </div>
+    </div>
+    <div id="debate-exec" style="display:none;flex:1;overflow:hidden;flex-direction:column">
+      <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <button class="back-btn" onclick="stopDebate()">‹</button>
+        <div style="font-weight:700;font-size:14px">⚔️ Debate in Progress</div>
+        <div id="debate-progress" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
+      </div>
+      <div class="exec-screen" id="debate-screen"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ BENCHMARK ═══════════ -->
+  <div id="screen-benchmark" class="screen">
+    <div id="bench-setup" class="bench-body">
+      <div class="card">
+        <div class="card-title">📊 Agent Benchmarker</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:10px">Run the same prompt across agents and rank by quality, depth &amp; speed.</p>
+        <textarea class="pipeline-goal" id="bench-prompt" placeholder="Prompt to test all agents with…&#10;e.g. Design a REST API for user authentication with JWT" rows="3"></textarea>
+        <div class="card-title" style="margin:10px 0 6px">Agents to Compare <span style="color:var(--text2);font-size:11px">(select 2+)</span></div>
+        <div id="bench-agents-select" style="display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto;margin-bottom:8px;padding:2px"></div>
+        <button class="run-btn" style="background:var(--accent)" onclick="runBenchmark()">📊 Run Benchmark</button>
+      </div>
+    </div>
+    <div id="bench-results" style="display:none;flex:1;overflow:hidden;flex-direction:column">
+      <div id="bench-results-inner" style="display:flex;flex:1;overflow:hidden;flex-direction:column"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Embedded data ─────────────────────────────────────────────────────────────
+const AGENTS = [{"id":"academic-anthropologist","name":"Anthropologist","division":"academic","description":"Expert in cultural systems, rituals, kinship, belief systems, and ethnographic method — builds cultu","color":"#D97706","emoji":"🌍","vibe":"No culture is random — every practice is a solution to a problem you might not s"},{"id":"academic-geographer","name":"Geographer","division":"academic","description":"Expert in physical and human geography, climate systems, cartography, and spatial analysis — builds ","color":"#059669","emoji":"🗺️","vibe":"Geography is destiny — where you are determines who you become"},{"id":"academic-historian","name":"Historian","division":"academic","description":"Expert in historical analysis, periodization, material culture, and historiography — validates histo","color":"#B45309","emoji":"📚","vibe":"History doesn't repeat, but it rhymes — and I know all the verses"},{"id":"academic-narratologist","name":"Narratologist","division":"academic","description":"Expert in narrative theory, story structure, character arcs, and literary analysis — grounds advice ","color":"#8B5CF6","emoji":"📜","vibe":"Every story is an argument — I help you find what yours is really saying"},{"id":"academic-psychologist","name":"Psychologist","division":"academic","description":"Expert in human behavior, personality theory, motivation, and cognitive patterns — builds psychologi","color":"#EC4899","emoji":"🧠","vibe":"People don't do things for no reason — I find the reason"},{"id":"design-brand-guardian","name":"Brand Guardian","division":"design","description":"Expert brand strategist and guardian specializing in brand identity development, consistency mainten","color":"blue","emoji":"🎨","vibe":"Your brand's fiercest protector and most passionate advocate."},{"id":"design-image-prompt-engineer","name":"Image Prompt Engineer","division":"design","description":"Expert photography prompt engineer specializing in crafting detailed, evocative prompts for AI image","color":"amber","emoji":"📷","vibe":"Translates visual concepts into precise prompts that produce stunning AI photogr"},{"id":"design-inclusive-visuals-specialist","name":"Inclusive Visuals Specialist","division":"design","description":"Representation expert who defeats systemic AI biases to generate culturally accurate, affirming, and","color":"#4DB6AC","emoji":"🌈","vibe":"Defeats systemic AI biases to generate culturally accurate, affirming imagery."},{"id":"design-persona-walkthrough","name":"Persona Walkthrough Specialist","division":"design","description":"Simulate cognitive walkthroughs of web pages from a defined persona's psychological perspective — ca","color":"#10B981","emoji":"🎭","vibe":"I become your user so you can see what your analytics can't show you."},{"id":"design-ui-designer","name":"UI Designer","division":"design","description":"Expert UI designer specializing in visual design systems, component libraries, and pixel-perfect int","color":"purple","emoji":"🎨","vibe":"Creates beautiful, consistent, accessible interfaces that feel just right."},{"id":"design-ux-architect","name":"UX Architect","division":"design","description":"Technical architecture and UX specialist who provides developers with solid foundations, CSS systems","color":"purple","emoji":"📐","vibe":"Gives developers solid foundations, CSS systems, and clear implementation paths."},{"id":"design-ux-researcher","name":"UX Researcher","division":"design","description":"Expert user experience researcher specializing in user behavior analysis, usability testing, and dat","color":"green","emoji":"🔬","vibe":"Validates design decisions with real user data, not assumptions."},{"id":"design-visual-storyteller","name":"Visual Storyteller","division":"design","description":"Expert visual communication specialist focused on creating compelling visual narratives, multimedia ","color":"purple","emoji":"🎬","vibe":"Transforms complex information into visual narratives that move people."},{"id":"design-whimsy-injector","name":"Whimsy Injector","division":"design","description":"Expert creative specialist focused on adding personality, delight, and playful elements to brand exp","color":"pink","emoji":"✨","vibe":"Adds the unexpected moments of delight that make brands unforgettable."},{"id":"engineering-ai-data-remediation-engineer","name":"AI Data Remediation Engineer","division":"engineering","description":"Specialist in self-healing data pipelines — uses air-gapped local SLMs and semantic clustering to au","color":"green","emoji":"🧬","vibe":"Fixes your broken data with surgical AI precision — no rows left behind."},{"id":"engineering-ai-engineer","name":"AI Engineer","division":"engineering","description":"Expert AI/ML engineer specializing in machine learning model development, deployment, and integratio","color":"blue","emoji":"🤖","vibe":"Turns ML models into production features that actually scale."},{"id":"engineering-autonomous-optimization-architect","name":"Autonomous Optimization Architect","division":"engineering","description":"Intelligent system governor that continuously shadow-tests APIs for performance while enforcing stri","color":"#673AB7","emoji":"⚡","vibe":"The system governor that makes things faster without bankrupting you."},{"id":"engineering-backend-architect","name":"Backend Architect","division":"engineering","description":"Senior backend architect specializing in scalable system design, database architecture, API developm","color":"blue","emoji":"🏗️","vibe":"Designs the systems that hold everything up — databases, APIs, cloud, scale."},{"id":"engineering-cms-developer","name":"CMS Developer","division":"engineering","description":"Drupal and WordPress specialist for theme development, custom plugins/modules, content architecture,","color":"blue","emoji":"🧱","vibe":""},{"id":"engineering-code-reviewer","name":"Code Reviewer","division":"engineering","description":"Expert code reviewer who provides constructive, actionable feedback focused on correctness, maintain","color":"purple","emoji":"👁️","vibe":"Reviews code like a mentor, not a gatekeeper. Every comment teaches something."},{"id":"engineering-codebase-onboarding-engineer","name":"Codebase Onboarding Engineer","division":"engineering","description":"Expert developer onboarding specialist who helps new engineers understand unfamiliar codebases fast ","color":"teal","emoji":"🧭","vibe":"Gets new developers productive faster by reading the code, tracing the paths, an"},{"id":"engineering-data-engineer","name":"Data Engineer","division":"engineering","description":"Expert data engineer specializing in building reliable data pipelines, lakehouse architectures, and ","color":"orange","emoji":"🔧","vibe":"Builds the pipelines that turn raw data into trusted, analytics-ready assets."},{"id":"engineering-database-optimizer","name":"Database Optimizer","division":"engineering","description":"Expert database specialist focusing on schema design, query optimization, indexing strategies, and p","color":"amber","emoji":"🗄️","vibe":"Indexes, query plans, and schema design — databases that don't wake you at 3am."},{"id":"engineering-devops-automator","name":"DevOps Automator","division":"engineering","description":"Expert DevOps engineer specializing in infrastructure automation, CI/CD pipeline development, and cl","color":"orange","emoji":"⚙️","vibe":"Automates infrastructure so your team ships faster and sleeps better."},{"id":"engineering-drupal-shopping-cart","name":"Drupal Shopping Cart Engineer","division":"engineering","description":"Expert Drupal e-commerce engineer specializing in Drupal Commerce for product catalog management, pa","color":"blue","emoji":"🛒","vibe":"A meticulous Drupal commerce engineer who treats every storefront as a system of"},{"id":"engineering-email-intelligence-engineer","name":"Email Intelligence Engineer","division":"engineering","description":"Expert in extracting structured, reasoning-ready data from raw email threads for AI agents and autom","color":"indigo","emoji":"📧","vibe":"Turns messy MIME into reasoning-ready context because raw email is noise and you"},{"id":"engineering-embedded-firmware-engineer","name":"Embedded Firmware Engineer","division":"engineering","description":"Specialist in bare-metal and RTOS firmware - ESP32/ESP-IDF, PlatformIO, Arduino, ARM Cortex-M, STM32","color":"orange","emoji":"🔩","vibe":"Writes production-grade firmware for hardware that can't afford to crash."},{"id":"engineering-feishu-integration-developer","name":"Feishu Integration Developer","division":"engineering","description":"Full-stack integration expert specializing in the Feishu (Lark) Open Platform — proficient in Feishu","color":"blue","emoji":"🔗","vibe":"Builds enterprise integrations on the Feishu (Lark) platform — bots, approvals, "},{"id":"engineering-filament-optimization-specialist","name":"Filament Optimization Specialist","division":"engineering","description":"Expert in restructuring and optimizing Filament PHP admin interfaces for maximum usability and effic","color":"indigo","emoji":"🔧","vibe":"Pragmatic perfectionist — streamlines complex admin environments."},{"id":"engineering-frontend-developer","name":"Frontend Developer","division":"engineering","description":"Expert frontend developer specializing in modern web technologies, React/Vue/Angular frameworks, UI ","color":"cyan","emoji":"🖥️","vibe":"Builds responsive, accessible web apps with pixel-perfect precision."},{"id":"engineering-git-workflow-master","name":"Git Workflow Master","division":"engineering","description":"Expert in Git workflows, branching strategies, and version control best practices including conventi","color":"orange","emoji":"🌿","vibe":"Clean history, atomic commits, and branches that tell a story."},{"id":"engineering-incident-response-commander","name":"Incident Response Commander","division":"engineering","description":"Expert incident commander specializing in production incident management, structured response coordi","color":"#e63946","emoji":"🚨","vibe":"Turns production chaos into structured resolution."},{"id":"engineering-it-service-manager","name":"IT Service Manager","division":"engineering","description":"Expert IT service management specialist using ITIL 4 framework for service catalog design, incident ","color":"blue","emoji":"🖧","vibe":"IT exists to serve the business — not the other way around. Every ticket, every "},{"id":"engineering-minimal-change-engineer","name":"Minimal Change Engineer","division":"engineering","description":"Engineering specialist focused on minimum-viable diffs — fixes only what was asked, refuses scope cr","color":"slate","emoji":"🪡","vibe":"The smallest diff that solves the problem — every extra line is a liability."},{"id":"engineering-mobile-app-builder","name":"Mobile App Builder","division":"engineering","description":"Specialized mobile application developer with expertise in native iOS/Android development and cross-","color":"purple","emoji":"📲","vibe":"Ships native-quality apps on iOS and Android, fast."},{"id":"engineering-multi-agent-systems-architect","name":"Multi-Agent Systems Architect","division":"engineering","description":"Systems architect specializing in the design, coordination, and governance of multi-agent AI pipelin","color":"cyan","emoji":"🕸️","vibe":"Treats a team of AI agents like a distributed system — if it only survives the d"},{"id":"engineering-orgscript-engineer","name":"OrgScript Engineer","division":"engineering","description":"Expert in designing, parsing, and implementing OrgScript grammar, AST validation, and business logic","color":"green","emoji":"📜","vibe":"Process-oriented, strict on semantics, focused on turning human processes into A"},{"id":"engineering-prompt-engineer","name":"Prompt Engineer","division":"engineering","description":"Specialist in crafting, testing, and systematically optimizing prompts for LLMs — turning vague inst","color":"violet","emoji":"🧬","vibe":"I don't write prompts, I write contracts between humans and models."},{"id":"engineering-rapid-prototyper","name":"Rapid Prototyper","division":"engineering","description":"Specialized in ultra-fast proof-of-concept development and MVP creation using efficient tools and fr","color":"green","emoji":"⚡","vibe":"Turns an idea into a working prototype before the meeting's over."},{"id":"engineering-senior-developer","name":"Senior Developer","division":"engineering","description":"Premium implementation specialist - Masters Laravel/Livewire/FluxUI, advanced CSS, Three.js integrat","color":"green","emoji":"💎","vibe":"Premium full-stack craftsperson — Laravel, Livewire, Three.js, advanced CSS."},{"id":"engineering-software-architect","name":"Software Architect","division":"engineering","description":"Expert software architect specializing in system design, domain-driven design, architectural pattern","color":"indigo","emoji":"🏛️","vibe":"Designs systems that survive the team that built them. Every decision has a trad"},{"id":"engineering-solidity-smart-contract-engineer","name":"Solidity Smart Contract Engineer","division":"engineering","description":"Expert Solidity developer specializing in EVM smart contract architecture, gas optimization, upgrade","color":"orange","emoji":"⛓️","vibe":"Battle-hardened Solidity developer who lives and breathes the EVM."},{"id":"engineering-sre","name":"SRE (Site Reliability Engineer)","division":"engineering","description":"Expert site reliability engineer specializing in SLOs, error budgets, observability, chaos engineeri","color":"#e63946","emoji":"🛡️","vibe":"Reliability is a feature. Error budgets fund velocity — spend them wisely."},{"id":"engineering-technical-writer","name":"Technical Writer","division":"engineering","description":"Expert technical writer specializing in developer documentation, API references, README files, and t","color":"teal","emoji":"📚","vibe":"Writes the docs that developers actually read and use."},{"id":"engineering-voice-ai-integration-engineer","name":"Voice AI Integration Engineer","division":"engineering","description":"Expert in building end-to-end speech transcription pipelines using Whisper-style models and cloud AS","color":"violet","emoji":"🎙️","vibe":"Turns raw audio into structured, production-ready text that machines and humans "},{"id":"engineering-wechat-mini-program-developer","name":"WeChat Mini Program Developer","division":"engineering","description":"Expert WeChat Mini Program developer specializing in 小程序 development with WXML/WXSS/WXS, WeChat API ","color":"green","emoji":"💬","vibe":"Builds performant Mini Programs that thrive in the WeChat ecosystem."},{"id":"engineering-wordpress-shopping-cart","name":"WordPress Shopping Cart Engineer","division":"engineering","description":"Expert WordPress e-commerce engineer specializing in WooCommerce for product catalog management, pay","color":"purple","emoji":"🛍️","vibe":"A pragmatic WordPress commerce engineer who turns WooCommerce into powerful, con"},{"id":"finance-bookkeeper-controller","name":"Bookkeeper & Controller","division":"finance","description":"Expert bookkeeper and controller specializing in day-to-day accounting operations, financial reconci","color":"green","emoji":"📒","vibe":"Every penny accounted for, every close on time — the backbone of financial trust"},{"id":"finance-financial-analyst","name":"Financial Analyst","division":"finance","description":"Expert financial analyst specializing in financial modeling, forecasting, scenario analysis, and dat","color":"green","emoji":"📊","vibe":"Turns spreadsheets into strategy — every number tells a story, every model drive"},{"id":"finance-fpa-analyst","name":"FP&A Analyst","division":"finance","description":"Expert Financial Planning & Analysis (FP&A) analyst specializing in budgeting, variance analysis, fi","color":"green","emoji":"📈","vibe":"The budget whisperer — turns plans into numbers and numbers into action."},{"id":"finance-investment-researcher","name":"Investment Researcher","division":"finance","description":"Expert investment researcher specializing in market research, due diligence, portfolio analysis, and","color":"green","emoji":"🔍","vibe":"Digs deeper than the consensus — finds alpha in the footnotes and risks in the n"},{"id":"finance-tax-strategist","name":"Tax Strategist","division":"finance","description":"Expert tax strategist specializing in tax optimization, multi-jurisdictional compliance, transfer pr","color":"green","emoji":"🏛️","vibe":"Finds every legal dollar of savings in the tax code — compliance is the floor, o"},{"id":"game-audio-engineer","name":"Game Audio Engineer","division":"game-development","description":"Interactive audio specialist - Masters FMOD/Wwise integration, adaptive music systems, spatial audio","color":"indigo","emoji":"🎵","vibe":"Makes every gunshot, footstep, and musical cue feel alive in the game world."},{"id":"game-designer","name":"Game Designer","division":"game-development","description":"Systems and mechanics architect - Masters GDD authorship, player psychology, economy balancing, and ","color":"yellow","emoji":"🎮","vibe":"Thinks in loops, levers, and player motivations to architect compelling gameplay"},{"id":"level-designer","name":"Level Designer","division":"game-development","description":"Spatial storytelling and flow specialist - Masters layout theory, pacing architecture, encounter des","color":"teal","emoji":"🗺️","vibe":"Treats every level as an authored experience where space tells the story."},{"id":"narrative-designer","name":"Narrative Designer","division":"game-development","description":"Story systems and dialogue architect - Masters GDD-aligned narrative design, branching dialogue, lor","color":"red","emoji":"📖","vibe":"Architects story systems where narrative and gameplay are inseparable."},{"id":"technical-artist","name":"Technical Artist","division":"game-development","description":"Art-to-engine pipeline specialist - Masters shaders, VFX systems, LOD pipelines, performance budgeti","color":"pink","emoji":"🎨","vibe":"The bridge between artistic vision and engine reality."},{"id":"gis-3d-scene-developer","name":"3D & Scene Developer","division":"gis","description":"Web 3D visualization specialist who creates immersive 3D scenes, terrain models, point cloud visuali","color":"cyan","emoji":"🏔️","vibe":"Bringing the third dimension to the web — one scene at a time."},{"id":"gis-analyst","name":"GIS Analyst","division":"gis","description":"Day-to-day GIS operator who creates maps, manages layers, performs spatial queries, and maintains ge","color":"teal","emoji":"🖥️","vibe":"The reliable hands-on operator who keeps the GIS running day to day."},{"id":"gis-bim-specialist","name":"BIM/GIS Specialist","division":"gis","description":"Integration specialist who bridges Building Information Modeling and Geographic Information Systems ","color":"gold","emoji":"🏗️","vibe":"Where buildings meet geography — the spatial side of the built world."},{"id":"gis-cartography-designer","name":"Cartography Designer","division":"gis","description":"Map aesthetics specialist who designs beautiful, readable, and effective maps — color theory, typogr","color":"pink","emoji":"🎨","vibe":"A map that communicates beautifully is a map that gets used."},{"id":"gis-drone-reality-mapping","name":"Drone/Reality Mapping Specialist","division":"gis","description":"Photogrammetry and reality capture expert who processes drone imagery into orthomosaics, digital ter","color":"amber","emoji":"🛸","vibe":"From raw drone footage to production-ready GIS data — seamless."},{"id":"gis-geoai-ml-engineer","name":"GeoAI/ML Engineer","division":"gis","description":"Geospatial machine learning specialist who builds models for feature extraction, object detection, i","color":"green","emoji":"🤖","vibe":"Teaching machines to see the Earth — one pixel at a time."},{"id":"gis-geoprocessing-specialist","name":"Geoprocessing Specialist","division":"gis","description":"ArcPy and Python toolbox expert who automates spatial workflows — builds .pyt toolboxes, Model Build","color":"red","emoji":"⚙️","vibe":"If you've done it manually more than twice, this agent will automate it."},{"id":"gis-qa-engineer","name":"GIS QA Engineer","division":"gis","description":"Quality assurance specialist who validates geospatial data integrity — topology checks, metadata aud","color":"purple","emoji":"✅","vibe":"Data doesn't ship until QA says it ships."},{"id":"gis-solution-engineer","name":"Solution Engineer","division":"gis","description":"Hands-on GIS prototype builder who takes strategy from Technical Consultant and turns it into workin","color":"blue","emoji":"🔧","vibe":"The builder who makes strategy real — one working demo at a time."},{"id":"gis-spatial-data-engineer","name":"Spatial Data Engineer","division":"gis","description":"ETL specialist who transforms messy geospatial data from any source into clean, standardized, produc","color":"orange","emoji":"📦","vibe":"Data comes in dirty. It leaves clean, documented, and ready to publish."},{"id":"gis-spatial-data-scientist","name":"Spatial Data Scientist","division":"gis","description":"Advanced spatial analytics specialist who applies statistical modeling, spatial econometrics, cluste","color":"indigo","emoji":"📊","vibe":"Finding the patterns in space that even experienced analysts miss."},{"id":"gis-technical-consultant","name":"Technical Consultant","division":"gis","description":"Strategic GIS advisor who translates business problems into geospatial solutions — gap analysis, tec","color":"navy","emoji":"🧠","vibe":"The strategist who connects business pain points with geospatial solutions that "},{"id":"gis-web-gis-developer","name":"Web GIS Developer","division":"gis","description":"Full-stack web GIS engineer who builds interactive mapping applications — MapLibre GL JS, ArcGIS JS ","color":"blue","emoji":"🌐","vibe":"Maps on the web that actually work — fast, responsive, and beautiful."},{"id":"marketing-aeo-foundations","name":"AEO Foundations Architect","division":"marketing","description":"Expert in AI Engine Optimization infrastructure — implements llms.txt, AI-aware robots.txt, token-bu","color":"#059669","emoji":"🏗️","vibe":"The foundation layer everyone skips — making sure AI systems can actually discov"},{"id":"marketing-agentic-search-optimizer","name":"Agentic Search Optimizer","division":"marketing","description":"Expert in WebMCP readiness and agentic task completion — audits whether AI agents can actually accom","color":"#0891B2","emoji":"🤖","vibe":"While everyone else is optimizing to get cited by AI, this agent makes sure AI c"},{"id":"marketing-ai-citation-strategist","name":"AI Citation Strategist","division":"marketing","description":"Expert in AI recommendation engine optimization (AEO/GEO) — audits brand visibility across ChatGPT, ","color":"#6D28D9","emoji":"🔮","vibe":"Figures out why the AI recommends your competitor and rewires the signals so it "},{"id":"marketing-app-store-optimizer","name":"App Store Optimizer","division":"marketing","description":"Expert app store marketing specialist focused on App Store Optimization (ASO), conversion rate optim","color":"blue","emoji":"📱","vibe":"Gets your app found, downloaded, and loved in the store."},{"id":"marketing-baidu-seo-specialist","name":"Baidu SEO Specialist","division":"marketing","description":"Expert Baidu search optimization specialist focused on Chinese search engine ranking, Baidu ecosyste","color":"blue","emoji":"🇨🇳","vibe":"Masters Baidu's algorithm so your brand ranks in China's search ecosystem."},{"id":"marketing-bilibili-content-strategist","name":"Bilibili Content Strategist","division":"marketing","description":"Expert Bilibili marketing specialist focused on UP主 growth, danmaku culture mastery, B站 algorithm op","color":"pink","emoji":"🎬","vibe":"Speaks fluent danmaku and grows your brand on B站."},{"id":"marketing-book-co-author","name":"Book Co-Author","division":"marketing","description":"Strategic thought-leadership book collaborator for founders, experts, and operators turning voice no","color":"#8B5E3C","emoji":"📘","vibe":"Turns rough expertise into a recognizable book people can quote, remember, and b"},{"id":"marketing-carousel-growth-engine","name":"Carousel Growth Engine","division":"marketing","description":"Autonomous TikTok and Instagram carousel generation specialist. Analyzes any website URL with Playwr","color":"#FF0050","emoji":"🎠","vibe":"Autonomously generates viral carousels from any URL and publishes them to feed."},{"id":"marketing-china-ecommerce-operator","name":"China E-Commerce Operator","division":"marketing","description":"Expert China e-commerce operations specialist covering Taobao, Tmall, Pinduoduo, and JD ecosystems w","color":"red","emoji":"🛒","vibe":"Runs your Taobao, Tmall, Pinduoduo, and JD storefronts like a native operator."},{"id":"marketing-china-market-localization-strategist","name":"China Market Localization Strategist","division":"marketing","description":"Full-stack China market localization expert who transforms real-time trend signals into executable g","color":"#E60012","emoji":"🇨🇳","vibe":"Turns China's chaotic trend landscape into a precision-guided marketing machine "},{"id":"marketing-content-creator","name":"Content Creator","division":"marketing","description":"Expert content strategist and creator for multi-platform campaigns. Develops editorial calendars, cr","color":"teal","emoji":"✍️","vibe":"Crafts compelling stories across every platform your audience lives on."},{"id":"marketing-cross-border-ecommerce","name":"Cross-Border E-Commerce Specialist","division":"marketing","description":"Full-funnel cross-border e-commerce strategist covering Amazon, Shopee, Lazada, AliExpress, Temu, an","color":"blue","emoji":"🌏","vibe":"Takes your products from Chinese factories to global bestseller lists."},{"id":"marketing-douyin-strategist","name":"Douyin Strategist","division":"marketing","description":"Short-video marketing expert specializing in the Douyin platform, with deep expertise in recommendat","color":"#000000","emoji":"🎵","vibe":"Masters the Douyin algorithm so your short videos actually get seen."},{"id":"marketing-email-strategist","name":"Email Marketing Strategist","division":"marketing","description":"Expert email marketing strategist for CRM-driven campaigns, lifecycle automation, segmentation archi","color":"green","emoji":"📧","vibe":"Turns a messy contact list into a segmented, automated revenue engine that sends"},{"id":"marketing-global-podcast-strategist","name":"Global Podcast Strategist","division":"marketing","description":"Expert podcast growth specialist focused on show positioning, audience development, content strategy","color":"purple","emoji":"🎙️","vibe":"Turns conversations into communities and episodes into growth engines."},{"id":"marketing-growth-hacker","name":"Growth Hacker","division":"marketing","description":"Expert growth strategist specializing in rapid user acquisition through data-driven experimentation.","color":"green","emoji":"🚀","vibe":"Finds the growth channel nobody's exploited yet — then scales it."},{"id":"marketing-instagram-curator","name":"Instagram Curator","division":"marketing","description":"Expert Instagram marketing specialist focused on visual storytelling, community building, and multi-","color":"#E4405F","emoji":"📸","vibe":"Masters the grid aesthetic and turns scrollers into an engaged community."},{"id":"marketing-kuaishou-strategist","name":"Kuaishou Strategist","division":"marketing","description":"Expert Kuaishou marketing strategist specializing in short-video content for China's lower-tier city","color":"orange","emoji":"🎥","vibe":"Grows grassroots audiences and drives live commerce on 快手."},{"id":"marketing-linkedin-content-creator","name":"LinkedIn Content Creator","division":"marketing","description":"Expert LinkedIn content strategist focused on thought leadership, personal brand building, and high-","color":"#0A66C2","emoji":"💼","vibe":"Turns professional expertise into scroll-stopping content that makes the right p"},{"id":"marketing-livestream-commerce-coach","name":"Livestream Commerce Coach","division":"marketing","description":"Veteran livestream e-commerce coach specializing in host training and live room operations across Do","color":"#E63946","emoji":"🎙️","vibe":"Coaches your livestream hosts from awkward beginners to million-yuan sellers."},{"id":"marketing-multi-platform-publisher","name":"Multi-Platform Publisher","division":"marketing","description":"Expert orchestrator for one-click Chinese blog publishing. Routes a single article to 知乎 / 小红书 / CSD","color":"#FF6B35","emoji":"📡","vibe":"One article, all platforms, safely — the traffic conductor for Chinese content c"},{"id":"marketing-podcast-strategist","name":"Podcast Strategist","division":"marketing","description":"Content strategy and operations expert for the Chinese podcast market, with deep expertise in Xiaoyu","color":"purple","emoji":"🎧","vibe":"Guides your podcast from concept to loyal audience in China's booming audio scen"},{"id":"marketing-pr-communications-manager","name":"PR & Communications Manager","division":"marketing","description":"Strategic public relations and communications specialist for media relations, press releases, crisis","color":"blue","emoji":"📣","vibe":"Reputation is built in years and lost in minutes. Every message, every statement"},{"id":"marketing-private-domain-operator","name":"Private Domain Operator","division":"marketing","description":"Expert in building enterprise WeChat (WeCom) private domain ecosystems, with deep expertise in SCRM ","color":"#1A73E8","emoji":"🔒","vibe":"Builds your WeChat private traffic empire from first contact to lifetime value."},{"id":"marketing-reddit-community-builder","name":"Reddit Community Builder","division":"marketing","description":"Expert Reddit marketing specialist focused on authentic community engagement, value-driven content c","color":"#FF4500","emoji":"💬","vibe":"Speaks fluent Reddit and builds community trust the authentic way."},{"id":"marketing-seo-specialist","name":"SEO Specialist","division":"marketing","description":"Expert search engine optimization strategist specializing in technical SEO, content optimization, li","color":"#4285F4","emoji":"🔍","vibe":"Drives sustainable organic traffic through technical SEO and content strategy."},{"id":"marketing-short-video-editing-coach","name":"Short-Video Editing Coach","division":"marketing","description":"Hands-on short-video editing coach covering the full post-production pipeline, with mastery of CapCu","color":"#7B2D8E","emoji":"🎬","vibe":"Turns raw footage into scroll-stopping short videos with professional polish."},{"id":"marketing-social-media-strategist","name":"Social Media Strategist","division":"marketing","description":"Expert social media strategist for LinkedIn, Twitter, and professional platforms. Creates cross-plat","color":"blue","emoji":"📣","vibe":"Orchestrates cross-platform campaigns that build community and drive engagement."},{"id":"marketing-tiktok-strategist","name":"TikTok Strategist","division":"marketing","description":"Expert TikTok marketing specialist focused on viral content creation, algorithm optimization, and co","color":"#000000","emoji":"🎵","vibe":"Rides the algorithm and builds community through authentic TikTok culture."},{"id":"marketing-twitter-engager","name":"Twitter Engager","division":"marketing","description":"Expert Twitter marketing specialist focused on real-time engagement, thought leadership building, an","color":"#1DA1F2","emoji":"🐦","vibe":"Builds thought leadership and brand authority 280 characters at a time."},{"id":"marketing-video-optimization-specialist","name":"Video Optimization Specialist","division":"marketing","description":"Video marketing strategist specializing in YouTube algorithm optimization, audience retention, chapt","color":"red","emoji":"🎬","vibe":"Energetic, data-driven, strategic, and hyper-focused on audience retention"},{"id":"marketing-wechat-official-account","name":"WeChat Official Account Manager","division":"marketing","description":"Expert WeChat Official Account (OA) strategist specializing in content marketing, subscriber engagem","color":"#09B83E","emoji":"📱","vibe":"Grows loyal WeChat subscriber communities through consistent value delivery."},{"id":"marketing-weibo-strategist","name":"Weibo Strategist","division":"marketing","description":"Full-spectrum operations expert for Sina Weibo, with deep expertise in trending topic mechanics, Sup","color":"#FF8200","emoji":"🔥","vibe":"Makes your brand trend on Weibo and keeps the conversation going."},{"id":"marketing-x-twitter-intelligence-analyst","name":"X/Twitter Intelligence Analyst","division":"marketing","description":"Social intelligence specialist for X/Twitter research, trend detection, account monitoring, and evid","color":"#111111","emoji":"🛰️","vibe":"Turns noisy X conversations into sourced market, audience, and risk intelligence"},{"id":"marketing-xiaohongshu-specialist","name":"Xiaohongshu Specialist","division":"marketing","description":"Expert Xiaohongshu marketing specialist focused on lifestyle content, trend-driven strategies, and a","color":"#FF1B6D","emoji":"🌸","vibe":"Masters lifestyle content and aesthetic storytelling on 小红书."},{"id":"marketing-zhihu-strategist","name":"Zhihu Strategist","division":"marketing","description":"Expert Zhihu marketing specialist focused on thought leadership, community credibility, and knowledg","color":"#0084FF","emoji":"🧠","vibe":"Builds brand authority through expert knowledge-sharing on 知乎."},{"id":"paid-media-auditor","name":"Paid Media Auditor","division":"paid-media","description":"Comprehensive paid media auditor who systematically evaluates Google Ads, Microsoft Ads, and Meta ac","color":"orange","emoji":"📋","vibe":"Finds the waste in your ad spend before your CFO does."},{"id":"paid-media-creative-strategist","name":"Ad Creative Strategist","division":"paid-media","description":"Paid media creative specialist focused on ad copywriting, RSA optimization, asset group design, and ","color":"orange","emoji":"✍️","vibe":"Turns ad creative from guesswork into a repeatable science."},{"id":"paid-media-paid-social-strategist","name":"Paid Social Strategist","division":"paid-media","description":"Cross-platform paid social advertising specialist covering Meta (Facebook/Instagram), LinkedIn, TikT","color":"orange","emoji":"📱","vibe":"Makes every dollar on Meta, LinkedIn, and TikTok ads work harder."},{"id":"paid-media-ppc-strategist","name":"PPC Campaign Strategist","division":"paid-media","description":"Senior paid media strategist specializing in large-scale search, shopping, and performance max campa","color":"orange","emoji":"💰","vibe":"Architects PPC campaigns that scale from $10K to $10M+ monthly."},{"id":"paid-media-programmatic-buyer","name":"Programmatic & Display Buyer","division":"paid-media","description":"Display advertising and programmatic media buying specialist covering managed placements, Google Dis","color":"orange","emoji":"📺","vibe":"Buys display and video inventory at scale with surgical precision."},{"id":"paid-media-search-query-analyst","name":"Search Query Analyst","division":"paid-media","description":"Specialist in search term analysis, negative keyword architecture, and query-to-intent mapping. Turn","color":"orange","emoji":"🔍","vibe":"Mines search queries to find the gold your competitors are missing."},{"id":"paid-media-tracking-specialist","name":"Tracking & Measurement Specialist","division":"paid-media","description":"Expert in conversion tracking architecture, tag management, and attribution modeling across Google T","color":"orange","emoji":"📡","vibe":"If it's not tracked correctly, it didn't happen."},{"id":"product-behavioral-nudge-engine","name":"Behavioral Nudge Engine","division":"product","description":"Behavioral psychology specialist that adapts software interaction cadences and styles to maximize us","color":"#FF8A65","emoji":"🧠","vibe":"Adapts software interactions to maximize user motivation through behavioral psyc"},{"id":"product-feedback-synthesizer","name":"Feedback Synthesizer","division":"product","description":"Expert in collecting, analyzing, and synthesizing user feedback from multiple channels to extract ac","color":"blue","emoji":"🔍","vibe":"Distills a thousand user voices into the five things you need to build next."},{"id":"product-manager","name":"Product Manager","division":"product","description":"Holistic product leader who owns the full product lifecycle — from discovery and strategy through ro","color":"blue","emoji":"🧭","vibe":"Ships the right thing, not just the next thing — outcome-obsessed, user-grounded"},{"id":"product-sprint-prioritizer","name":"Sprint Prioritizer","division":"product","description":"Expert product manager specializing in agile sprint planning, feature prioritization, and resource a","color":"green","emoji":"🎯","vibe":"Maximizes sprint value through data-driven prioritization and ruthless focus."},{"id":"product-trend-researcher","name":"Trend Researcher","division":"product","description":"Expert market intelligence analyst specializing in identifying emerging trends, competitive analysis","color":"purple","emoji":"🔭","vibe":"Spots emerging trends before they hit the mainstream."},{"id":"project-management-experiment-tracker","name":"Experiment Tracker","division":"project-management","description":"Expert project manager specializing in experiment design, execution tracking, and data-driven decisi","color":"purple","emoji":"🧪","vibe":"Designs experiments, tracks results, and lets the data decide."},{"id":"project-management-jira-workflow-steward","name":"Jira Workflow Steward","division":"project-management","description":"Expert delivery operations specialist who enforces Jira-linked Git workflows, traceable commits, str","color":"orange","emoji":"📋","vibe":"Enforces traceable commits, structured PRs, and release-safe branch strategy."},{"id":"project-management-meeting-notes-specialist","name":"Meeting Notes Specialist","division":"project-management","description":"Extract structured decisions, action items, and open questions from meeting transcripts or rough not","color":"blue","emoji":"📋","vibe":"Precise extractor — finds the signal in the noise, never invents what isn't ther"},{"id":"project-management-project-shepherd","name":"Project Shepherd","division":"project-management","description":"Expert project manager specializing in cross-functional project coordination, timeline management, a","color":"blue","emoji":"🐑","vibe":"Herds cross-functional chaos into on-time, on-scope delivery."},{"id":"project-management-studio-operations","name":"Studio Operations","division":"project-management","description":"Expert operations manager specializing in day-to-day studio efficiency, process optimization, and re","color":"green","emoji":"🏭","vibe":"Keeps the studio running smoothly — processes, tools, and people in sync."},{"id":"project-management-studio-producer","name":"Studio Producer","division":"project-management","description":"Senior strategic leader specializing in high-level creative and technical project orchestration, res","color":"gold","emoji":"🎬","vibe":"Aligns creative vision with business objectives across complex initiatives."},{"id":"project-manager-senior","name":"Senior Project Manager","division":"project-management","description":"Converts specs to tasks and remembers previous projects. Focused on realistic scope, no background p","color":"blue","emoji":"📝","vibe":"Converts specs to tasks with realistic scope — no gold-plating, no fantasy."},{"id":"sales-account-strategist","name":"Account Strategist","division":"sales","description":"Expert post-sale account strategist specializing in land-and-expand execution, stakeholder mapping, ","color":"#2E7D32","emoji":"🗺️","vibe":"Maps the org, finds the whitespace, and turns customers into platforms."},{"id":"sales-coach","name":"Sales Coach","division":"sales","description":"Expert sales coaching specialist focused on rep development, pipeline review facilitation, call coac","color":"#E65100","emoji":"🏋️","vibe":"Asks the question that makes the rep rethink the entire deal."},{"id":"sales-deal-strategist","name":"Deal Strategist","division":"sales","description":"Senior deal strategist specializing in MEDDPICC qualification, competitive positioning, and win plan","color":"#1B4D3E","emoji":"♟️","vibe":"Qualifies deals like a surgeon and kills happy ears on contact."},{"id":"sales-discovery-coach","name":"Discovery Coach","division":"sales","description":"Coaches sales teams on elite discovery methodology — question design, current-state mapping, gap qua","color":"#5C7CFA","emoji":"🔍","vibe":"Asks one more question than everyone else — and that's the one that closes the d"},{"id":"sales-engineer","name":"Sales Engineer","division":"sales","description":"Senior pre-sales engineer specializing in technical discovery, demo engineering, POC scoping, compet","color":"#2E5090","emoji":"🛠️","vibe":"Wins the technical decision before the deal even hits procurement."},{"id":"sales-offer-lead-gen-strategist","name":"Offer & Lead Gen Strategist","division":"sales","description":"Top-of-funnel architect who designs irresistible offers and lead magnets that attract qualified buye","color":"#F59E0B","emoji":"🧲","vibe":"Builds the thing buyers can't ignore — then multiplies the channels that deliver"},{"id":"sales-outbound-strategist","name":"Outbound Strategist","division":"sales","description":"Signal-based outbound specialist who designs multi-channel prospecting sequences, defines ICPs, and ","color":"#E8590C","emoji":"🎯","vibe":"Turns buying signals into booked meetings before the competition even notices."},{"id":"sales-pipeline-analyst","name":"Pipeline Analyst","division":"sales","description":"Revenue operations analyst specializing in pipeline health diagnostics, deal velocity analysis, fore","color":"#059669","emoji":"📊","vibe":"Tells you your forecast is wrong before you realize it yourself."},{"id":"sales-proposal-strategist","name":"Proposal Strategist","division":"sales","description":"Strategic proposal architect who transforms RFPs and sales opportunities into compelling win narrati","color":"#2563EB","emoji":"🏹","vibe":"Turns RFP responses into stories buyers can't put down."},{"id":"security-appsec-engineer","name":"Application Security Engineer","division":"security","description":"AppSec specialist who secures the software development lifecycle through threat modeling, secure cod","color":"#059669","emoji":"🔐","vibe":"Makes developers write secure code without even realizing it."},{"id":"security-architect","name":"Security Architect","division":"security","description":"Expert security architect specializing in threat modeling, secure-by-design architecture, trust-boun","color":"red","emoji":"🛡️","vibe":"Designs the security architecture and threat models that hold under adversarial "},{"id":"security-blockchain-security-auditor","name":"Blockchain Security Auditor","division":"security","description":"Expert smart contract security auditor specializing in vulnerability detection, formal verification,","color":"red","emoji":"🛡️","vibe":"Finds the exploit in your smart contract before the attacker does."},{"id":"security-cloud-security-architect","name":"Cloud Security Architect","division":"security","description":"Cloud-native security specialist designing zero trust architectures, implementing defense-in-depth a","color":"#3b82f6","emoji":"☁️","vibe":"Builds cloud infrastructure where \"secure by default\" isn't just a slide title."},{"id":"security-compliance-auditor","name":"Compliance Auditor","division":"security","description":"Expert technical compliance auditor specializing in SOC 2, ISO 27001, HIPAA, and PCI-DSS audits — fr","color":"orange","emoji":"📋","vibe":"Walks you from readiness assessment through evidence collection to SOC 2 certifi"},{"id":"security-incident-responder","name":"Incident Responder","division":"security","description":"Digital forensics and incident response specialist who leads breach investigations, contains active ","color":"#f59e0b","emoji":"🚨","vibe":"Runs toward the breach while everyone else runs away."},{"id":"security-penetration-tester","name":"Penetration Tester","division":"security","description":"Offensive security specialist conducting authorized penetration tests, red team operations, and vuln","color":"#dc2626","emoji":"🗡️","vibe":"Breaks into your systems so the real attackers can't."},{"id":"security-senior-secops","name":"Senior SecOps Engineer","division":"security","description":"Defensive application security specialist who scans every code submission for secrets and sensitive ","color":"#E67E22","emoji":"🛡️","vibe":"Before I read your request, I've already scanned your code for secrets. Security"},{"id":"security-threat-detection-engineer","name":"Threat Detection Engineer","division":"security","description":"Expert detection engineer specializing in SIEM rule development, MITRE ATT&CK coverage mapping, thre","color":"#7b2d8e","emoji":"🎯","vibe":"Builds the detection layer that catches attackers after they bypass prevention."},{"id":"security-threat-intelligence-analyst","name":"Threat Intelligence Analyst","division":"security","description":"Cyber threat intelligence specialist who tracks adversary groups, maps attack campaigns to MITRE ATT","color":"#7c3aed","emoji":"🔍","vibe":"Knows what the adversary will do before the adversary does."},{"id":"macos-spatial-metal-engineer","name":"macOS Spatial/Metal Engineer","division":"spatial-computing","description":"Native Swift and Metal specialist building high-performance 3D rendering systems and spatial computi","color":"metallic-blue","emoji":"🍎","vibe":"Pushes Metal to its limits for 3D rendering on macOS and Vision Pro."},{"id":"terminal-integration-specialist","name":"Terminal Integration Specialist","division":"spatial-computing","description":"Terminal emulation, text rendering optimization, and SwiftTerm integration for modern Swift applicat","color":"green","emoji":"🖥️","vibe":"Masters terminal emulation and text rendering in modern Swift applications."},{"id":"visionos-spatial-engineer","name":"visionOS Spatial Engineer","division":"spatial-computing","description":"Native visionOS spatial computing, SwiftUI volumetric interfaces, and Liquid Glass design implementa","color":"indigo","emoji":"🥽","vibe":"Builds native volumetric interfaces and Liquid Glass experiences for visionOS."},{"id":"xr-cockpit-interaction-specialist","name":"XR Cockpit Interaction Specialist","division":"spatial-computing","description":"Specialist in designing and developing immersive cockpit-based control systems for XR environments","color":"orange","emoji":"🕹️","vibe":"Designs immersive cockpit control systems that feel natural in XR."},{"id":"xr-immersive-developer","name":"XR Immersive Developer","division":"spatial-computing","description":"Expert WebXR and immersive technology developer with specialization in browser-based AR/VR/XR applic","color":"neon-cyan","emoji":"🌐","vibe":"Builds browser-based AR/VR/XR experiences that push WebXR to its limits."},{"id":"xr-interface-architect","name":"XR Interface Architect","division":"spatial-computing","description":"Spatial interaction designer and interface strategist for immersive AR/VR/XR environments","color":"neon-green","emoji":"🫧","vibe":"Designs spatial interfaces where interaction feels like instinct, not instructio"},{"id":"accounts-payable-agent","name":"Accounts Payable Agent","division":"specialized","description":"Autonomous payment processing specialist that executes vendor payments, contractor invoices, and rec","color":"green","emoji":"💸","vibe":"Moves money across any rail — crypto, fiat, stablecoins — so you don't have to."},{"id":"agentic-identity-trust","name":"Agentic Identity & Trust Architect","division":"specialized","description":"Designs identity, authentication, and trust verification systems for autonomous AI agents operating ","color":"#2d5a27","emoji":"🔐","vibe":"Ensures every AI agent can prove who it is, what it's allowed to do, and what it"},{"id":"agents-orchestrator","name":"Agents Orchestrator","division":"specialized","description":"Autonomous pipeline manager that orchestrates the entire development workflow. You are the leader of","color":"cyan","emoji":"🎛️","vibe":"The conductor who runs the entire dev pipeline from spec to ship."},{"id":"automation-governance-architect","name":"Automation Governance Architect","division":"specialized","description":"Governance-first architect for business automations (n8n-first) who audits value, risk, and maintain","color":"cyan","emoji":"⚙️","vibe":"Calm, skeptical, and operations-focused. Prefer reliable systems over automation"},{"id":"business-strategist","name":"Business Strategist","division":"specialized","description":"Senior management consulting specialist for competitive analysis, market entry strategy, business mo","color":"indigo","emoji":"♟️","vibe":"Strategy without execution is hallucination. Execution without strategy is chaos"},{"id":"change-management-consultant","name":"Change Management Consultant","division":"specialized","description":"Expert change management specialist using ADKAR, Kotter, and Prosci frameworks to guide organization","color":"amber","emoji":"🔄","vibe":"Change doesn't fail because of bad technology or bad strategy — it fails because"},{"id":"chief-financial-officer","name":"Chief Financial Officer","division":"specialized","description":"Strategic finance executive who governs capital allocation, treasury operations, financial planning,","color":"navy","emoji":"💼","vibe":"Thinks in trade-offs, risk-adjusted returns, and long-term value creation — turn"},{"id":"corporate-training-designer","name":"Corporate Training Designer","division":"specialized","description":"Expert in enterprise training system design and curriculum development — proficient in training need","color":"orange","emoji":"📚","vibe":"Designs training programs that drive real behavior change — from needs analysis "},{"id":"customer-service","name":"Customer Service","division":"specialized","description":"Friendly, professional customer service specialist for any industry — handling inquiries, complaints","color":"teal","emoji":"🎧","vibe":"Every customer interaction is a chance to turn a problem into loyalty — handle i"},{"id":"customer-success-manager","name":"Customer Success Manager","division":"specialized","description":"Strategic customer success specialist for onboarding, health scoring, QBR facilitation, churn preven","color":"green","emoji":"🌟","vibe":"Customer success isn't a department that reacts to problems — it's a discipline "},{"id":"data-consolidation-agent","name":"Data Consolidation Agent","division":"specialized","description":"AI agent that consolidates extracted sales data into live reporting dashboards with territory, rep, ","color":"#38a169","emoji":"🗄️","vibe":"Consolidates scattered sales data into live reporting dashboards."},{"id":"data-privacy-officer","name":"Data Privacy Officer","division":"specialized","description":"Corporate data privacy specialist and DPO who builds GDPR, CCPA, and global privacy compliance progr","color":"purple","emoji":"🔐","vibe":"Treats personal data as a liability to be minimized rather than an asset to be h"},{"id":"esg-sustainability-officer","name":"ESG & Sustainability Officer","division":"specialized","description":"Corporate sustainability strategist and ESG reporting specialist who builds environmental, social, a","color":"green","emoji":"🌱","vibe":"Builds sustainability programs that hold up to scrutiny — grounds every claim in"},{"id":"government-digital-presales-consultant","name":"Government Digital Presales Consultant","division":"specialized","description":"Presales expert for China's government digital transformation market (ToG), proficient in policy int","color":"#8B0000","emoji":"🏛️","vibe":"Navigates the Chinese government IT procurement maze — from policy signals to wi"},{"id":"grant-writer","name":"Grant Writer","division":"specialized","description":"Expert grant writing specialist for nonprofits, research institutions, and social enterprises — cove","color":"purple","emoji":"📝","vibe":"Every grant is a conversation between your mission and a funder's priorities. Th"},{"id":"healthcare-customer-service","name":"Healthcare Customer Service","division":"specialized","description":"Empathetic healthcare customer service specialist for patient support, billing inquiries, appointmen","color":"teal","emoji":"🏥","vibe":"Every patient deserves to feel heard, respected, and supported — especially when"},{"id":"healthcare-marketing-compliance","name":"Healthcare Marketing Compliance Specialist","division":"specialized","description":"Expert in healthcare marketing compliance in China, proficient in the Advertising Law, Medical Adver","color":"#2E8B57","emoji":"⚕️","vibe":"Keeps your healthcare marketing legal in China's tightly regulated landscape — r"},{"id":"hospitality-guest-services","name":"Hospitality Guest Services","division":"specialized","description":"Comprehensive hospitality guest services specialist for hotels, resorts, restaurants, and event venu","color":"teal","emoji":"🏨","vibe":"Hospitality is not a transaction — it's a feeling. Every guest interaction is an"},{"id":"hr-onboarding","name":"HR Onboarding","division":"specialized","description":"Comprehensive HR onboarding specialist for employee orientation, documentation management, complianc","color":"green","emoji":"🤝","vibe":"The first 90 days determine whether a new hire becomes a long-term contributor o"},{"id":"identity-graph-operator","name":"Identity Graph Operator","division":"specialized","description":"Operates a shared identity graph that multiple AI agents resolve against. Ensures every agent in a m","color":"#C5A572","emoji":"🕸️","vibe":"Ensures every agent in a multi-agent system gets the same canonical answer for \""},{"id":"language-translator","name":"Language Translator","division":"specialized","description":"Real-time Spanish ↔ English translation specialist with cultural context, regional dialect awareness","color":"teal","emoji":"🌐","vibe":"Bridges languages with precision, cultural respect, and the fluency of a native "},{"id":"legal-billing-time-tracking","name":"Legal Billing & Time Tracking","division":"specialized","description":"Comprehensive legal billing and time tracking specialist for accurate time capture, invoice generati","color":"green","emoji":"⏱️","vibe":"Every six minutes of unbilled time is money left on the table. Every unclear bil"},{"id":"legal-client-intake","name":"Legal Client Intake","division":"specialized","description":"Comprehensive legal client intake specialist for qualifying prospects, collecting case information, ","color":"blue","emoji":"📋","vibe":"The first conversation with a potential client sets the tone for the entire atto"},{"id":"legal-document-review","name":"Legal Document Review","division":"specialized","description":"Comprehensive legal document review specialist for contracts, litigation documents, and real estate ","color":"blue","emoji":"⚖️","vibe":"Every word in a legal document matters. Every missed clause is a liability. Ever"},{"id":"loan-officer-assistant","name":"Loan Officer Assistant","division":"specialized","description":"Comprehensive loan officer assistant for mortgage and lending professionals — covering borrower inta","color":"blue","emoji":"🏦","vibe":"Every loan is someone's dream — a home, a business, a fresh start. Move it throu"},{"id":"lsp-index-engineer","name":"LSP/Index Engineer","division":"specialized","description":"Language Server Protocol specialist building unified code intelligence systems through LSP client or","color":"orange","emoji":"🔎","vibe":"Builds unified code intelligence through LSP orchestration and semantic indexing"},{"id":"ma-integration-manager","name":"M&A Integration Manager","division":"specialized","description":"Mergers and acquisitions integration specialist who designs and executes post-merger integration pro","color":"indigo","emoji":"🤝","vibe":"Treats the signed deal as the starting line, not the finish — runs post-merger i"},{"id":"medical-billing-coding-specialist","name":"Medical Billing & Coding Specialist","division":"specialized","description":"Expert medical billing and coding specialist for ICD-10-CM/PCS, CPT, and HCPCS coding, claim submiss","color":"blue","emoji":"🏥","vibe":"Every unsubmitted claim is lost revenue. Every unchallenged denial is money left"},{"id":"operations-manager","name":"Operations Manager","division":"specialized","description":"Business operations specialist who applies Lean, Six Sigma, and systems thinking to process mapping,","color":"slate","emoji":"⚙️","vibe":"Sees every business as a system of processes and treats waste, variation, and un"},{"id":"organizational-psychologist","name":"Organizational Psychologist","division":"specialized","description":"Applied organizational psychologist who diagnoses team dynamics, psychological safety, burnout risk,","color":"teal","emoji":"🧠","vibe":"Treats team dysfunction like a clinician reads symptoms — grounds every diagnosi"},{"id":"personal-growth-mentor","name":"Personal Growth Mentor","division":"specialized","description":"Cross-domain personal development mentor for goal clarity, habit design, strategic decisions, and ac","color":"teal","emoji":"🌱","vibe":"Systems over slogans. Clarity before action. Execution over inspiration."},{"id":"real-estate-buyer-seller","name":"Real Estate Buyer & Seller","division":"specialized","description":"Comprehensive real estate agent assistant for buyer representation, seller representation, listing m","color":"teal","emoji":"🏠","vibe":"Every transaction is someone's biggest financial decision. Every client deserves"},{"id":"recruitment-specialist","name":"Recruitment Specialist","division":"specialized","description":"Expert recruitment operations and talent acquisition specialist — skilled in China's major hiring pl","color":"blue","emoji":"🎯","vibe":"Builds your full-cycle recruiting engine across China's hiring platforms, from s"},{"id":"report-distribution-agent","name":"Report Distribution Agent","division":"specialized","description":"AI agent that automates distribution of consolidated sales reports to representatives based on terri","color":"#d69e2e","emoji":"📤","vibe":"Automates delivery of consolidated sales reports to the right reps."},{"id":"retail-customer-returns","name":"Retail Customer Returns","division":"specialized","description":"Comprehensive retail customer returns specialist for processing returns, exchanges, and refunds acro","color":"amber","emoji":"🛒","vibe":"A return is not a failure — it's an opportunity. Handle it with speed, fairness,"},{"id":"sales-data-extraction-agent","name":"Sales Data Extraction Agent","division":"specialized","description":"AI agent specialized in monitoring Excel files and extracting key sales metrics (MTD, YTD, Year End)","color":"#2b6cb0","emoji":"📊","vibe":"Watches your Excel files and extracts the metrics that matter."},{"id":"sales-outreach","name":"Sales Outreach","division":"specialized","description":"Consultative B2B sales outreach specialist for cold prospecting, lead follow-up, objection handling,","color":"amber","emoji":"🎯","vibe":"The best salespeople don't sell — they help people buy. Every outreach is a conv"},{"id":"specialized-chief-of-staff","name":"Chief of Staff","division":"specialized","description":"Master coordinator for founders and executives — filters noise, owns processes, enforces consistency","color":"#6B7280","emoji":"🧭","vibe":"I don't own any function. I own the space between all of them."},{"id":"specialized-civil-engineer","name":"Civil Engineer","division":"specialized","description":"Expert civil and structural engineer with global standards coverage — Eurocode, DIN, ACI, AISC, ASCE","color":"yellow","emoji":"🏗️","vibe":"Designs structures that stand across borders — from seismic Tokyo to wind-swept "},{"id":"specialized-cultural-intelligence-strategist","name":"Cultural Intelligence Strategist","division":"specialized","description":"CQ specialist that detects invisible exclusion, researches global context, and ensures software reso","color":"#FFA000","emoji":"🌍","vibe":"Detects invisible exclusion and ensures your software resonates across cultures."},{"id":"specialized-developer-advocate","name":"Developer Advocate","division":"specialized","description":"Expert developer advocate specializing in building developer communities, creating compelling techni","color":"purple","emoji":"🗣️","vibe":"Bridges your product team and the developer community through authentic engageme"},{"id":"specialized-document-generator","name":"Document Generator","division":"specialized","description":"Expert document creation specialist who generates professional PDF, PPTX, DOCX, and XLSX files using","color":"blue","emoji":"📄","vibe":"Professional documents from code — PDFs, slides, spreadsheets, and reports."},{"id":"specialized-french-consulting-market","name":"French Consulting Market Navigator","division":"specialized","description":"Navigate the French ESN/SI freelance ecosystem — margin models, platform mechanics (Malt, collective","color":"#002395","emoji":"🇫🇷","vibe":"The insider who decodes the opaque French consulting food chain so freelancers s"},{"id":"specialized-korean-business-navigator","name":"Korean Business Navigator","division":"specialized","description":"Korean business culture for foreign professionals — 품의 decision process, nunchi reading, KakaoTalk b","color":"#003478","emoji":"🇰🇷","vibe":"The bridge between Western directness and Korean relationship dynamics — reads t"},{"id":"specialized-mcp-builder","name":"MCP Builder","division":"specialized","description":"Expert Model Context Protocol developer who designs, builds, and tests MCP servers that extend AI ag","color":"indigo","emoji":"🔌","vibe":"Builds the tools that make AI agents actually useful in the real world."},{"id":"specialized-model-qa","name":"Model QA Specialist","division":"specialized","description":"Independent model QA expert who audits ML and statistical models end-to-end - from documentation rev","color":"#B22222","emoji":"🔬","vibe":"Audits ML models end-to-end — from data reconstruction to calibration testing."},{"id":"specialized-pricing-analyst","name":"Pricing Analyst","division":"specialized","description":"Specialized pricing analyst who develops optimal pricing models through market research, competitor ","color":"gold","emoji":"💰","vibe":"Finds the price point where value captured meets value delivered — then proves i"},{"id":"specialized-salesforce-architect","name":"Salesforce Architect","division":"specialized","description":"Solution architecture for Salesforce platform — multi-cloud design, integration patterns, governor l","color":"#00A1E0","emoji":"☁️","vibe":"The calm hand that turns a tangled Salesforce org into an architecture that scal"},{"id":"specialized-strategy-duel-agent","name":"Strategy Duel Agent","division":"specialized","description":"Conducts live strategy duels using game theory and the 36 Chinese stratagems","color":"#1e90ff","emoji":"⚔️","vibe":"Orchestrates high-stakes, turn-based strategy battles with sharp analysis and me"},{"id":"specialized-workflow-architect","name":"Workflow Architect","division":"specialized","description":"Workflow design specialist who maps complete workflow trees for every system, user journey, and agen","color":"orange","emoji":"🗺️","vibe":"Every path the system can take — mapped, named, and specified before a single li"},{"id":"study-abroad-advisor","name":"Study Abroad Advisor","division":"specialized","description":"Full-spectrum study abroad planning expert covering the US, UK, Canada, Australia, Europe, Hong Kong","color":"#1B4D3E","emoji":"🎓","vibe":"Guides Chinese students through the entire study abroad journey — from school se"},{"id":"supply-chain-strategist","name":"Supply Chain Strategist","division":"specialized","description":"Expert supply chain management and procurement strategy specialist — skilled in supplier development","color":"blue","emoji":"🔗","vibe":"Builds your procurement engine and supply chain resilience across China's manufa"},{"id":"zk-steward","name":"ZK Steward","division":"specialized","description":"Knowledge-base steward in the spirit of Niklas Luhmann's Zettelkasten. Default perspective: Luhmann;","color":"teal","emoji":"🗃️","vibe":"Channels Luhmann's Zettelkasten to build connected, validated knowledge bases."},{"id":"support-analytics-reporter","name":"Analytics Reporter","division":"support","description":"Expert data analyst transforming raw data into actionable business insights. Creates dashboards, per","color":"teal","emoji":"📊","vibe":"Transforms raw data into the insights that drive your next decision."},{"id":"support-executive-summary-generator","name":"Executive Summary Generator","division":"support","description":"Consultant-grade AI specialist trained to think and communicate like a senior strategy consultant. T","color":"purple","emoji":"📝","vibe":"Thinks like a McKinsey consultant, writes for the C-suite."},{"id":"support-finance-tracker","name":"Finance Tracker","division":"support","description":"Expert financial analyst and controller specializing in financial planning, budget management, and b","color":"green","emoji":"💰","vibe":"Keeps the books clean, the cash flowing, and the forecasts honest."},{"id":"support-infrastructure-maintainer","name":"Infrastructure Maintainer","division":"support","description":"Expert infrastructure specialist focused on system reliability, performance optimization, and techni","color":"orange","emoji":"🏢","vibe":"Keeps the lights on, the servers humming, and the alerts quiet."},{"id":"support-legal-compliance-checker","name":"Legal Compliance Checker","division":"support","description":"Expert legal and compliance specialist ensuring business operations, data handling, and content crea","color":"red","emoji":"⚖️","vibe":"Ensures your operations comply with the law across every jurisdiction that matte"},{"id":"support-support-responder","name":"Support Responder","division":"support","description":"Expert customer support specialist delivering exceptional customer service, issue resolution, and us","color":"blue","emoji":"💬","vibe":"Turns frustrated users into loyal advocates, one interaction at a time."},{"id":"testing-accessibility-auditor","name":"Accessibility Auditor","division":"testing","description":"Expert accessibility specialist who audits interfaces against WCAG standards, tests with assistive t","color":"#0077B6","emoji":"♿","vibe":"If it's not tested with a screen reader, it's not accessible."},{"id":"testing-api-tester","name":"API Tester","division":"testing","description":"Expert API testing specialist focused on comprehensive API validation, performance testing, and qual","color":"purple","emoji":"🔌","vibe":"Breaks your API before your users do."},{"id":"testing-evidence-collector","name":"Evidence Collector","division":"testing","description":"Screenshot-obsessed, fantasy-allergic QA specialist - Default to finding 3-5 issues, requires visual","color":"orange","emoji":"📸","vibe":"Screenshot-obsessed QA who won't approve anything without visual proof."},{"id":"testing-performance-benchmarker","name":"Performance Benchmarker","division":"testing","description":"Expert performance testing and optimization specialist focused on measuring, analyzing, and improvin","color":"orange","emoji":"⏱️","vibe":"Measures everything, optimizes what matters, and proves the improvement."},{"id":"testing-reality-checker","name":"Reality Checker","division":"testing","description":"Stops fantasy approvals, evidence-based certification - Default to \"NEEDS WORK\", requires overwhelmi","color":"red","emoji":"🧐","vibe":"Defaults to \"NEEDS WORK\" — requires overwhelming proof for production readiness."},{"id":"testing-test-results-analyzer","name":"Test Results Analyzer","division":"testing","description":"Expert test analysis specialist focused on comprehensive test result evaluation, quality metrics ana","color":"indigo","emoji":"📋","vibe":"Reads test results like a detective reads evidence — nothing gets past."},{"id":"testing-tool-evaluator","name":"Tool Evaluator","division":"testing","description":"Expert technology assessment specialist focused on evaluating, testing, and recommending tools, soft","color":"teal","emoji":"🔧","vibe":"Tests and recommends the right tools so your team doesn't waste time on the wron"},{"id":"testing-workflow-optimizer","name":"Workflow Optimizer","division":"testing","description":"Expert process improvement specialist focused on analyzing, optimizing, and automating workflows acr","color":"green","emoji":"⚡","vibe":"Finds the bottleneck, fixes the process, automates the rest."}];
+const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"name":"engineering","count":33},{"name":"finance","count":5},{"name":"game-development","count":5},{"name":"gis","count":13},{"name":"marketing","count":36},{"name":"paid-media","count":7},{"name":"product","count":5},{"name":"project-management","count":7},{"name":"sales","count":9},{"name":"security","count":10},{"name":"spatial-computing","count":6},{"name":"specialized","count":53},{"name":"support","count":6},{"name":"testing","count":8}];
+
+const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/agent-forge/main/agents';
+
+// ── Config ────────────────────────────────────────────────────────────────────
+const cfg = {
+  get provider(){ return localStorage.getItem('ag_provider')||'demo'; },
+  set provider(v){ localStorage.setItem('ag_provider',v); },
+  get groqKey(){ return localStorage.getItem('ag_groq_key')||''; },
+  set groqKey(v){ localStorage.setItem('ag_groq_key',v); },
+  get groqModel(){ return localStorage.getItem('ag_groq_model')||'llama-3.1-8b-instant'; },
+  set groqModel(v){ localStorage.setItem('ag_groq_model',v); },
+  get ollamaHost(){ return localStorage.getItem('ag_ollama_host')||'http://localhost:11434'; },
+  set ollamaHost(v){ localStorage.setItem('ag_ollama_host',v); },
+  get braveKey(){ return localStorage.getItem('ag_brave_key')||''; },
+  set braveKey(v){ localStorage.setItem('ag_brave_key',v); },
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let curAgent=null, chatMsgs=[], chatBusy=false, attachedFile=null;
+let selectedDiv='', pipelineMode=false, pipeline=[];
+let pipelineRunning=false, stopFlag=false;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+(()=>{
+  renderDivTabs(); renderList(); loadSettingsUI(); renderMemory();
+  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
+    showScreen('agents'); updateHdr();
+  }
+})();
+
+// ── Screens ───────────────────────────────────────────────────────────────────
+function showScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  ['agents','pipeline','memory','debate','benchmark','settings'].forEach(t=>{
+    const el=document.getElementById('tab-'+t);
+    if(el) el.classList.toggle('active-tab',t===n);
+  });
+  if(n==='memory') renderMemory();
+  if(n==='debate') initDebateSelects();
+  if(n==='benchmark') initBenchmarkAgents();
+}
+
+function updateHdr(){
+  const dot=document.getElementById('hdr-dot'), txt=document.getElementById('hdr-txt');
+  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
+    dot.className='dot ok'; txt.textContent='Groq·'+cfg.groqModel.split('-').slice(0,3).join('-');
+  } else if(cfg.provider==='ollama'){
+    dot.className='dot warn'; txt.textContent='Ollama';
+  } else {
+    dot.className='dot warn'; txt.textContent='demo';
+  }
+}
+
+// ── Setup ─────────────────────────────────────────────────────────────────────
+async function connectGroq(){
+  const key=document.getElementById('setup-key').value.trim();
+  if(!key.startsWith('gsk_')){ alert('Key must start with gsk_'); return; }
+  const btn=document.getElementById('setup-btn');
+  btn.textContent='Testing…'; btn.disabled=true;
+  const ok=await testGroq(key);
+  if(ok){
+    cfg.groqKey=key; cfg.provider='groq';
+    btn.textContent='✓ Connected!'; btn.style.background='var(--green)';
+    setTimeout(()=>{ showScreen('agents'); updateHdr(); },700);
+  } else {
+    btn.textContent='✗ Invalid key'; btn.style.background='var(--red)';
+    setTimeout(()=>{ btn.textContent='Connect & Start →'; btn.disabled=false; btn.style.background=''; },2500);
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function colorHex(c){
+  const m={red:'#ef4444',blue:'#3b82f6',green:'#22c55e',purple:'#a855f7',
+    yellow:'#eab308',orange:'#f97316',pink:'#ec4899',indigo:'#6366f1',
+    teal:'#14b8a6',cyan:'#06b6d4',violet:'#8b5cf6',emerald:'#10b981',amber:'#f59e0b'};
+  return m[c?.toLowerCase()]||(c?.startsWith('#')?c:'#6366f1');
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}
+function md(s){
+  return String(s)
+    .replace(/```(\w*)\n?([\s\S]*?)```/g,(_,lang,c)=>{
+      const raw=c.trim();
+      const id='code-'+Math.random().toString(36).slice(2,8);
+      return `<div class="code-block-wrap"><pre><code id="${id}" data-lang="${lang||''}" data-raw="${encodeURIComponent(raw)}">${esc(raw)}</code></pre><button class="run-code-btn" onclick="runCode('${id}')">▶ Run</button></div>`;
+    })
+    .replace(/`([^`\n]+)`/g,(_,c)=>`<code>${esc(c)}</code>`)
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>')
+    .replace(/^---$/gm,'<hr>').replace(/^[-*] (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>[\s\S]+?<\/li>)/g,'<ul>$1</ul>')
+    .replace(/\n\n+/g,'</p><p>').replace(/^(?!<[hupoli])(.+)$/gm,s=>s?`<p>${s}</p>`:'');
+}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+
+// ── Fetch full agent content ───────────────────────────────────────────────────
+async function fetchAgentContent(a){
+  // 1. Local server
+  try{
+    const r=await fetch('/api/agents/'+a.id,{signal:AbortSignal.timeout(2000)});
+    if(r.ok){const d=await r.json();if(d.content)return d.content;}
+  }catch{}
+  // 2. GitHub raw
+  try{
+    const url=`${GITHUB_RAW}/${a.division}/${a.id}.md`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    if(r.ok)return await r.text();
+  }catch{}
+  // 3. Fallback: description only
+  return `You are ${a.name}. ${a.description} ${a.vibe||''}`;
+}
+
+// ── Agent list ────────────────────────────────────────────────────────────────
+function renderDivTabs(){
+  document.getElementById('div-tabs').innerHTML=
+    `<button class="div-tab on" onclick="setDiv('')">All</button>`+
+    DIVISIONS.map(d=>`<button class="div-tab" onclick="setDiv('${d.name}')">${d.name} <span style="opacity:.6">${d.count}</span></button>`).join('');
+}
+function setDiv(d){
+  selectedDiv=d;
+  document.querySelectorAll('.div-tab').forEach(b=>b.classList.toggle('on',(!d&&b.textContent.trim().startsWith('All'))||(d&&b.textContent.trim().startsWith(d))));
+  renderList();
+}
+function renderList(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const f=AGENTS.filter(a=>(!q||a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q)||a.division.includes(q))&&(!selectedDiv||a.division===selectedDiv));
+  if(!f.length){document.getElementById('agent-list').innerHTML='<div style="padding:24px;text-align:center;color:var(--text2)">No agents found</div>';return;}
+  document.getElementById('agent-list').innerHTML=f.map(a=>{
+    const h=colorHex(a.color);
+    const plIdx=pipeline.findIndex(p=>p.id===a.id);
+    const badge=plIdx>=0?`<div class="pipeline-badge">${plIdx+1}</div>`:'';
+    const cls=plIdx>=0?'agent-item in-pipeline':'agent-item';
+    return `<div class="${cls}" onclick="agentTap('${a.id}')">
+      <div class="agi-emoji" style="background:${h}22;color:${h};border:1px solid ${h}44">${a.emoji}</div>
+      <div class="agi-info">
+        <div class="agi-name">${a.name}</div>
+        <div class="agi-div">${a.division}</div>
+        <div class="agi-desc">${a.description}</div>
+      </div>${badge}</div>`;
+  }).join('');
+}
+function agentTap(id){
+  if(pipelineMode){ togglePipelineAgent(id); }
+  else { openAgent(id); }
+}
+
+// ── Pipeline mode toggle ──────────────────────────────────────────────────────
+function togglePipelineMode(){
+  pipelineMode=!pipelineMode;
+  document.getElementById('pipeline-mode-btn').classList.toggle('active-tab',pipelineMode);
+  const bar=document.getElementById('pipeline-bar');
+  bar.style.display=pipelineMode?'flex':'none';
+  renderList();
+}
+function togglePipelineAgent(id){
+  const a=AGENTS.find(x=>x.id===id);if(!a)return;
+  const idx=pipeline.findIndex(p=>p.id===id);
+  if(idx>=0) pipeline.splice(idx,1);
+  else if(pipeline.length<6) pipeline.push(a);
+  document.getElementById('pl-count').textContent=pipeline.length;
+  renderList(); updatePipelineQueue();
+}
+function goToPipeline(){
+  pipelineMode=false;
+  document.getElementById('pipeline-mode-btn').classList.remove('active-tab');
+  document.getElementById('pipeline-bar').style.display='none';
+  showScreen('pipeline'); updatePipelineQueue();
+}
+function updatePipelineQueue(){
+  const el=document.getElementById('pipeline-queue');
+  const runBtn=document.getElementById('run-btn');
+  if(!pipeline.length){
+    el.innerHTML='<div class="pipeline-hint" id="pl-empty-hint">← Go to 🏠 Agents and tap ⛓️ Add to build your pipeline</div>';
+    runBtn.disabled=true; return;
+  }
+  el.innerHTML=pipeline.map((a,i)=>{
+    const h=colorHex(a.color);
+    return `<div class="pq-item">
+      <div class="pq-num">${i+1}</div>
+      <div class="pq-emoji">${a.emoji}</div>
+      <div class="pq-info"><div class="pq-name">${a.name}</div><div class="pq-div">${a.division}</div></div>
+      <button class="pq-remove" onclick="removePipelineAgent(${i})">×</button>
+    </div>`;
+  }).join('');
+  runBtn.disabled=pipeline.length<1||!document.getElementById('pl-goal').value.trim();
+}
+function removePipelineAgent(i){ pipeline.splice(i,1); updatePipelineQueue(); renderList(); }
+document.addEventListener('DOMContentLoaded',()=>{
+  const g=document.getElementById('pl-goal');
+  if(g) g.addEventListener('input',()=>{
+    const runBtn=document.getElementById('run-btn');
+    if(runBtn) runBtn.disabled=pipeline.length<1||!g.value.trim();
+  });
+});
+
+// ── Example pipelines ─────────────────────────────────────────────────────────
+const EXAMPLES = {
+  saas:{
+    goal:'Build a complete SaaS landing page and go-to-market plan for a project management tool targeting remote teams',
+    agents:['product-product-manager','engineering-frontend-developer','design-brand-guardian','marketing-growth-hacker']
+  },
+  security:{
+    goal:'Perform a full security audit of a Node.js web application with user authentication and payment processing',
+    agents:['security-security-architect','security-application-security-engineer','testing-qa-engineer']
+  },
+  content:{
+    goal:'Create a complete content marketing campaign for a new AI writing tool launch',
+    agents:['design-brand-guardian','marketing-content-strategist','marketing-seo-specialist']
+  }
+};
+function loadExample(key){
+  const ex=EXAMPLES[key]; if(!ex) return;
+  document.getElementById('pl-goal').value=ex.goal;
+  pipeline=ex.agents.map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+  updatePipelineQueue();
+}
+
+// ── Auto-Build Team (orchestrator picks agents) ───────────────────────────────
+async function autoBuildTeam(){
+  const goal=document.getElementById('pl-goal').value.trim();
+  const status=document.getElementById('auto-build-status');
+  const btn=document.getElementById('auto-build-btn');
+  if(!goal){ status.textContent='↑ Describe your goal first'; return; }
+  if(cfg.provider!=='groq'||!cfg.groqKey.startsWith('gsk_')){
+    status.innerHTML='<span style="color:var(--orange)">Connect Groq first — tap ⚙️</span>'; return;
+  }
+  btn.disabled=true; btn.textContent='✨ Assembling team…';
+  status.textContent='Analyzing goal & selecting specialists from 217 agents…';
+
+  // Compact roster: id|name|one-line desc, grouped — fits in context
+  const roster=AGENTS.map(a=>`${a.id} | ${a.name} (${a.division}): ${a.description.slice(0,90)}`).join('\n');
+  const sys=`You are an expert AI orchestrator. You assemble the optimal team of specialist agents to accomplish a project, choosing from a fixed roster. You understand which specialists must work in which ORDER so each builds on the previous one's output.`;
+  const prompt=`PROJECT GOAL:\n${goal}\n\nAVAILABLE SPECIALISTS (id | name (division): description):\n${roster}\n\nSelect the 3-5 BEST specialists to accomplish this goal, in the optimal execution ORDER (earlier agents lay groundwork for later ones). Respond with ONLY a JSON object, no prose:\n{"team":["exact-agent-id-1","exact-agent-id-2","exact-agent-id-3"],"reason":"one sentence why this team & order"}`;
+
+  try{
+    // Force the strongest model for selection quality
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.groqKey},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:512,
+        temperature:0.3,
+        response_format:{type:'json_object'},
+        messages:[{role:'system',content:sys},{role:'user',content:prompt}],
+      }),
+    });
+    if(!res.ok){
+      const e=await res.json().catch(()=>({}));
+      throw new Error(e.error?.message||'Groq '+res.status);
+    }
+    const data=await res.json();
+    const raw=data.choices?.[0]?.message?.content||'{}';
+    let parsed; try{ parsed=JSON.parse(raw); }catch{ parsed=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1)); }
+    const ids=Array.isArray(parsed.team)?parsed.team:[];
+    const team=ids.map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+    if(team.length<1) throw new Error('No matching agents returned');
+
+    pipeline=team.slice(0,6);
+    updatePipelineQueue(); renderList();
+    status.innerHTML=`<span style="color:var(--green)">✓ Team of ${pipeline.length} assembled</span>${parsed.reason?' — '+esc(parsed.reason):''}`;
+  }catch(e){
+    status.innerHTML='<span style="color:var(--red)">Auto-build failed: '+esc(e.message)+'</span>';
+  }
+  btn.disabled=false; btn.textContent='✨ Auto-Build Team';
+}
+
+// ── Run Pipeline ──────────────────────────────────────────────────────────────
+async function runPipeline(){
+  const goal=document.getElementById('pl-goal').value.trim();
+  if(!goal||!pipeline.length) return;
+  if(cfg.provider==='demo'){ alert('Connect Groq first — go to ⚙️ Settings'); return; }
+
+  stopFlag=false; pipelineRunning=true;
+  document.getElementById('pipeline-build').style.display='none';
+  const execEl=document.getElementById('pipeline-exec');
+  execEl.style.display='flex';
+  const screen=document.getElementById('exec-screen');
+  screen.innerHTML='';
+
+  const outputs=[];
+  const blocks=[];
+
+  for(let i=0;i<pipeline.length;i++){
+    if(stopFlag) break;
+    const agent=pipeline[i];
+    document.getElementById('exec-progress').textContent=`${i+1}/${pipeline.length}`;
+
+    // Create block UI
+    const h=colorHex(agent.color);
+    const blockId='exec-block-'+i;
+    const outputId='exec-out-'+i;
+    const statusId='exec-status-'+i;
+    screen.innerHTML+=`
+      <div class="exec-agent-block" id="${blockId}">
+        <div class="exec-agent-header">
+          <div style="width:32px;height:32px;border-radius:8px;background:${h}22;color:${h};border:1px solid ${h}44;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">${agent.emoji}</div>
+          <div style="min-width:0;flex:1"><div style="font-weight:600;font-size:13px">${agent.name}</div><div style="font-size:11px;color:var(--text2)">${agent.division}</div></div>
+          <div class="exec-agent-status running" id="${statusId}">● Working…</div>
+        </div>
+        <div class="exec-output" id="${outputId}"></div>
+        <button class="expand-btn" id="exp-${i}" onclick="toggleExpand(${i})" style="display:none">Show more ▾</button>
+      </div>`;
+    screen.scrollTop=screen.scrollHeight;
+
+    // Build context from previous outputs
+    let context='';
+    if(outputs.length>0){
+      context=`
+
+---
+**PREVIOUS AGENTS WORK:**
+`;
+      outputs.forEach((o,j)=>{
+        context+=`
+**${pipeline[j].name}** delivered:
+${o.slice(0,1500)}
+`;
+      });
+      context+=`
+---
+**YOUR TURN:** Continue this work. Build on what came before. Be specific and produce real deliverables.`;
+    }
+
+    const prompt=i===0
+      ? `PROJECT GOAL: ${goal}
+
+As ${agent.name}, deliver your part of this project. Be concrete, specific, and produce real output — not just advice.`
+      : `PROJECT GOAL: ${goal}${context}
+
+As ${agent.name}, now deliver YOUR specific contribution to this project. Be concrete and build on the previous work.`;
+
+    // Fetch agent content
+    const content=await fetchAgentContent(agent);
+    let agentOutput='';
+
+    try{
+      if(cfg.provider==='groq'){
+        await streamGroqInto(content, prompt, (chunk)=>{
+          agentOutput+=chunk;
+          const outEl=document.getElementById(outputId);
+          if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
+          screen.scrollTop=screen.scrollHeight;
+        });
+      } else {
+        await streamOllamaInto(content, prompt, (chunk)=>{
+          agentOutput+=chunk;
+          const outEl=document.getElementById(outputId);
+          if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
+        });
+      }
+    } catch(e){
+      agentOutput=`Error: ${e.message}`;
+    }
+
+    outputs.push(agentOutput);
+    const outEl=document.getElementById(outputId);
+    const statusEl=document.getElementById(statusId);
+    if(outEl){ outEl.innerHTML=md(agentOutput); }
+    if(statusEl){ statusEl.textContent='✓ Done'; statusEl.className='exec-agent-status done'; }
+    const expBtn=document.getElementById('exp-'+i);
+    if(expBtn&&agentOutput.length>400){ expBtn.style.display='block'; outEl.classList.add('collapsed'); }
+  }
+
+  // Final combined output
+  if(!stopFlag&&outputs.length>0){
+    const combined=pipeline.map((a,i)=>`## ${a.emoji} ${a.name}
+
+${outputs[i]}`).join('\n\n---\n\n');
+    screen.innerHTML+=`
+      <div class="final-output">
+        <h3>✅ Pipeline Complete — Combined Deliverable</h3>
+        <div style="font-size:13px;line-height:1.7">${md(combined)}</div>
+        <button class="copy-btn" onclick="copyOutput()">📋 Copy Full Output</button>
+        <button class="save-btn2" onclick="downloadPipeline()">⬇️ Download .md</button>
+        <button class="save-btn2" onclick="savePipelineToMemory('${esc(document.getElementById('pl-goal').value)}')">💾 Save to Memory</button>
+      </div>`;
+    window._lastPipelineOutput=combined;
+    window._lastPipelineGoal=document.getElementById('pl-goal').value;
+    screen.scrollTop=screen.scrollHeight;
+    document.getElementById('exec-progress').textContent='Complete ✓';
+  }
+  pipelineRunning=false;
+}
+
+function toggleExpand(i){
+  const out=document.getElementById('exec-out-'+i);
+  const btn=document.getElementById('exp-'+i);
+  if(out.classList.contains('collapsed')){ out.classList.remove('collapsed'); btn.textContent='Show less ▴'; }
+  else { out.classList.add('collapsed'); btn.textContent='Show more ▾'; }
+}
+function stopPipeline(){
+  stopFlag=true; pipelineRunning=false;
+  document.getElementById('pipeline-exec').style.display='none';
+  document.getElementById('pipeline-build').style.display='flex';
+}
+function copyOutput(){
+  if(window._lastPipelineOutput) navigator.clipboard?.writeText(window._lastPipelineOutput).then(()=>alert('Copied!')).catch(()=>alert('Long-press to copy'));
+}
+
+// ── Export: download text as a file (client-side, free) ───────────────────────
+function downloadText(filename, text){
+  try{
+    const blob=new Blob([text],{type:'text/markdown;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); },500);
+  }catch(e){ alert('Download failed: '+e.message); }
+}
+function slug(s){ return String(s||'export').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40)||'export'; }
+function downloadPipeline(){
+  if(!window._lastPipelineOutput){ alert('Nothing to export yet'); return; }
+  const goal=window._lastPipelineGoal||'pipeline';
+  const header=`# Pipeline: ${goal}\n\n_Generated by AgentForge · ${new Date().toLocaleString()}_\n\n---\n\n`;
+  downloadText('pipeline-'+slug(goal)+'.md', header+window._lastPipelineOutput);
+}
+function downloadDebate(){
+  const txt=window._lastDebateEl?.innerText||''; if(!txt){ alert('Nothing to export yet'); return; }
+  downloadText('debate-'+slug(window._lastDebateTopic)+'.md', '# Agent Debate\n\n_'+new Date().toLocaleString()+'_\n\n---\n\n'+txt);
+}
+function downloadBenchmark(){
+  if(!window._lastBenchReport){ alert('Nothing to export yet'); return; }
+  downloadText('benchmark-'+slug(window._lastBenchPrompt)+'.md', window._lastBenchReport);
+}
+function downloadChat(){
+  if(!curAgent||!chatMsgs.length){ alert('Nothing to export yet'); return; }
+  const body=chatMsgs.filter(m=>!(m.role==='assistant'&&m.streaming)).map(m=>{
+    const who=m.role==='user'?'**You**':`**${curAgent.emoji} ${curAgent.name}**`;
+    const file=m.file?`\n\n> 📎 attached: ${m.file.name} (${m.file.chars} chars)`:'';
+    return `${who}:${file}\n\n${m.content}`;
+  }).join('\n\n---\n\n');
+  const header=`# Chat with ${curAgent.name}\n\n_${new Date().toLocaleString()}_\n\n---\n\n`;
+  downloadText('chat-'+slug(curAgent.name)+'.md', header+body);
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+async function openAgent(id){
+  const a=AGENTS.find(x=>x.id===id); if(!a) return;
+  curAgent={...a,content:null}; chatMsgs=[]; attachedFile=null; renderAttachChip();
+  const h=colorHex(a.color);
+  document.getElementById('ch-name').textContent=a.name;
+  document.getElementById('ch-sub').textContent='Loading…';
+  const em=document.getElementById('ch-emoji');
+  em.textContent=a.emoji; em.style.cssText=`background:${h}22;color:${h};border:1px solid ${h}44`;
+  showScreen('chat'); renderChat();
+  const content=await fetchAgentContent(a);
+  curAgent.content=content;
+  document.getElementById('ch-sub').textContent=a.division+(cfg.provider==='groq'?' · '+cfg.groqModel.split('-').slice(0,3).join('-'):'');
+  renderChat();
+  setTimeout(()=>document.getElementById('msg-input').focus(),150);
+}
+function clearChat(){ chatMsgs=[]; attachedFile=null; renderAttachChip(); renderChat(); }
+
+// ── File attachment (client-side, free, offline) ──────────────────────────────
+function onFilePicked(e){
+  const file=e.target.files?.[0]; e.target.value='';
+  if(!file) return;
+  const MAX=200*1024; // 200KB of text
+  if(file.size>2*1024*1024){ alert('File too large (max ~2MB).'); return; }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    let content=String(reader.result||'');
+    let truncated=false;
+    if(content.length>MAX){ content=content.slice(0,MAX); truncated=true; }
+    attachedFile={name:file.name,content,chars:content.length,truncated};
+    renderAttachChip();
+  };
+  reader.onerror=()=>alert('Could not read file.');
+  reader.readAsText(file);
+}
+function renderAttachChip(){
+  const wrap=document.getElementById('attach-chip-wrap');
+  if(!wrap) return;
+  if(!attachedFile){ wrap.innerHTML=''; return; }
+  wrap.innerHTML=`<div class="attach-chip">
+    <span>📎</span>
+    <span class="ac-name">${esc(attachedFile.name)}</span>
+    <span style="opacity:.7">${attachedFile.chars} chars${attachedFile.truncated?' (trimmed)':''}</span>
+    <button class="ac-x" onclick="removeAttach()">×</button>
+  </div>`;
+}
+function removeAttach(){ attachedFile=null; renderAttachChip(); }
+function renderChat(){
+  const el=document.getElementById('messages');
+  if(!chatMsgs.length){
+    el.innerHTML=curAgent?`<div style="text-align:center;color:var(--text2);margin-top:24px;padding:0 18px">
+      <div style="font-size:46px;margin-bottom:10px">${curAgent.emoji}</div>
+      <div style="font-weight:700;color:var(--text);font-size:16px;margin-bottom:6px">${curAgent.name}</div>
+      <div style="font-size:13px;line-height:1.6;max-width:300px;margin:0 auto">${curAgent.description}</div>
+      ${curAgent.vibe?`<div style="font-style:italic;margin-top:9px;font-size:12px">"${curAgent.vibe}"</div>`:''}
+      ${cfg.provider==='demo'?'<div style="margin-top:14px;font-size:12px;color:var(--orange);background:var(--orange)11;border:1px solid var(--orange)33;padding:9px;border-radius:8px">Demo mode — tap ⚙️ to connect Groq (free)</div>':''}
+    </div>`:''; return;
+  }
+  el.innerHTML=chatMsgs.map(m=>{
+    const u=m.role==='user';
+    return `<div class="msg ${u?'user':'assistant'}">
+      <div class="msg-av">${u?'You':(curAgent?.emoji||'🤖')}</div>
+      <div><div class="bubble">${m.file?`<div style="font-size:11px;opacity:.85;margin-bottom:5px">📎 ${esc(m.file.name)} · ${m.file.chars} chars</div>`:''}${u?esc(m.content):md(m.content)}${m.streaming?'<span class="cursor">▋</span>':''}</div>
+      ${m.meta?`<div class="msg-meta">⏱ ${m.meta.t}s${m.meta.tok?' · '+m.meta.tok+' tok':''}</div>`:''}</div></div>`;
+  }).join('');
+  el.scrollTop=el.scrollHeight;
+}
+// Build the message history the LLM sees, inlining any attached file content
+function toLLMHistory(){
+  return chatMsgs.filter(m=>!(m.role==='assistant'&&m.streaming)).map(m=>{
+    if(m.role==='user'&&m.file){
+      return {role:'user',content:`The user attached a file "${m.file.name}". Use its contents as context.\n\n--- FILE CONTENT ---\n${m.file.content}\n--- END FILE ---\n\n${m.content}`};
+    }
+    return {role:m.role,content:m.content};
+  });
+}
+async function sendMsg(){
+  const inp=document.getElementById('msg-input');
+  const text=inp.value.trim(); if((!text&&!attachedFile)||chatBusy||!curAgent) return;
+  inp.value=''; inp.style.height='44px';
+  document.getElementById('send-btn').disabled=true;
+  const userMsg={role:'user',content:text||'(see attached file)'};
+  if(attachedFile){ userMsg.file=attachedFile; attachedFile=null; renderAttachChip(); }
+  chatMsgs.push(userMsg);
+  const ai={role:'assistant',content:'',streaming:true};
+  chatMsgs.push(ai); renderChat(); chatBusy=true;
+  const t0=Date.now();
+  try{
+    if(cfg.provider==='groq'){
+      await streamGroqInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
+    } else if(cfg.provider==='ollama'){
+      await streamOllamaInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
+    } else {
+      await streamDemo(ai,curAgent);
+    }
+    ai.meta={t:((Date.now()-t0)/1000).toFixed(1)};
+  }catch(e){ai.content='**Error:** '+e.message;}
+  ai.streaming=false; chatBusy=false;
+  document.getElementById('send-btn').disabled=false; renderChat();
+}
+
+// ── Groq streaming ────────────────────────────────────────────────────────────
+// ── Brave web search ─────────────────────────────────────────────────────────
+async function webSearch(query){
+  try{
+    const r=await fetch('/api/search?q='+encodeURIComponent(query)+'&key='+cfg.braveKey,{signal:AbortSignal.timeout(6000)});
+    if(r.ok){const d=await r.json();if(d.results)return d.results;}
+  }catch{}
+  try{
+    const r=await fetch('https://api.search.brave.com/res/v1/web/search?q='+encodeURIComponent(query)+'&count=5',{
+      headers:{'Accept':'application/json','X-Subscription-Token':cfg.braveKey},
+      signal:AbortSignal.timeout(6000),
+    });
+    if(r.ok){const d=await r.json();return(d.web?.results||[]).map(x=>({title:x.title,url:x.url,snippet:x.description||''}));}
+  }catch{}
+  return [];
+}
+
+// ── Groq streaming with optional tool-calling (web search) ───────────────────
+async function streamGroqInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
+  const messages = msgHistory
+    ? [{role:'system',content:systemPrompt}, ...msgHistory]
+    : [{role:'system',content:systemPrompt},{role:'user',content:singleUserMsg}];
+
+  const tools = cfg.braveKey ? [{
+    type:'function',
+    function:{
+      name:'web_search',
+      description:'Search the web for current info, news, prices, docs, CVEs, competitors, trends.',
+      parameters:{type:'object',properties:{query:{type:'string',description:'Search query'}},required:['query']}
+    }
+  }] : undefined;
+
+  const currentMsgs=[...messages];
+  for(let round=0;round<3;round++){
+    const isLastRound=round===2;
+    const body={model:cfg.groqModel,max_tokens:2048,messages:currentMsgs};
+    if(tools&&!isLastRound) body.tools=tools;
+    else body.stream=true;
+
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.groqKey},
+      body:JSON.stringify(body),
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Groq '+res.status);}
+
+    if(!body.stream){
+      const data=await res.json();
+      const msg=data.choices?.[0]?.message;
+      if(msg?.tool_calls?.length){
+        currentMsgs.push(msg);
+        for(const tc of msg.tool_calls){
+          if(tc.function?.name==='web_search'){
+            let q='';try{q=JSON.parse(tc.function.arguments).query;}catch{}
+            onChunk('\n\n🔍 *Searching: "'+q+'"…*\n\n');
+            const results=await webSearch(q);
+            const txt=results.length
+              ? results.map((r,i)=>(i+1)+'. **'+r.title+'**\n   '+r.snippet+'\n   '+r.url).join('\n\n')
+              : 'No results found.';
+            currentMsgs.push({role:'tool',tool_call_id:tc.id,content:txt});
+          }
+        }
+        continue;
+      } else {
+        if(msg?.content) onChunk(msg.content);
+        return;
+      }
+    } else {
+      const reader=res.body.getReader(),dec=new TextDecoder();let buf='';
+      while(true){
+        const{done,value}=await reader.read();if(done)break;
+        buf+=dec.decode(value,{stream:true});
+        const lines=buf.split('\n');buf=lines.pop();
+        for(const line of lines){
+          if(!line.startsWith('data: '))continue;
+          const d=line.slice(6);if(d==='[DONE]')break;
+          try{const c=JSON.parse(d);const t=c.choices?.[0]?.delta?.content||'';if(t)onChunk(t);}catch{}
+        }
+      }
+      return;
+    }
+  }
+}
+
+// ── Ollama streaming ──────────────────────────────────────────────────────────
+async function streamOllamaInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
+  const messages = msgHistory
+    ? [{role:'system',content:systemPrompt},...msgHistory]
+    : [{role:'system',content:systemPrompt},{role:'user',content:singleUserMsg}];
+  const res=await fetch(cfg.ollamaHost+'/api/chat',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'llama3.2',stream:true,messages}),
+  });
+  if(!res.ok)throw new Error('Ollama '+res.status);
+  const reader=res.body.getReader(),dec=new TextDecoder();let buf='';
+  while(true){
+    const{done,value}=await reader.read();if(done)break;
+    buf+=dec.decode(value,{stream:true});
+    const lines=buf.split('\n');buf=lines.pop();
+    for(const line of lines){
+      if(!line.trim())continue;
+      try{const c=JSON.parse(line);if(c.message?.content)onChunk(c.message.content);}catch{}
+    }
+  }
+}
+
+async function streamDemo(ai,agent){
+  const t=`Hi! I'm **${agent.name}** ${agent.emoji}
+
+${agent.vibe||agent.description}
+
+*Tap ⚙️ → connect Groq free for real AI.*`;
+  for(let i=0;i<t.length;i++){ai.content=t.slice(0,i+1);renderChat();await new Promise(r=>setTimeout(r,14));}
+}
+
+// ── Memory ────────────────────────────────────────────────────────────────────
+function getMemory(){ try{return JSON.parse(localStorage.getItem('ag_memory')||'[]');}catch{return[];} }
+function setMemory(m){ localStorage.setItem('ag_memory',JSON.stringify(m)); }
+
+function saveToMemory(){
+  if(!curAgent||!chatMsgs.length){alert('Nothing to save yet');return;}
+  const text=chatMsgs.map(m=>`${m.role==='user'?'You':'Agent'}: ${m.content}`).join('\n\n');
+  const mem=getMemory();
+  mem.unshift({id:Date.now(),title:`${curAgent.emoji} ${curAgent.name}`,preview:text.slice(0,200),content:text,ts:new Date().toLocaleString(),type:'chat'});
+  setMemory(mem.slice(0,50));
+  alert('Saved to 🧠 Memory!');
+}
+
+function savePipelineToMemory(goal){
+  if(!window._lastPipelineOutput)return;
+  const mem=getMemory();
+  mem.unshift({id:Date.now(),title:`⛓️ Pipeline: ${goal.slice(0,40)}`,preview:window._lastPipelineOutput.slice(0,200),content:window._lastPipelineOutput,ts:new Date().toLocaleString(),type:'pipeline'});
+  setMemory(mem.slice(0,50));
+  alert('Pipeline saved to 🧠 Memory!');
+}
+
+function renderMemory(){
+  const mem=getMemory();
+  const el=document.getElementById('memory-body'); if(!el)return;
+  if(!mem.length){el.innerHTML='<div class="empty-memory">No saved items yet.<br><br>Tap 💾 in a chat to save,<br>or save a pipeline output.</div>';return;}
+  el.innerHTML=mem.map(m=>`
+    <div class="memory-item">
+      <div class="memory-title">${m.title}</div>
+      <div class="memory-preview">${esc(m.preview)}</div>
+      <div class="memory-meta"><span>${m.ts}</span><span style="background:var(--bg3);padding:1px 7px;border-radius:99px">${m.type}</span></div>
+      <div class="memory-actions">
+        <button class="mem-btn" onclick="viewMemory(${m.id})">View</button>
+        <button class="mem-btn" onclick="copyMemory(${m.id})">Copy</button>
+        <button class="mem-btn danger" onclick="deleteMemory(${m.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+function viewMemory(id){const m=getMemory().find(x=>x.id===id);if(m)alert(m.content.slice(0,2000)+(m.content.length>2000?'\n\n[truncated...]':''));}
+function copyMemory(id){const m=getMemory().find(x=>x.id===id);if(m)navigator.clipboard?.writeText(m.content).then(()=>alert('Copied!')).catch(()=>alert('Use View then long-press'));}
+function deleteMemory(id){const mem=getMemory().filter(x=>x.id!==id);setMemory(mem);renderMemory();}
+function clearAllMemory(){if(confirm('Delete all saved memory?')){localStorage.removeItem('ag_memory');renderMemory();}}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function loadSettingsUI(){
+  setProvider(cfg.provider,false);
+  document.getElementById('s-groq-key').value=cfg.groqKey;
+  document.getElementById('s-ollama-host').value=cfg.ollamaHost;
+  document.getElementById('s-brave-key').value=cfg.braveKey;
+  document.querySelectorAll('#groq-models .mchip').forEach(c=>{
+    c.classList.toggle('on',c.dataset.m===cfg.groqModel);
+    c.onclick=()=>{document.querySelectorAll('#groq-models .mchip').forEach(x=>x.classList.remove('on'));c.classList.add('on');cfg.groqModel=c.dataset.m;};
+  });
+  updateHdr();
+  const dot=document.getElementById('set-dot'),txt=document.getElementById('set-txt');
+  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){dot.className='dot ok';txt.textContent='Groq connected · '+cfg.groqModel;}
+  else{dot.className='dot warn';txt.textContent=cfg.provider==='demo'?'Demo mode':'Not connected';}
+  // update search status
+  const sd=document.getElementById('search-dot'),ss=document.getElementById('search-status');
+  if(sd&&ss){
+    if(cfg.braveKey){sd.className='dot ok';ss.textContent='Web search enabled';}
+    else{sd.className='dot warn';ss.textContent='Not configured — agents will use training data only';}
+  }
+}
+
+async function saveBraveKey(){
+  cfg.braveKey=document.getElementById('s-brave-key').value.trim();
+  loadSettingsUI();
+  alert(cfg.braveKey ? '✓ Search key saved! Agents will now search the web.' : 'Key cleared.');
+}
+function setProvider(p,save=true){
+  cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
+  ['groq','ollama','demo'].forEach(x=>document.getElementById('prov-'+x)?.classList.toggle('on',x===p));
+  const sg=document.getElementById('s-groq'),so=document.getElementById('s-ollama');
+  if(sg)sg.style.display=p==='groq'?'block':'none';
+  if(so)so.style.display=p==='ollama'?'block':'none';
+}
+async function saveSettings(){
+  cfg.groqKey=document.getElementById('s-groq-key').value.trim();
+  cfg.ollamaHost=document.getElementById('s-ollama-host').value.trim().replace(/\/$/,'');
+  const res=document.getElementById('save-result');
+  res.textContent='Testing…';
+  let ok=false;
+  if(cfg.provider==='groq') ok=await testGroq(cfg.groqKey);
+  else if(cfg.provider==='ollama') ok=await testOllama();
+  else ok=true;
+  res.style.color=ok?'var(--green)':'var(--red)';
+  res.textContent=ok?'✓ Connected!':'✗ Failed — check details';
+  updateHdr(); loadSettingsUI();
+}
+async function testGroq(key){ if(!key?.startsWith('gsk_'))return false; try{const r=await fetch('https://api.groq.com/openai/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(5000)});return r.ok;}catch{return false;} }
+async function testOllama(){ try{const r=await fetch(cfg.ollamaHost+'/api/tags',{signal:AbortSignal.timeout(4000)});return r.ok;}catch{return false;} }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── VOICE INPUT (Web Speech API) ─────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+let _recog=null;
+function toggleVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert('Voice input needs Chrome or Safari.');return;}
+  const btn=document.getElementById('mic-btn');
+  if(_recog){_recog.stop();_recog=null;btn.classList.remove('on');return;}
+  _recog=new SR();
+  _recog.continuous=false; _recog.interimResults=true; _recog.lang='en-US';
+  btn.classList.add('on');
+  _recog.onresult=(e)=>{
+    const t=Array.from(e.results).map(r=>r[0].transcript).join('');
+    const inp=document.getElementById('msg-input');
+    inp.value=t; autoResize(inp);
+  };
+  _recog.onend=()=>{btn.classList.remove('on');_recog=null;};
+  _recog.onerror=(e)=>{btn.classList.remove('on');_recog=null;if(e.error!=='aborted')alert('Voice error: '+e.error);};
+  _recog.start();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── CODE RUNNER (Piston API) ──────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+const LANG_MAP={python:'python',py:'python',javascript:'javascript',js:'javascript',
+  typescript:'typescript',ts:'typescript',node:'javascript',bash:'bash',sh:'bash',
+  ruby:'ruby',rb:'ruby',go:'go',rust:'rust',php:'php',java:'java',
+  c:'c',cpp:'c++','c++':'c++',cs:'csharp',csharp:'csharp',r:'r',
+  kotlin:'kotlin',swift:'swift',scala:'scala'};
+
+async function runCode(id){
+  const el=document.getElementById(id);if(!el)return;
+  const raw=decodeURIComponent(el.dataset.raw||'');
+  const detectedLang=el.dataset.lang||'python';
+  const lang=LANG_MAP[detectedLang.toLowerCase()]||'python';
+  const wrap=el.closest('.code-block-wrap');
+  const btn=wrap?.querySelector('.run-code-btn');
+  if(btn){btn.textContent='⏳';btn.disabled=true;}
+
+  let outEl=wrap?.querySelector('.code-output');
+  if(!outEl){outEl=document.createElement('div');outEl.className='code-output';wrap?.appendChild(outEl);}
+  outEl.textContent='Running '+lang+'…';
+
+  try{
+    const r=await fetch('https://emkc.org/api/v2/piston/execute',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({language:lang,version:'*',files:[{name:'main',content:raw}]}),
+      signal:AbortSignal.timeout(20000),
+    });
+    if(!r.ok)throw new Error('Piston '+r.status);
+    const data=await r.json();
+    const stdout=data.run?.stdout||'';
+    const stderr=data.run?.stderr||'';
+    const compile_err=data.compile?.stderr||'';
+    const hasErr=stderr||compile_err||data.run?.code;
+    outEl.textContent=(stdout||(hasErr?'':'(no output)'))+(compile_err?'\n⚠️ Compile:\n'+compile_err:'')+(stderr?'\n⚠️ stderr:\n'+stderr:'');
+    outEl.className='code-output'+(hasErr?' err':'');
+  }catch(e){
+    outEl.textContent='Error: '+e.message;outEl.className='code-output err';
+  }
+  if(btn){btn.textContent='▶ Run';btn.disabled=false;}
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── AGENT DEBATE ──────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+let _debateRounds=2,_debateStop=false;
+
+function setDebateRounds(btn,n){
+  _debateRounds=n;
+  document.querySelectorAll('[data-rounds]').forEach(b=>b.classList.toggle('on',b===btn));
+}
+
+function initDebateSelects(){
+  const opts=AGENTS.map(a=>`<option value="${a.id}">${a.emoji} ${a.name} · ${a.division}</option>`).join('');
+  ['debate-a','debate-b'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.options.length<=1){el.innerHTML='<option value="">Select agent…</option>'+opts;}
+  });
+}
+
+async function runDebate(){
+  const aId=document.getElementById('debate-a').value;
+  const bId=document.getElementById('debate-b').value;
+  const topic=document.getElementById('debate-topic').value.trim();
+  if(!aId||!bId){alert('Select both agents');return;}
+  if(!topic){alert('Enter a debate topic');return;}
+  if(aId===bId){alert('Pick two different agents');return;}
+  if(cfg.provider==='demo'){alert('Connect Groq first — tap ⚙️');return;}
+
+  _debateStop=false;
+  const agentA=AGENTS.find(a=>a.id===aId),agentB=AGENTS.find(a=>a.id===bId);
+  document.getElementById('debate-setup').style.display='none';
+  const execEl=document.getElementById('debate-exec');execEl.style.display='flex';
+  const screen=document.getElementById('debate-screen');screen.innerHTML='';
+
+  const [contentA,contentB]=await Promise.all([fetchAgentContent(agentA),fetchAgentContent(agentB)]);
+
+  let lastOutput='';
+  const totalTurns=_debateRounds*2;
+
+  for(let turn=1;turn<=totalTurns;turn++){
+    if(_debateStop)break;
+    const isA=turn%2===1;
+    const agent=isA?agentA:agentB;
+    const content=isA?contentA:contentB;
+    const roundNum=Math.ceil(turn/2);
+    document.getElementById('debate-progress').textContent=`Round ${roundNum}/${_debateRounds}`;
+
+    const h=colorHex(agent.color);
+    const outId='dout-'+turn;
+    const statusId='dstatus-'+turn;
+    const role=isA?'Proposer':'Critic';
+    screen.innerHTML+=`
+      <div class="debate-round-block">
+        <div class="debate-round-header">
+          <span style="width:28px;height:28px;border-radius:7px;background:${h}22;color:${h};border:1px solid ${h}44;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${agent.emoji}</span>
+          <span style="font-size:13px">${agent.name}</span>
+          <span class="role-badge ${isA?'role-a':'role-b'}">${role} R${roundNum}</span>
+          <span id="${statusId}" style="margin-left:auto;font-size:11px;color:var(--orange)">● Working…</span>
+        </div>
+        <div class="debate-round-body" id="${outId}"></div>
+      </div>`;
+    screen.scrollTop=screen.scrollHeight;
+
+    let prompt;
+    if(turn===1){
+      prompt=`DEBATE TOPIC: ${topic}\n\nYou are the Proposer. Present your best, most specific solution. Structure your answer with clear sections. Be technical, concrete, and opinionated. This is Round 1.`;
+    }else if(isA){
+      prompt=`DEBATE TOPIC: ${topic}\n\nThe Critic (Round ${roundNum-1}) said:\n---\n${lastOutput.slice(0,1500)}\n---\n\nDefend and strengthen your original proposal. Address every criticism. Add anything you missed. Round ${roundNum}.`;
+    }else{
+      prompt=`DEBATE TOPIC: ${topic}\n\nThe Proposer (Round ${roundNum}) just argued:\n---\n${lastOutput.slice(0,1500)}\n---\n\nChallenge this rigorously. Identify flaws, edge cases, better alternatives, missing considerations. Be sharp but constructive. Round ${roundNum}.`;
+    }
+
+    let output='';
+    try{
+      await streamGroqInto(content, prompt, (chunk)=>{
+        output+=chunk;
+        const el=document.getElementById(outId);
+        if(el){el.innerHTML=md(output)+'<span class="cursor">▋</span>';el.scrollTop=el.scrollHeight;}
+        screen.scrollTop=screen.scrollHeight;
+      });
+    }catch(e){output='**Error:** '+e.message;}
+
+    lastOutput=output;
+    const outEl=document.getElementById(outId);
+    const stEl=document.getElementById(statusId);
+    if(outEl)outEl.innerHTML=md(output);
+    if(stEl){stEl.textContent='✓ Done';stEl.style.color='var(--green)';}
+  }
+
+  if(!_debateStop){
+    document.getElementById('debate-progress').textContent='Complete ✓';
+    screen.innerHTML+=`
+      <div class="final-output" style="border-color:var(--purple)">
+        <h3 style="color:var(--purple)">⚔️ Debate Complete</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6">
+          The final Proposer turn contains the refined, battle-tested answer.<br>
+          <b>${agentA.emoji} ${agentA.name}</b> proposed · <b>${agentB.emoji} ${agentB.name}</b> critiqued — ${_debateRounds} rounds.
+        </p>
+        <button class="copy-btn" style="background:var(--purple)22;border-color:var(--purple)44;color:var(--purple);margin-top:10px" onclick="copyDebateOutput()">📋 Copy Debate</button>
+        <button class="save-btn2" onclick="downloadDebate()">⬇️ Download .md</button>
+      </div>`;
+    window._lastDebateEl=screen;
+    window._lastDebateTopic=topic;
+  }
+}
+
+function stopDebate(){
+  _debateStop=true;
+  document.getElementById('debate-exec').style.display='none';
+  document.getElementById('debate-setup').style.display='flex';
+}
+function copyDebateOutput(){
+  const txt=window._lastDebateEl?.innerText||'';
+  navigator.clipboard?.writeText(txt).then(()=>alert('Copied!')).catch(()=>alert('Long-press to copy'));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── AGENT BENCHMARKER ─────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+const BENCH_DEFAULTS=[
+  'engineering-frontend-developer','engineering-backend-architect',
+  'engineering-software-architect','design-ui-designer',
+  'design-ux-architect','security-security-architect',
+  'product-product-manager','specialized-business-strategist',
+  'engineering-ai-engineer','testing-performance-benchmarker'
+];
+
+let _benchInit=false;
+function initBenchmarkAgents(){
+  if(_benchInit)return;_benchInit=true;
+  const el=document.getElementById('bench-agents-select');if(!el)return;
+  el.innerHTML=BENCH_DEFAULTS.map(id=>{
+    const a=AGENTS.find(x=>x.id===id);if(!a)return'';
+    const h=colorHex(a.color);
+    return `<label style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:var(--bg3);border-radius:7px;cursor:pointer;font-size:13px;border:1px solid var(--border)">
+      <input type="checkbox" value="${a.id}" style="accent-color:var(--accent);width:16px;height:16px" checked>
+      <span style="width:26px;height:26px;border-radius:6px;background:${h}22;color:${h};border:1px solid ${h}44;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${a.emoji}</span>
+      <span style="min-width:0"><b>${a.name}</b><br><span style="font-size:11px;color:var(--text2)">${a.division}</span></span>
+    </label>`;
+  }).filter(Boolean).join('');
+}
+
+async function runBenchmark(){
+  const prompt=document.getElementById('bench-prompt').value.trim();
+  if(!prompt){alert('Enter a prompt to benchmark');return;}
+  if(cfg.provider==='demo'){alert('Connect Groq first — tap ⚙️');return;}
+  const checked=[...document.querySelectorAll('#bench-agents-select input:checked')].map(x=>x.value);
+  if(checked.length<2){alert('Select at least 2 agents');return;}
+
+  const resultsOuter=document.getElementById('bench-results');
+  const inner=document.getElementById('bench-results-inner');
+  document.getElementById('bench-setup').style.display='none';
+  resultsOuter.style.display='flex';
+  inner.innerHTML=`
+    <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <button class="back-btn" onclick="stopBenchmark()">‹</button>
+      <div style="font-weight:700;font-size:14px">📊 Benchmarking</div>
+      <div id="bench-progress" style="margin-left:auto;font-size:12px;color:var(--text2)">0/${checked.length}</div>
+    </div>
+    <div class="bench-body" id="bench-grid" style="gap:8px"></div>`;
+
+  const grid=document.getElementById('bench-grid');
+  const results=[];
+
+  for(let i=0;i<checked.length;i++){
+    const agent=AGENTS.find(a=>a.id===checked[i]);if(!agent)continue;
+    document.getElementById('bench-progress').textContent=`${i+1}/${checked.length}`;
+    const h=colorHex(agent.color);
+    const outId='bout-'+i;
+    grid.innerHTML+=`
+      <div class="bench-item" id="bitem-${i}">
+        <div class="bench-item-hdr">
+          <div style="width:28px;height:28px;border-radius:6px;background:${h}22;color:${h};border:1px solid ${h}44;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${agent.emoji}</div>
+          <div style="min-width:0;flex:1"><div style="font-weight:600;font-size:13px">${agent.name}</div><div style="font-size:11px;color:var(--text2)">${agent.division}</div></div>
+          <div id="bscore-${i}" class="bench-score">⏳</div>
+        </div>
+        <div id="${outId}" style="font-size:11px;color:var(--text2);max-height:60px;overflow:hidden;line-height:1.4"></div>
+        <div class="bench-bar"><div class="bench-bar-fill" id="bbar-${i}" style="width:0%"></div></div>
+      </div>`;
+    grid.scrollTop=grid.scrollHeight;
+
+    const content=await fetchAgentContent(agent);
+    let output='';const t0=Date.now();
+    try{
+      await streamGroqInto(content, prompt, (chunk)=>{
+        output+=chunk;
+        const outEl=document.getElementById(outId);
+        if(outEl){const preview=output.replace(/[#*`]/g,'').slice(0,150);outEl.textContent=preview+'…';}
+      });
+    }catch(e){output='Error: '+e.message;}
+
+    const elapsed=((Date.now()-t0)/1000);
+    const words=output.split(/\s+/).filter(Boolean).length;
+    const hasCode=/```/.test(output)?20:0;
+    const hasStructure=/^#+\s|^\d+\.\s|^[-*]\s/m.test(output)?15:0;
+    const speedScore=Math.max(0,Math.round(15-elapsed*1.5));
+    const depthScore=Math.min(50,Math.round(words/8));
+    const score=Math.min(100,depthScore+hasCode+hasStructure+speedScore);
+
+    results.push({i,agent,output,elapsed:elapsed.toFixed(1),score,words});
+    document.getElementById('bscore-'+i).textContent=score+'/100';
+    document.getElementById('bbar-'+i).style.width=score+'%';
+    document.getElementById('bench-progress').textContent=`${i+1}/${checked.length} done`;
+  }
+
+  // ── LLM judge phase: impartial model scores the actual answers ──────────────
+  let judged=false;
+  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')&&results.length){
+    document.getElementById('bench-progress').textContent='⚖️ Judging answers…';
+    try{
+      const verdicts=await judgeBenchmark(prompt,results);
+      if(verdicts&&verdicts.length){
+        for(const v of verdicts){
+          const r=results.find(x=>x.i===v.i);
+          if(r){ r.score=Math.max(0,Math.min(100,v.score|0)); r.verdict=v.verdict||''; }
+        }
+        judged=true;
+      }
+    }catch(e){ /* fall back to heuristic */ }
+  }
+
+  results.sort((a,b)=>b.score-a.score);
+  // Repaint each agent's score + bar with final (judged or heuristic) values
+  results.forEach(r=>{
+    const sc=document.getElementById('bscore-'+r.i);
+    const bar=document.getElementById('bbar-'+r.i);
+    if(sc) sc.textContent=r.score+'/100';
+    if(bar) bar.style.width=r.score+'%';
+  });
+  if(results.length){
+    document.getElementById('bitem-'+results[0].i)?.classList.add('bench-winner');
+    const ws=document.getElementById('bscore-'+results[0].i);
+    if(ws) ws.textContent=results[0].score+'/100 🏆';
+    document.getElementById('bench-progress').textContent='Winner: '+results[0].agent.name;
+  }
+
+  grid.innerHTML+=`
+    <div class="final-output" style="border-color:var(--accent)">
+      <h3 style="color:var(--accent2);margin-bottom:10px">📊 Final Rankings</h3>
+      ${results.map((r,rank)=>`
+        <div style="padding:8px 0;border-bottom:1px solid var(--border)33;font-size:13px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-weight:700;color:var(--text2);width:22px">#${rank+1}</span>
+            <span>${r.agent.emoji} ${r.agent.name}</span>
+            <span style="margin-left:auto;color:var(--accent2);font-weight:700">${r.score}/100</span>
+            <span style="color:var(--text2);font-size:11px">${r.elapsed}s</span>
+          </div>
+          ${r.verdict?`<div style="font-size:12px;color:var(--text2);margin:3px 0 0 30px;line-height:1.4">${esc(r.verdict)}</div>`:''}
+        </div>`).join('')}
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">${judged?'⚖️ Scored by an impartial LLM judge (llama-3.3-70b) on relevance, depth & correctness.':'Heuristic score = depth(50) + code(20) + structure(15) + speed(15). Connect Groq for LLM-judged scoring.'}</p>
+      <button class="save-btn2" onclick="downloadBenchmark()">⬇️ Download Full Report .md</button>
+    </div>`;
+
+  // Build exportable markdown report (rankings + full answers)
+  window._lastBenchPrompt=prompt;
+  window._lastBenchReport=`# Agent Benchmark\n\n**Prompt:** ${prompt}\n\n_${new Date().toLocaleString()} · ${judged?'LLM-judged':'heuristic'} scoring_\n\n## Rankings\n\n`+
+    results.map((r,rank)=>`${rank+1}. **${r.agent.name}** (${r.agent.division}) — ${r.score}/100 · ${r.elapsed}s${r.verdict?`\n   - _${r.verdict}_`:''}`).join('\n')+
+    `\n\n---\n\n## Full Answers\n\n`+
+    results.map((r,rank)=>`### #${rank+1} ${r.agent.emoji} ${r.agent.name} — ${r.score}/100\n\n${r.output||'(no output)'}`).join('\n\n---\n\n');
+}
+
+// ── LLM judge: rank candidate answers to the same prompt ──────────────────────
+async function judgeBenchmark(prompt,results){
+  const candidates=results.map(r=>`### CANDIDATE ${r.i} — ${r.agent.name} (${r.agent.division})\n${(r.output||'').slice(0,2200)}`).join('\n\n');
+  const sys='You are a rigorous, impartial evaluation judge. You score AI answers to the same task on quality alone — relevance to the task, technical depth, correctness, and usefulness. You are not swayed by length or formatting. Return strict JSON only.';
+  const ask=`TASK GIVEN TO ALL CANDIDATES:\n${prompt}\n\nCANDIDATE ANSWERS:\n${candidates}\n\nScore EACH candidate 0-100 on overall quality for this task. Be discriminating — spread the scores, do not cluster them. Respond with ONLY this JSON:\n{"scores":[{"i":<candidate number>,"score":<0-100>,"verdict":"<max 12-word critique>"}]}`;
+  const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.groqKey},
+    body:JSON.stringify({
+      model:'llama-3.3-70b-versatile',max_tokens:1024,temperature:0.2,
+      response_format:{type:'json_object'},
+      messages:[{role:'system',content:sys},{role:'user',content:ask}],
+    }),
+  });
+  if(!res.ok) throw new Error('judge '+res.status);
+  const data=await res.json();
+  const raw=data.choices?.[0]?.message?.content||'{}';
+  let parsed; try{ parsed=JSON.parse(raw); }catch{ parsed=JSON.parse(raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1)); }
+  return Array.isArray(parsed.scores)?parsed.scores:[];
+}
+
+function stopBenchmark(){
+  document.getElementById('bench-results').style.display='none';
+  document.getElementById('bench-setup').style.display='flex';
+  _benchInit=false;initBenchmarkAgents();
+}
+</script>
+</body>
+</html>
