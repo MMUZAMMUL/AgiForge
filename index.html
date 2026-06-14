@@ -421,16 +421,18 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <!-- Backup engines (auto fail-over) -->
       <div class="card">
         <div class="card-title">🛡️ Backup Engines (optional)</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <div id="or-dot" class="dot warn" style="width:8px;height:8px"></div>
           <span id="or-status" style="font-size:12px;color:var(--text2)">Not configured</span>
         </div>
-        <input class="field-input" id="s-or-key" type="password" placeholder="Paste your backup key…"/>
-        <div class="field-hint">
-          Add a free key at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys ↗</a><br>
-          When set, AgentForge auto-fails-over across extra free engines so long jobs never stall on rate limits.
-        </div>
-        <button class="primary-btn" onclick="saveOrKey()" style="margin-top:8px;background:var(--purple);font-size:13px;padding:10px">Save Backup Key</button>
+        <div class="field-hint" style="margin-bottom:8px">Add any of these free keys. When one engine is busy, AgentForge fails over instantly so long jobs never stall.</div>
+        <label style="font-size:12px;color:var(--text2)">OpenRouter <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">get key ↗</a></label>
+        <input class="field-input" id="s-or-key" type="password" placeholder="OpenRouter key…" style="margin:4px 0 10px"/>
+        <label style="font-size:12px;color:var(--text2)">Cerebras <a href="https://cloud.cerebras.ai" target="_blank" rel="noopener">get key ↗</a></label>
+        <input class="field-input" id="s-cb-key" type="password" placeholder="Cerebras key…" style="margin:4px 0 10px"/>
+        <label style="font-size:12px;color:var(--text2)">Google Gemini <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">get key ↗</a></label>
+        <input class="field-input" id="s-gm-key" type="password" placeholder="Gemini key…" style="margin:4px 0 4px"/>
+        <button class="primary-btn" onclick="saveBackupKeys()" style="margin-top:10px;background:var(--purple);font-size:13px;padding:10px">Save Backup Engines</button>
       </div>
     </div>
   </div>
@@ -700,6 +702,10 @@ const cfg = {
   set braveKey(v){ localStorage.setItem('ag_brave_key',v); },
   get orKey(){ return localStorage.getItem('ag_or_key')||''; },
   set orKey(v){ localStorage.setItem('ag_or_key',v); },
+  get cerebrasKey(){ return localStorage.getItem('ag_cb_key')||''; },
+  set cerebrasKey(v){ localStorage.setItem('ag_cb_key',v); },
+  get geminiKey(){ return localStorage.getItem('ag_gm_key')||''; },
+  set geminiKey(v){ localStorage.setItem('ag_gm_key',v); },
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -1223,26 +1229,46 @@ function guessExt(lang,raw){
     sh:'sh',bash:'sh',sql:'sql',yaml:'yaml',yml:'yml',xml:'xml',md:'md',markdown:'md'};
   return map[lang]||'txt';
 }
+// Write one file into the connected folder (nested paths supported); else download.
+async function writeToWorkspace(fname, raw){
+  if(window.showDirectoryPicker && workspaceDir){
+    const parts=fname.split('/').filter(Boolean);
+    let dir=workspaceDir;
+    for(let k=0;k<parts.length-1;k++){ dir=await dir.getDirectoryHandle(parts[k],{create:true}); }
+    const fh=await dir.getFileHandle(parts[parts.length-1],{create:true});
+    const wr=await fh.createWritable(); await wr.write(raw); await wr.close();
+    return true;
+  }
+  downloadText(fname, raw); // universal fallback (mobile / other browsers)
+  return false;
+}
 async function saveCode(id){
   const el=document.getElementById(id); if(!el) return;
   const raw=decodeURIComponent(el.dataset.raw||'');
   const ext=guessExt(el.dataset.lang,raw);
   const fname=prompt('Save file as:', (ext==='html'?'index':'file')+'.'+ext);
   if(!fname) return;
-  // Preferred: write into a chosen local folder (Chrome/Edge desktop)
-  if(window.showDirectoryPicker){
-    try{
-      if(!workspaceDir){ const d=await connectWorkspace(); if(!d){ downloadText(fname,raw); return; } }
-      const parts=fname.split('/').filter(Boolean);
-      let dir=workspaceDir;
-      for(let k=0;k<parts.length-1;k++){ dir=await dir.getDirectoryHandle(parts[k],{create:true}); }
-      const fh=await dir.getFileHandle(parts[parts.length-1],{create:true});
-      const wr=await fh.createWritable(); await wr.write(raw); await wr.close();
-      toast('Saved '+fname+' → '+workspaceDir.name);
-      return;
-    }catch(e){ /* fall back to download */ }
+  if(window.showDirectoryPicker && !workspaceDir){ const d=await connectWorkspace(); if(!d){ downloadText(fname,raw); return; } }
+  try{ const wrote=await writeToWorkspace(fname, raw); toast(wrote?('Saved '+fname+' → '+workspaceDir.name):('Downloaded '+fname)); }
+  catch(e){ downloadText(fname, raw); toast('Downloaded '+fname); }
+}
+// Scaffold a whole multi-file project from one answer into the chosen folder.
+async function saveAllFiles(i){
+  const m=chatMsgs[i]; if(!m) return;
+  const blocks=[...m.content.matchAll(/```(\w*)\n?([\s\S]*?)```/g)];
+  if(!blocks.length){ toast('No code files in this message'); return; }
+  if(window.showDirectoryPicker && !workspaceDir){ const d=await connectWorkspace(); if(!d){ toast('Pick a folder to save the project'); return; } }
+  let saved=0, idx=0;
+  for(const b of blocks){
+    idx++;
+    const lang=b[1], raw=(b[2]||'').trim(); if(!raw) continue;
+    // Try to infer a filename from the text right before the code fence
+    const pre=m.content.slice(Math.max(0,b.index-160), b.index);
+    const fnMatch=pre.match(/([A-Za-z0-9_.\-\/]+\.[A-Za-z]{1,5})[`*\s:]*$/);
+    const fname=fnMatch?fnMatch[1]:('file'+idx+'.'+guessExt(lang,raw));
+    try{ await writeToWorkspace(fname, raw); saved++; }catch(e){}
   }
-  downloadText(fname, raw); // universal fallback (mobile / other browsers)
+  toast(`Saved ${saved} file${saved!==1?'s':''}${workspaceDir?(' → '+workspaceDir.name):' (downloaded)'}`);
 }
 
 // ── Lightweight toast ─────────────────────────────────────────────────────────
@@ -1318,9 +1344,11 @@ function renderChat(){
   }
   el.innerHTML=chatMsgs.map((m,idx)=>{
     const u=m.role==='user';
+    const hasCode=!u&&/```/.test(m.content||'');
     const acts=(!m.streaming&&m.content)?`<div class="msg-actions">
         <button class="msg-act" onclick="copyMsg(${idx})">📋 Copy</button>
         <button class="msg-act" onclick="quoteMsg(${idx})">❝ Quote</button>
+        ${hasCode?`<button class="msg-act" onclick="saveAllFiles(${idx})">📂 Save all files</button>`:''}
       </div>`:'';
     return `<div class="msg ${u?'user':'assistant'}">
       <div class="msg-av">${u?'You':(curAgent?.emoji||'🤖')}</div>
@@ -1394,11 +1422,20 @@ const OPENROUTER_MODELS = [
 ];
 
 // Build the ordered list of (provider, model) attempts for one request.
+const CEREBRAS_MODELS=['llama-3.3-70b','llama3.1-8b'];
+const GEMINI_MODELS=['gemini-2.0-flash','gemini-1.5-flash'];
+
 function buildEngineChain(startModel){
   const chain=[];
   if(cfg.groqKey.startsWith('gsk_')){
     const pool=[startModel, ...GROQ_MODELS.filter(m=>m!==startModel)];
     pool.forEach(m=>chain.push({prov:'groq',model:m,url:'https://api.groq.com/openai/v1/chat/completions',key:cfg.groqKey}));
+  }
+  if(cfg.cerebrasKey){
+    CEREBRAS_MODELS.forEach(m=>chain.push({prov:'cerebras',model:m,url:'https://api.cerebras.ai/v1/chat/completions',key:cfg.cerebrasKey}));
+  }
+  if(cfg.geminiKey){
+    GEMINI_MODELS.forEach(m=>chain.push({prov:'gemini',model:m,url:'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',key:cfg.geminiKey}));
   }
   if(cfg.orKey){
     OPENROUTER_MODELS.forEach(m=>chain.push({prov:'openrouter',model:m,url:'https://openrouter.ai/api/v1/chat/completions',key:cfg.orKey}));
@@ -1597,6 +1634,8 @@ function loadSettingsUI(){
   document.getElementById('s-ollama-host').value=cfg.ollamaHost;
   document.getElementById('s-brave-key').value=cfg.braveKey;
   const ork=document.getElementById('s-or-key'); if(ork) ork.value=cfg.orKey;
+  const cbk=document.getElementById('s-cb-key'); if(cbk) cbk.value=cfg.cerebrasKey;
+  const gmk=document.getElementById('s-gm-key'); if(gmk) gmk.value=cfg.geminiKey;
   document.querySelectorAll('#groq-models .mchip').forEach(c=>{
     c.classList.toggle('on',c.dataset.m===cfg.groqModel);
     c.onclick=()=>{document.querySelectorAll('#groq-models .mchip').forEach(x=>x.classList.remove('on'));c.classList.add('on');cfg.groqModel=c.dataset.m;};
@@ -1614,7 +1653,8 @@ function loadSettingsUI(){
   // update backup-engine status
   const od=document.getElementById('or-dot'),os=document.getElementById('or-status');
   if(od&&os){
-    if(cfg.orKey){od.className='dot ok';os.textContent='Backup engines active — auto fail-over on';}
+    const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
+    if(n){od.className='dot ok';os.textContent=`${n} backup engine${n>1?'s':''} active — auto fail-over on`;}
     else{od.className='dot warn';os.textContent='Not configured — single provider only';}
   }
 }
@@ -1624,10 +1664,13 @@ async function saveBraveKey(){
   loadSettingsUI();
   alert(cfg.braveKey ? '✓ Search key saved! Agents will now search the web.' : 'Key cleared.');
 }
-async function saveOrKey(){
+async function saveBackupKeys(){
   cfg.orKey=document.getElementById('s-or-key').value.trim();
+  cfg.cerebrasKey=document.getElementById('s-cb-key').value.trim();
+  cfg.geminiKey=document.getElementById('s-gm-key').value.trim();
   loadSettingsUI();
-  alert(cfg.orKey ? '✓ Backup engines saved! Long jobs will auto-fail-over instead of stalling.' : 'Backup key cleared.');
+  const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
+  alert(n ? `✓ Saved ${n} backup engine${n>1?'s':''}! Jobs will auto-fail-over instead of stalling.` : 'Backup engines cleared.');
 }
 function setProvider(p,save=true){
   cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
