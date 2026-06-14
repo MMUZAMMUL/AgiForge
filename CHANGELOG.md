@@ -3,6 +3,16 @@
 All notable changes to AgentForge are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Added
+- **PWA support** — `manifest.webmanifest`, service worker (`sw.js`) with offline
+  app shell + runtime caching, app icons, and iOS/Android install meta tags. The
+  app is now installable to the home screen and works offline.
+- **Marketing landing page** (`landing.html`) — hero, feature grid, division
+  roster, pricing (free + one-time Pro packs / All-Access), and FAQ. Purchase
+  buttons are wired to a configurable storefront (Gumroad / Lemon Squeezy).
+
 ## [3.0.0] — 2026-06-14
 
 ### Added
