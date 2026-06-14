@@ -5,7 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Clean, self-contained branding throughout the UI.** Underlying inference
+  engines are now shown as branded tiers — **Forge Flash / Forge Max / Forge
+  Lite** — and providers as **Cloud / Local / Demo**. Removed third-party and
+  model names from all user-facing copy. Fixed stale "217" → **183** everywhere.
+
 ### Added
+- **SEO**: canonical URLs, Open Graph + Twitter cards, JSON-LD structured data
+  (`WebApplication` / `SoftwareApplication`), keywords, `robots.txt`, and
+  `sitemap.xml`.
 - **PWA support** — `manifest.webmanifest`, service worker (`sw.js`) with offline
   app shell + runtime caching, app icons, and iOS/Android install meta tags. The
   app is now installable to the home screen and works offline.

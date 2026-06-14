@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mmuzammul.github.io/Agi-forge/sitemap.xml
