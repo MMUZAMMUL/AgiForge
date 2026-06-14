@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- **Multi-provider auto fail-over** — optional free backup engines (OpenRouter).
+  When an engine is rate-limited, AgentForge switches instantly across providers
+  so pipelines and long jobs no longer stall on 429s.
+- **Message Copy & Quote** on every chat message.
+- **Continue in Chat** after a pipeline completes.
+- **Attach a local folder / repo** (📁) as read-only context.
+- **Build & test**: ⬚ Preview opens generated HTML in a new tab; 💾 Save writes a
+  code block into a chosen local folder (Chrome/Edge desktop via File System
+  Access API; downloads as a fallback elsewhere).
+- **Favorites (⭐)** with a Popular shelf on the home screen.
+
+### Fixed
+- Division tab counts corrected to the real per-division totals (e.g. Engineering
+  27, Marketing 25, Specialized 42).
+
 ### Changed
 - **Clean, self-contained branding throughout the UI.** Underlying inference
   engines are now shown as branded tiers — **Forge Flash / Forge Max / Forge

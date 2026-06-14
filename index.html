@@ -193,6 +193,12 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
 .code-block-wrap{position:relative;margin:6px 0}
 .run-code-btn{position:absolute;top:5px;right:5px;background:var(--green)22;border:1px solid var(--green)44;color:var(--green);font-size:11px;padding:3px 8px;border-radius:5px;cursor:pointer;font-weight:600}
 .run-code-btn:disabled{opacity:.5;cursor:not-allowed}
+.code-tools{position:absolute;top:5px;right:5px;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:82%}
+.code-tools .run-code-btn{position:static}
+.ctool{font-size:11px;padding:3px 8px;border-radius:5px;cursor:pointer;font-weight:600;white-space:nowrap}
+.ctool.prev{background:var(--accent)22;border:1px solid var(--accent)44;color:var(--accent2)}
+.ctool.save{background:var(--purple)22;border:1px solid var(--purple)44;color:var(--purple)}
+.ctool:disabled{opacity:.5;cursor:not-allowed}
 .code-output{background:#0a1a0a;border:1px solid var(--green)33;border-top:none;border-radius:0 0 7px 7px;padding:8px 10px;font-size:12px;font-family:monospace;color:var(--green);white-space:pre-wrap;max-height:200px;overflow-y:auto}
 .code-output.err{color:var(--red);border-color:var(--red)33}
 
@@ -410,6 +416,21 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
           When set, agents automatically search the web for real-time info.
         </div>
         <button class="primary-btn" onclick="saveBraveKey()" style="margin-top:8px;background:var(--orange);font-size:13px;padding:10px">Save Search Key</button>
+      </div>
+
+      <!-- Backup engines (auto fail-over) -->
+      <div class="card">
+        <div class="card-title">🛡️ Backup Engines (optional)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div id="or-dot" class="dot warn" style="width:8px;height:8px"></div>
+          <span id="or-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+        </div>
+        <input class="field-input" id="s-or-key" type="password" placeholder="Paste your backup key…"/>
+        <div class="field-hint">
+          Add a free key at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys ↗</a><br>
+          When set, AgentForge auto-fails-over across extra free engines so long jobs never stall on rate limits.
+        </div>
+        <button class="primary-btn" onclick="saveOrKey()" style="margin-top:8px;background:var(--purple);font-size:13px;padding:10px">Save Backup Key</button>
       </div>
     </div>
   </div>
@@ -653,7 +674,7 @@ const AGENTS = [
 {"id":"testing-tool-evaluator","name":"Tool Evaluator","division":"testing","description":"Expert technology assessment specialist focused on evaluating, testing, and recommending tools, soft","color":"teal","emoji":"\ud83d\udd27","vibe":"Tests and recommends the right tools so your team doesn't waste time on the wron"},
 {"id":"testing-workflow-optimizer","name":"Workflow Optimizer","division":"testing","description":"Expert process improvement specialist focused on analyzing, optimizing, and automating workflows acr","color":"green","emoji":"\u26a1","vibe":"Finds the bottleneck, fixes the process, automates the rest."}
 ];
-const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"name":"engineering","count":33},{"name":"finance","count":5},{"name":"game-development","count":5},{"name":"gis","count":13},{"name":"marketing","count":36},{"name":"paid-media","count":7},{"name":"product","count":5},{"name":"project-management","count":7},{"name":"sales","count":9},{"name":"security","count":10},{"name":"spatial-computing","count":6},{"name":"specialized","count":53},{"name":"support","count":6},{"name":"testing","count":8}];
+const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"name":"engineering","count":27},{"name":"finance","count":5},{"name":"game-development","count":5},{"name":"gis","count":10},{"name":"marketing","count":25},{"name":"paid-media","count":7},{"name":"product","count":5},{"name":"project-management","count":7},{"name":"sales","count":9},{"name":"security","count":10},{"name":"spatial-computing","count":3},{"name":"specialized","count":42},{"name":"support","count":6},{"name":"testing","count":8}];
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
 
@@ -677,6 +698,8 @@ const cfg = {
   set ollamaHost(v){ localStorage.setItem('ag_ollama_host',v); },
   get braveKey(){ return localStorage.getItem('ag_brave_key')||''; },
   set braveKey(v){ localStorage.setItem('ag_brave_key',v); },
+  get orKey(){ return localStorage.getItem('ag_or_key')||''; },
+  set orKey(v){ localStorage.setItem('ag_or_key',v); },
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -746,7 +769,9 @@ function md(s){
     .replace(/```(\w*)\n?([\s\S]*?)```/g,(_,lang,c)=>{
       const raw=c.trim();
       const id='code-'+Math.random().toString(36).slice(2,8);
-      return `<div class="code-block-wrap"><pre><code id="${id}" data-lang="${lang||''}" data-raw="${encodeURIComponent(raw)}">${esc(raw)}</code></pre><button class="run-code-btn" onclick="runCode('${id}')">▶ Run</button></div>`;
+      const isHTML=(lang||'').toLowerCase()==='html'||/^\s*<(!doctype|html|div|body|head|section|main)/i.test(raw);
+      const preview=isHTML?`<button class="ctool prev" onclick="previewCode('${id}')">⬚ Preview</button>`:'';
+      return `<div class="code-block-wrap"><pre><code id="${id}" data-lang="${lang||''}" data-raw="${encodeURIComponent(raw)}">${esc(raw)}</code></pre><div class="code-tools">${preview}<button class="ctool save" onclick="saveCode('${id}')">💾 Save</button><button class="run-code-btn" onclick="runCode('${id}')">▶ Run</button></div></div>`;
     })
     .replace(/`([^`\n]+)`/g,(_,c)=>`<code>${esc(c)}</code>`)
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')
@@ -1174,6 +1199,52 @@ function renderAttachChip(){
 }
 function removeAttach(){ attachedFile=null; renderAttachChip(); }
 
+// ── Build & test: preview HTML + save generated files to a local folder ───────
+let workspaceDir=null;
+function previewCode(id){
+  const el=document.getElementById(id); if(!el) return;
+  const raw=decodeURIComponent(el.dataset.raw||'');
+  const blob=new Blob([raw],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const w=window.open(url,'_blank');
+  if(!w) toast('Allow pop-ups to preview');
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+async function connectWorkspace(){
+  if(!window.showDirectoryPicker){ toast('Folder saving needs Chrome/Edge on desktop'); return null; }
+  try{ workspaceDir=await window.showDirectoryPicker({mode:'readwrite'}); toast('Workspace: '+workspaceDir.name); return workspaceDir; }
+  catch(e){ return null; }
+}
+function guessExt(lang,raw){
+  lang=(lang||'').toLowerCase();
+  if(lang==='html'||/^\s*<(!doctype|html)/i.test(raw)) return 'html';
+  const map={js:'js',javascript:'js',ts:'ts',typescript:'ts',py:'py',python:'py',css:'css',json:'json',
+    java:'java',go:'go',rust:'rs',rs:'rs',rb:'rb',ruby:'rb',php:'php',c:'c',cpp:'cpp','c++':'cpp',
+    sh:'sh',bash:'sh',sql:'sql',yaml:'yaml',yml:'yml',xml:'xml',md:'md',markdown:'md'};
+  return map[lang]||'txt';
+}
+async function saveCode(id){
+  const el=document.getElementById(id); if(!el) return;
+  const raw=decodeURIComponent(el.dataset.raw||'');
+  const ext=guessExt(el.dataset.lang,raw);
+  const fname=prompt('Save file as:', (ext==='html'?'index':'file')+'.'+ext);
+  if(!fname) return;
+  // Preferred: write into a chosen local folder (Chrome/Edge desktop)
+  if(window.showDirectoryPicker){
+    try{
+      if(!workspaceDir){ const d=await connectWorkspace(); if(!d){ downloadText(fname,raw); return; } }
+      const parts=fname.split('/').filter(Boolean);
+      let dir=workspaceDir;
+      for(let k=0;k<parts.length-1;k++){ dir=await dir.getDirectoryHandle(parts[k],{create:true}); }
+      const fh=await dir.getFileHandle(parts[parts.length-1],{create:true});
+      const wr=await fh.createWritable(); await wr.write(raw); await wr.close();
+      toast('Saved '+fname+' → '+workspaceDir.name);
+      return;
+    }catch(e){ /* fall back to download */ }
+  }
+  downloadText(fname, raw); // universal fallback (mobile / other browsers)
+}
+
 // ── Lightweight toast ─────────────────────────────────────────────────────────
 function toast(msg){
   let t=document.getElementById('ag-toast');
@@ -1313,31 +1384,58 @@ function parseRetryAfter(msg){
   return m ? Math.ceil(parseFloat(m[1]) * 1000) + 500 : 15000;
 }
 
-async function groqFetchWithRetry(body, onStatus){
-  let model = body.model || cfg.groqModel;
-  for(let attempt=0; attempt<4; attempt++){
-    body.model = model;
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.groqKey},
-      body:JSON.stringify(body),
-    });
-    if(res.status === 429){
-      const e = await res.json().catch(()=>({}));
-      const wait = parseRetryAfter(e.error?.message||'');
-      const secs = Math.ceil(wait/1000);
-      if(onStatus) onStatus(`\n\n⏳ *Rate limit — switching model & retrying in ${secs}s…*\n\n`);
-      model = nextGroqModel(model);
-      await new Promise(r=>setTimeout(r, wait));
-      continue;
-    }
-    if(!res.ok){
-      const e = await res.json().catch(()=>({}));
-      throw new Error(e.error?.message||'AI service '+res.status);
-    }
-    return res;
+// Free fallback engines on OpenRouter (one key → many models, each its own limits).
+const OPENROUTER_MODELS = [
+  'meta-llama/llama-3.3-70b-instruct:free',
+  'google/gemini-2.0-flash-exp:free',
+  'qwen/qwen-2.5-72b-instruct:free',
+  'mistralai/mistral-small-3.1-24b-instruct:free',
+  'meta-llama/llama-3.1-8b-instruct:free',
+];
+
+// Build the ordered list of (provider, model) attempts for one request.
+function buildEngineChain(startModel){
+  const chain=[];
+  if(cfg.groqKey.startsWith('gsk_')){
+    const pool=[startModel, ...GROQ_MODELS.filter(m=>m!==startModel)];
+    pool.forEach(m=>chain.push({prov:'groq',model:m,url:'https://api.groq.com/openai/v1/chat/completions',key:cfg.groqKey}));
   }
-  throw new Error('Rate limit persists after 4 retries. Wait a minute and try again.');
+  if(cfg.orKey){
+    OPENROUTER_MODELS.forEach(m=>chain.push({prov:'openrouter',model:m,url:'https://openrouter.ai/api/v1/chat/completions',key:cfg.orKey}));
+  }
+  return chain;
+}
+
+// Multi-provider request with automatic fail-over so work never stalls on a 429.
+async function groqFetchWithRetry(body, onStatus){
+  const chain=buildEngineChain(body.model||cfg.groqModel);
+  if(!chain.length) throw new Error('No AI engine connected — add a free key in ⚙️ Settings.');
+  let lastErr;
+  for(let i=0;i<chain.length;i++){
+    const eng=chain[i];
+    body.model=eng.model;
+    const headers={'Content-Type':'application/json','Authorization':'Bearer '+eng.key};
+    if(eng.prov==='openrouter'){ headers['HTTP-Referer']='https://mmuzammul.github.io/Agi-forge/'; headers['X-Title']='AgentForge'; }
+    let res;
+    try{ res=await fetch(eng.url,{method:'POST',headers,body:JSON.stringify(body)}); }
+    catch(err){ lastErr=err; continue; }
+
+    if(res.status===429){
+      const hasNext=i<chain.length-1;
+      if(hasNext){ if(onStatus) onStatus('\n\n⚡ *Engine busy — switching instantly…*\n\n'); continue; }
+      const e=await res.json().catch(()=>({}));
+      const wait=parseRetryAfter(e.error?.message||'');
+      if(onStatus) onStatus(`\n\n⏳ *All engines busy — retrying in ${Math.ceil(wait/1000)}s…*\n\n`);
+      await new Promise(r=>setTimeout(r,wait));
+      try{ res=await fetch(eng.url,{method:'POST',headers,body:JSON.stringify(body)}); }
+      catch(err){ lastErr=err; continue; }
+    }
+    if(res.ok) return res;
+    const e=await res.json().catch(()=>({}));
+    lastErr=new Error(e.error?.message||'AI service '+res.status);
+    // non-OK (e.g. model unsupported by a free engine) → fall through to next engine
+  }
+  throw lastErr||new Error('All engines are busy — try again in a moment.');
 }
 
 // ── Web search ─────────────────────────────────────────────────────────
@@ -1498,6 +1596,7 @@ function loadSettingsUI(){
   document.getElementById('s-groq-key').value=cfg.groqKey;
   document.getElementById('s-ollama-host').value=cfg.ollamaHost;
   document.getElementById('s-brave-key').value=cfg.braveKey;
+  const ork=document.getElementById('s-or-key'); if(ork) ork.value=cfg.orKey;
   document.querySelectorAll('#groq-models .mchip').forEach(c=>{
     c.classList.toggle('on',c.dataset.m===cfg.groqModel);
     c.onclick=()=>{document.querySelectorAll('#groq-models .mchip').forEach(x=>x.classList.remove('on'));c.classList.add('on');cfg.groqModel=c.dataset.m;};
@@ -1512,12 +1611,23 @@ function loadSettingsUI(){
     if(cfg.braveKey){sd.className='dot ok';ss.textContent='Web search enabled';}
     else{sd.className='dot warn';ss.textContent='Not configured — agents will use training data only';}
   }
+  // update backup-engine status
+  const od=document.getElementById('or-dot'),os=document.getElementById('or-status');
+  if(od&&os){
+    if(cfg.orKey){od.className='dot ok';os.textContent='Backup engines active — auto fail-over on';}
+    else{od.className='dot warn';os.textContent='Not configured — single provider only';}
+  }
 }
 
 async function saveBraveKey(){
   cfg.braveKey=document.getElementById('s-brave-key').value.trim();
   loadSettingsUI();
   alert(cfg.braveKey ? '✓ Search key saved! Agents will now search the web.' : 'Key cleared.');
+}
+async function saveOrKey(){
+  cfg.orKey=document.getElementById('s-or-key').value.trim();
+  loadSettingsUI();
+  alert(cfg.orKey ? '✓ Backup engines saved! Long jobs will auto-fail-over instead of stalling.' : 'Backup key cleared.');
 }
 function setProvider(p,save=true){
   cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
