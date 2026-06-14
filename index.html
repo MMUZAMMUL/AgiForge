@@ -2,8 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<title>AgentForge</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<title>AgentForge — 183 AI Specialists</title>
+<meta name="description" content="A mobile-first agentic AI platform with 183 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free."/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<meta name="theme-color" content="#0f1117"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="AgentForge"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png"/>
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1751,6 +1761,13 @@ function stopBenchmark(){
   document.getElementById('bench-results').style.display='none';
   document.getElementById('bench-setup').style.display='flex';
   _benchInit=false;initBenchmarkAgents();
+}
+
+/* PWA: register service worker for offline + installability */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
 }
 </script>
 </body>
