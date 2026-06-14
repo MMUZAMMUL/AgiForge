@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live app
+    url: https://mmuzammul.github.io/Agi-forge/
+    about: Try AgentForge in your browser.
+  - name: Documentation
+    url: https://github.com/MMUZAMMUL/Agi-forge/tree/main/docs
+    about: Architecture, features, deployment, and the agent catalog.
