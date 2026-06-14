@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
 <title>AgentForge — 183 AI Specialists</title>
 <meta name="description" content="A mobile-first agentic AI platform with 183 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free."/>
+<meta name="keywords" content="AI agents, AI specialists, agentic AI, AI team, multi-agent, AI pipeline, AI chat, free AI app, mobile AI, AI assistant, prompt engineering, code runner"/>
+<meta name="author" content="AgentForge"/>
+<link rel="canonical" href="https://mmuzammul.github.io/Agi-forge/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="AgentForge"/>
+<meta property="og:title" content="AgentForge — 183 AI Specialists in Your Browser"/>
+<meta property="og:description" content="Chat with 183 domain specialists, chain them into pipelines, auto-build the perfect team, and run the code they write. Free, runs in your browser."/>
+<meta property="og:image" content="https://mmuzammul.github.io/Agi-forge/assets/icon-512.png"/>
+<meta property="og:url" content="https://mmuzammul.github.io/Agi-forge/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="AgentForge — 183 AI Specialists in Your Browser"/>
+<meta name="twitter:description" content="183 expert AI specialists, pipelines, auto-built teams, debate & a code runner. Free."/>
+<meta name="twitter:image" content="https://mmuzammul.github.io/Agi-forge/assets/icon-512.png"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"AgentForge","url":"https://mmuzammul.github.io/Agi-forge/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","description":"A mobile-first agentic AI platform with 183 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"mmuzammul"}}
+</script>
 <link rel="manifest" href="manifest.webmanifest"/>
 <meta name="theme-color" content="#0f1117"/>
 <meta name="mobile-web-app-capable" content="yes"/>
@@ -222,18 +238,19 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
   <div id="screen-setup" class="screen active">
     <div class="welcome">
       <div class="welcome-hero">
-        <div class="big">🏢</div>
-        <h1>AgentForge</h1>
-        <p>217 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
+        <div class="big">⚡</div>
+        <h1>Agent<span style="color:var(--accent2)">Forge</span></h1>
+        <p>183 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
       </div>
       <div class="card">
-        <div class="card-title">⚡ Connect Free AI — 2 minutes on mobile</div>
+        <div class="card-title">⚡ Activate Free AI — 2 minutes on mobile</div>
         <div class="step-list">
-          <div class="step"><div class="snum">1</div><div class="step-body"><b>Open console.groq.com</b>Sign up free — Google login, no card.</div></div>
-          <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API Key</b>API Keys → Create → copy it.</div></div>
-          <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below</b></div></div>
+          <div class="step"><div class="snum">1</div><div class="step-body"><b>Get a free access key</b>Sign up with Google — no card, takes seconds.</div></div>
+          <div class="step"><div class="snum">2</div><div class="step-body"><b>Create the key</b>Copy your access key.</div></div>
+          <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste it below</b></div></div>
         </div>
-        <input class="field-input" id="setup-key" type="password" placeholder="gsk_…" autocomplete="off"/>
+        <div class="field-hint" style="margin-bottom:8px">Get your free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys ↗</a></div>
+        <input class="field-input" id="setup-key" type="password" placeholder="Paste your access key…" autocomplete="off"/>
         <button class="primary-btn" id="setup-btn" onclick="connectGroq()">Connect & Start →</button>
       </div>
       <div class="skip-link">Already set up? <span onclick="showScreen('agents')">Go to agents →</span></div>
@@ -243,7 +260,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
   <!-- ═══════════ AGENTS ═══════════ -->
   <div id="screen-agents" class="screen">
     <div class="search-bar" style="display:flex;gap:8px">
-      <input class="search-input" id="search" placeholder="Search 217 specialists…" oninput="renderList()" style="flex:1"/>
+      <input class="search-input" id="search" placeholder="Search 183 specialists…" oninput="renderList()" style="flex:1"/>
       <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
     </div>
     <div id="pipeline-bar" style="display:none;padding:8px 12px;background:var(--purple)11;border-bottom:1px solid var(--purple)44;font-size:13px;color:var(--purple);display:flex;align-items:center;gap:8px">
@@ -345,26 +362,25 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <div class="card">
         <div class="card-title">Provider</div>
         <div class="prov-row" style="margin-bottom:12px">
-          <button class="prov-btn" id="prov-groq" onclick="setProvider('groq')">⚡ Groq<br><small>Free·Fast</small></button>
-          <button class="prov-btn" id="prov-ollama" onclick="setProvider('ollama')">🦙 Ollama<br><small>Local·PC</small></button>
+          <button class="prov-btn" id="prov-groq" onclick="setProvider('groq')">⚡ Cloud<br><small>Free·Fast</small></button>
+          <button class="prov-btn" id="prov-ollama" onclick="setProvider('ollama')">🖥️ Local<br><small>Your PC</small></button>
           <button class="prov-btn" id="prov-demo" onclick="setProvider('demo')">👁 Demo<br><small>No AI</small></button>
         </div>
         <div id="s-groq">
-          <div class="card-title">Groq API Key</div>
-          <input class="field-input" id="s-groq-key" type="password" placeholder="gsk_…"/>
-          <div class="field-hint">Free at <a href="https://console.groq.com" target="_blank">console.groq.com</a></div>
+          <div class="card-title">Access Key</div>
+          <input class="field-input" id="s-groq-key" type="password" placeholder="Paste your access key…"/>
+          <div class="field-hint">Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys ↗</a></div>
           <div style="margin-top:10px">
-            <div class="card-title">Model</div>
+            <div class="card-title">Engine</div>
             <div class="model-chips" id="groq-models">
-              <span class="mchip on" data-m="llama-3.1-8b-instant">llama3.1-8b ⚡</span>
-              <span class="mchip" data-m="llama-3.3-70b-versatile">llama3.3-70b 🧠</span>
-              <span class="mchip" data-m="mixtral-8x7b-32768">mixtral-8x7b</span>
-              <span class="mchip" data-m="gemma2-9b-it">gemma2-9b</span>
+              <span class="mchip on" data-m="llama-3.1-8b-instant">⚡ Forge Flash</span>
+              <span class="mchip" data-m="llama-3.3-70b-versatile">🧠 Forge Max</span>
+              <span class="mchip" data-m="gemma2-9b-it">🍃 Forge Lite</span>
             </div>
           </div>
         </div>
         <div id="s-ollama" style="display:none">
-          <div class="card-title">Ollama Host</div>
+          <div class="card-title">Local Host</div>
           <input class="field-input" id="s-ollama-host" placeholder="http://192.168.1.x:11434"/>
         </div>
         <button class="primary-btn" onclick="saveSettings()" style="margin-top:12px">Save & Test →</button>
@@ -378,7 +394,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
           <div id="search-dot" class="dot warn" style="width:8px;height:8px"></div>
           <span id="search-status" style="font-size:12px;color:var(--text2)">Not configured</span>
         </div>
-        <input class="field-input" id="s-brave-key" type="password" placeholder="BSA…  (Brave Search API key)"/>
+        <input class="field-input" id="s-brave-key" type="password" placeholder="Paste your search key…"/>
         <div class="field-hint">
           Free 2000 searches/month at <a href="https://api.search.brave.com" target="_blank">api.search.brave.com</a><br>
           When set, agents automatically search the web for real-time info.
@@ -631,6 +647,14 @@ const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"n
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
 
+// ── Engine tiers (branded display names for the underlying inference engines) ────
+const ENGINE_LABELS = {
+  'llama-3.1-8b-instant':   'Forge Flash',
+  'llama-3.3-70b-versatile':'Forge Max',
+  'gemma2-9b-it':           'Forge Lite',
+};
+function engineLabel(id){ return ENGINE_LABELS[id] || 'Forge AI'; }
+
 // ── Config ────────────────────────────────────────────────────────────────────
 const cfg = {
   get provider(){ return localStorage.getItem('ag_provider')||'demo'; },
@@ -674,18 +698,18 @@ function showScreen(n){
 function updateHdr(){
   const dot=document.getElementById('hdr-dot'), txt=document.getElementById('hdr-txt');
   if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
-    dot.className='dot ok'; txt.textContent='Groq·'+cfg.groqModel.split('-').slice(0,3).join('-');
+    dot.className='dot ok'; txt.textContent=engineLabel(cfg.groqModel);
   } else if(cfg.provider==='ollama'){
-    dot.className='dot warn'; txt.textContent='Ollama';
+    dot.className='dot warn'; txt.textContent='Local';
   } else {
-    dot.className='dot warn'; txt.textContent='demo';
+    dot.className='dot warn'; txt.textContent='Demo';
   }
 }
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
 async function connectGroq(){
   const key=document.getElementById('setup-key').value.trim();
-  if(!key.startsWith('gsk_')){ alert('Key must start with gsk_'); return; }
+  if(!key.startsWith('gsk_')){ alert('Please paste a valid access key.'); return; }
   const btn=document.getElementById('setup-btn');
   btn.textContent='Testing…'; btn.disabled=true;
   const ok=await testGroq(key);
@@ -853,10 +877,10 @@ async function autoBuildTeam(){
   const btn=document.getElementById('auto-build-btn');
   if(!goal){ status.textContent='↑ Describe your goal first'; return; }
   if(cfg.provider!=='groq'||!cfg.groqKey.startsWith('gsk_')){
-    status.innerHTML='<span style="color:var(--orange)">Connect Groq first — tap ⚙️</span>'; return;
+    status.innerHTML='<span style="color:var(--orange)">Connect AI first — tap ⚙️</span>'; return;
   }
   btn.disabled=true; btn.textContent='✨ Assembling team…';
-  status.textContent='Analyzing goal & selecting specialists from 217 agents…';
+  status.textContent='Analyzing goal & selecting specialists from 183 agents…';
 
   // Compact roster: id|name|one-line desc, grouped — fits in context
   const roster=AGENTS.map(a=>`${a.id} | ${a.name} (${a.division}): ${a.description.slice(0,90)}`).join('\n');
@@ -874,7 +898,7 @@ async function autoBuildTeam(){
     const res=await groqFetchWithRetry(body, s=>{ status.textContent=s; });
     if(!res.ok){
       const e=await res.json().catch(()=>({}));
-      throw new Error(e.error?.message||'Groq '+res.status);
+      throw new Error(e.error?.message||'AI service '+res.status);
     }
     const data=await res.json();
     const raw=data.choices?.[0]?.message?.content||'{}';
@@ -896,7 +920,7 @@ async function autoBuildTeam(){
 async function runPipeline(){
   const goal=document.getElementById('pl-goal').value.trim();
   if(!goal||!pipeline.length) return;
-  if(cfg.provider==='demo'){ alert('Connect Groq first — go to ⚙️ Settings'); return; }
+  if(cfg.provider==='demo'){ alert('Connect AI first — go to ⚙️ Settings'); return; }
 
   stopFlag=false; pipelineRunning=true;
   document.getElementById('pipeline-build').style.display='none';
@@ -1074,7 +1098,7 @@ async function openAgent(id){
   showScreen('chat'); renderChat();
   const content=await fetchAgentContent(a);
   curAgent.content=content;
-  document.getElementById('ch-sub').textContent=a.division+(cfg.provider==='groq'?' · '+cfg.groqModel.split('-').slice(0,3).join('-'):'');
+  document.getElementById('ch-sub').textContent=a.division+(cfg.provider==='groq'?' · '+engineLabel(cfg.groqModel):'');
   renderChat();
   setTimeout(()=>document.getElementById('msg-input').focus(),150);
 }
@@ -1117,7 +1141,7 @@ function renderChat(){
       <div style="font-weight:700;color:var(--text);font-size:16px;margin-bottom:6px">${curAgent.name}</div>
       <div style="font-size:13px;line-height:1.6;max-width:300px;margin:0 auto">${curAgent.description}</div>
       ${curAgent.vibe?`<div style="font-style:italic;margin-top:9px;font-size:12px">"${curAgent.vibe}"</div>`:''}
-      ${cfg.provider==='demo'?'<div style="margin-top:14px;font-size:12px;color:var(--orange);background:var(--orange)11;border:1px solid var(--orange)33;padding:9px;border-radius:8px">Demo mode — tap ⚙️ to connect Groq (free)</div>':''}
+      ${cfg.provider==='demo'?'<div style="margin-top:14px;font-size:12px;color:var(--orange);background:var(--orange)11;border:1px solid var(--orange)33;padding:9px;border-radius:8px">Demo mode — tap ⚙️ to connect free AI</div>':''}
     </div>`:''; return;
   }
   el.innerHTML=chatMsgs.map(m=>{
@@ -1163,13 +1187,12 @@ async function sendMsg(){
   document.getElementById('send-btn').disabled=false; renderChat();
 }
 
-// ── Groq rate-limit helpers ───────────────────────────────────────────────────
-// Free-tier model pool — each has its own TPM bucket, rotate on rate limit
+// ── Cloud engine rate-limit helpers ───────────────────────────────────────────────────
+// Engine pool — each tier has its own rate bucket; rotate on limit
 const GROQ_MODELS = [
   'llama-3.1-8b-instant',
   'llama-3.3-70b-versatile',
   'gemma2-9b-it',
-  'mixtral-8x7b-32768',
 ];
 let _groqModelIdx = 0; // round-robin pointer
 
@@ -1205,14 +1228,14 @@ async function groqFetchWithRetry(body, onStatus){
     }
     if(!res.ok){
       const e = await res.json().catch(()=>({}));
-      throw new Error(e.error?.message||'Groq '+res.status);
+      throw new Error(e.error?.message||'AI service '+res.status);
     }
     return res;
   }
   throw new Error('Rate limit persists after 4 retries. Wait a minute and try again.');
 }
 
-// ── Brave web search ─────────────────────────────────────────────────────────
+// ── Web search ─────────────────────────────────────────────────────────
 async function webSearch(query){
   try{
     const r=await fetch('/api/search?q='+encodeURIComponent(query)+'&key='+cfg.braveKey,{signal:AbortSignal.timeout(6000)});
@@ -1228,7 +1251,7 @@ async function webSearch(query){
   return [];
 }
 
-// ── Groq streaming with optional tool-calling (web search) ───────────────────
+// ── Cloud streaming with optional tool-calling (web search) ───────────────────
 async function streamGroqInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
   const messages = msgHistory
     ? [{role:'system',content:systemPrompt}, ...msgHistory]
@@ -1251,7 +1274,7 @@ async function streamGroqInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
     else body.stream=true;
 
     const res=await groqFetchWithRetry(body, onChunk);
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'Groq '+res.status);}
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'AI service '+res.status);}
 
     if(!body.stream){
       const data=await res.json();
@@ -1291,7 +1314,7 @@ async function streamGroqInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
   }
 }
 
-// ── Ollama streaming ──────────────────────────────────────────────────────────
+// ── Local streaming ──────────────────────────────────────────────────────────
 async function streamOllamaInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
   const messages = msgHistory
     ? [{role:'system',content:systemPrompt},...msgHistory]
@@ -1300,7 +1323,7 @@ async function streamOllamaInto(systemPrompt, singleUserMsg, onChunk, msgHistory
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'llama3.2',stream:true,messages}),
   });
-  if(!res.ok)throw new Error('Ollama '+res.status);
+  if(!res.ok)throw new Error('Local AI '+res.status);
   const reader=res.body.getReader(),dec=new TextDecoder();let buf='';
   while(true){
     const{done,value}=await reader.read();if(done)break;
@@ -1318,7 +1341,7 @@ async function streamDemo(ai,agent){
 
 ${agent.vibe||agent.description}
 
-*Tap ⚙️ → connect Groq free for real AI.*`;
+*Tap ⚙️ → connect free AI for real responses.*`;
   for(let i=0;i<t.length;i++){ai.content=t.slice(0,i+1);renderChat();await new Promise(r=>setTimeout(r,14));}
 }
 
@@ -1376,7 +1399,7 @@ function loadSettingsUI(){
   });
   updateHdr();
   const dot=document.getElementById('set-dot'),txt=document.getElementById('set-txt');
-  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){dot.className='dot ok';txt.textContent='Groq connected · '+cfg.groqModel;}
+  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){dot.className='dot ok';txt.textContent='Connected · '+engineLabel(cfg.groqModel);}
   else{dot.className='dot warn';txt.textContent=cfg.provider==='demo'?'Demo mode':'Not connected';}
   // update search status
   const sd=document.getElementById('search-dot'),ss=document.getElementById('search-status');
@@ -1504,7 +1527,7 @@ async function runDebate(){
   if(!aId||!bId){alert('Select both agents');return;}
   if(!topic){alert('Enter a debate topic');return;}
   if(aId===bId){alert('Pick two different agents');return;}
-  if(cfg.provider==='demo'){alert('Connect Groq first — tap ⚙️');return;}
+  if(cfg.provider==='demo'){alert('Connect AI first — tap ⚙️');return;}
 
   _debateStop=false;
   const agentA=AGENTS.find(a=>a.id===aId),agentB=AGENTS.find(a=>a.id===bId);
@@ -1623,7 +1646,7 @@ function initBenchmarkAgents(){
 async function runBenchmark(){
   const prompt=document.getElementById('bench-prompt').value.trim();
   if(!prompt){alert('Enter a prompt to benchmark');return;}
-  if(cfg.provider==='demo'){alert('Connect Groq first — tap ⚙️');return;}
+  if(cfg.provider==='demo'){alert('Connect AI first — tap ⚙️');return;}
   const checked=[...document.querySelectorAll('#bench-agents-select input:checked')].map(x=>x.value);
   if(checked.length<2){alert('Select at least 2 agents');return;}
 
@@ -1727,7 +1750,7 @@ async function runBenchmark(){
           </div>
           ${r.verdict?`<div style="font-size:12px;color:var(--text2);margin:3px 0 0 30px;line-height:1.4">${esc(r.verdict)}</div>`:''}
         </div>`).join('')}
-      <p style="font-size:12px;color:var(--text2);margin-top:8px">${judged?'⚖️ Scored by an impartial LLM judge (llama-3.3-70b) on relevance, depth & correctness.':'Heuristic score = depth(50) + code(20) + structure(15) + speed(15). Connect Groq for LLM-judged scoring.'}</p>
+      <p style="font-size:12px;color:var(--text2);margin-top:8px">${judged?'⚖️ Scored by an impartial AI judge on relevance, depth & correctness.':'Heuristic score = depth(50) + code(20) + structure(15) + speed(15). Connect AI for AI-judged scoring.'}</p>
       <button class="save-btn2" onclick="downloadBenchmark()">⬇️ Download Full Report .md</button>
     </div>`;
 
