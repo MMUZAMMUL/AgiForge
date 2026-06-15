@@ -574,6 +574,30 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <button class="primary-btn" onclick="saveBackupKeys()" style="margin-top:10px;background:var(--purple);font-size:13px;padding:10px">Save Backup Engines</button>
       </div>
 
+      <!-- Vertical Editions -->
+      <div class="card">
+        <div class="card-title">🏢 Vertical Editions</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5">Focused versions of AgentForge for specific industries — filtered agents, custom branding.</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <a href="?edition=legal" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #1e40af55;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">⚖️</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#60a5fa">LegalForge</div><div style="font-size:11px;color:var(--text2)">Document review, compliance, client intake</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          <a href="?edition=finance" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #15803d55;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">💰</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#4ade80">FinanceForge</div><div style="font-size:11px;color:var(--text2)">Bookkeeping, investment, tax, crypto, risk</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          <a href="?edition=healthcare" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #0e749055;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">🏥</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#22d3ee">HealthForge</div><div style="font-size:11px;color:var(--text2)">Patient services, billing, compliance, HR</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          ${EDITION_KEY?`<a href="." style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none"><span style="font-size:12px;color:var(--text2)">← Back to full AgentForge (all 203 specialists)</span></a>`:''}
+        </div>
+      </div>
+
       <!-- Automations / Webhook -->
       <div class="card">
         <div class="card-title">⚡ Automations (optional)</div>
@@ -927,6 +951,78 @@ const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"n
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
 
+// ── Vertical editions (white-label) ──────────────────────────────────────────
+const EDITION_KEY = new URLSearchParams(location.search).get('edition') || '';
+const EDITIONS = {
+  legal: {
+    brand: 'Legal<span>Forge</span>',
+    label: 'LegalForge',
+    tagline: 'AI Legal Specialists',
+    accent: '#1e40af', accent2: '#60a5fa',
+    placeholder: 'Search legal specialists…',
+    title: 'LegalForge — AI Legal Specialists',
+    ids: new Set(['legal-document-review','legal-billing-time-tracking','legal-client-intake',
+      'support-legal-compliance-checker','data-privacy-officer','specialized-negotiation-expert',
+      'ma-integration-manager','specialized-chief-of-staff','finance-tax-strategist',
+      'organizational-psychologist','specialized-change-management-consultant',
+      'recruitment-specialist','grant-writer'])
+  },
+  finance: {
+    brand: 'Finance<span>Forge</span>',
+    label: 'FinanceForge',
+    tagline: 'AI Finance Specialists',
+    accent: '#15803d', accent2: '#4ade80',
+    placeholder: 'Search finance specialists…',
+    title: 'FinanceForge — AI Finance Specialists',
+    ids: new Set(['finance-bookkeeper-controller','finance-financial-analyst','finance-fpa-analyst',
+      'finance-investment-researcher','finance-tax-strategist','finance-cryptocurrency-analyst',
+      'finance-personal-finance-coach','finance-risk-manager',
+      'chief-financial-officer','specialized-pricing-analyst',
+      'loan-officer-assistant','accounts-payable-agent','esg-sustainability-officer',
+      'specialized-negotiation-expert'])
+  },
+  healthcare: {
+    brand: 'Health<span>Forge</span>',
+    label: 'HealthForge',
+    tagline: 'AI Healthcare Specialists',
+    accent: '#0e7490', accent2: '#22d3ee',
+    placeholder: 'Search healthcare specialists…',
+    title: 'HealthForge — AI Healthcare Specialists',
+    ids: new Set(['healthcare-customer-service','healthcare-marketing-compliance',
+      'medical-billing-coding-specialist','data-privacy-officer',
+      'support-legal-compliance-checker','academic-psychologist',
+      'organizational-psychologist','recruitment-specialist',
+      'hr-onboarding','support-support-responder'])
+  }
+};
+
+function getEditionAgents(){
+  if(!EDITION_KEY || !EDITIONS[EDITION_KEY]) return AGENTS;
+  const {ids}=EDITIONS[EDITION_KEY];
+  return AGENTS.filter(a=>ids.has(a.id));
+}
+
+function applyEdition(){
+  const ed=EDITIONS[EDITION_KEY]; if(!ed) return;
+  document.querySelector('.logo').innerHTML=ed.brand;
+  document.title=ed.title;
+  document.documentElement.style.setProperty('--accent',ed.accent);
+  document.documentElement.style.setProperty('--accent2',ed.accent2);
+  const s=document.getElementById('search'); if(s) s.placeholder=ed.placeholder;
+  // Edition pill in header
+  const pill=document.createElement('span');
+  pill.style.cssText=`font-size:10px;background:${ed.accent}33;border:1px solid ${ed.accent}66;color:${ed.accent2};padding:2px 9px;border-radius:99px;font-weight:700;flex-shrink:0`;
+  pill.textContent=ed.tagline;
+  const hdrDot=document.getElementById('hdr-dot');
+  hdrDot.parentNode.insertBefore(pill,hdrDot.nextSibling);
+  // Back link
+  const back=document.createElement('button');
+  back.className='icon-btn'; back.style.cssText='font-size:11px;padding:4px 8px';
+  back.textContent='← All'; back.title='Back to AgentForge';
+  back.onclick=()=>{const u=new URL(location.href);u.searchParams.delete('edition');location.href=u.toString();};
+  document.querySelector('.hdr-right').prepend(back);
+}
+
 // ── Engine tiers (branded display names for the underlying inference engines) ────
 const ENGINE_LABELS = {
   'llama-3.1-8b-instant':   'Forge Flash',
@@ -989,7 +1085,7 @@ async function waitForSupa(ms=5000){
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
-  renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
+  applyEdition(); renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
   const fromURL=loadPipelineFromURL();
   if(fromURL){ showScreen('pipeline'); updateHdr(); }
   else if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
@@ -1351,9 +1447,13 @@ async function fetchAgentContent(a){
 
 // ── Agent list ────────────────────────────────────────────────────────────────
 function renderDivTabs(){
+  const agents=getEditionAgents();
+  const divCounts={};
+  agents.forEach(a=>{divCounts[a.division]=(divCounts[a.division]||0)+1;});
+  const tabs=Object.entries(divCounts).sort((a,b)=>a[0].localeCompare(b[0]));
   document.getElementById('div-tabs').innerHTML=
     `<button class="div-tab on" onclick="setDiv('')">All</button>`+
-    DIVISIONS.map(d=>`<button class="div-tab" onclick="setDiv('${d.name}')">${d.name} <span style="opacity:.6">${d.count}</span></button>`).join('');
+    tabs.map(([name,count])=>`<button class="div-tab" onclick="setDiv('${name}')">${name} <span style="opacity:.6">${count}</span></button>`).join('');
 }
 function setDiv(d){
   selectedDiv=d;
@@ -1393,16 +1493,18 @@ function renderList(){
   const q=document.getElementById('search').value.toLowerCase();
   const el=document.getElementById('agent-list');
   const customs=getCustomAgents();
-  const allAgents=[...AGENTS,...customs];
+  const base=getEditionAgents();
+  const allAgents=[...base,...customs];
+  const edLabel=EDITIONS[EDITION_KEY];
   // Home view (no search, no division filter, not in pipeline mode): show shelves
   if(!q && !selectedDiv && !pipelineMode){
     const favs=getFavs().map(id=>allAgents.find(a=>a.id===id)).filter(Boolean);
-    const popular=POPULAR_IDS.map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+    const popular=POPULAR_IDS.map(id=>base.find(a=>a.id===id)).filter(Boolean);
     let html='';
     if(customs.length) html+=section(`🛠️ My Agents · ${customs.length}`)+customs.map(agentCard).join('');
     if(favs.length) html+=section('⭐ Your Favorites')+favs.map(agentCard).join('');
-    html+=section('🔥 Popular')+popular.map(agentCard).join('');
-    html+=section(`📁 All Specialists · ${AGENTS.length}`)+AGENTS.map(agentCard).join('');
+    if(!edLabel && popular.length) html+=section('🔥 Popular')+popular.map(agentCard).join('');
+    html+=section(`📁 ${edLabel?edLabel.label+' Specialists':' All Specialists'} · ${base.length}`)+base.map(agentCard).join('');
     el.innerHTML=html;
     return;
   }
