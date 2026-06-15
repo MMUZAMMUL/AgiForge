@@ -834,8 +834,8 @@ let pipelineRunning=false, stopFlag=false;
 // ── Backend (Supabase) ─────────────────────────────────────────────────────────
 // Owner-controlled. Paste your project's URL + anon (public) key here, then push.
 // Until filled, the app works exactly as before and Account shows a friendly notice.
-const SUPABASE_URL  = '';
-const SUPABASE_ANON  = '';
+const SUPABASE_URL  = 'https://rwpumrldstyaqvvfrodw.supabase.co';
+const SUPABASE_ANON  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3cHVtcmxkc3R5YXF2dmZyb2R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0ODg4NTksImV4cCI6MjA5NzA2NDg1OX0.F_aIdTOxkJl9Q8BvQsBL9l-inVHuFS6ulHjou5C8AkY';
 let supa=null, currentUser=null, authMode='login';
 function authReady(){ return !!supa; }
 function initSupa(){
