@@ -1345,7 +1345,7 @@ function downloadChat(){
 // ── Chat ──────────────────────────────────────────────────────────────────────
 async function openAgent(id){
   const a=AGENTS.find(x=>x.id===id); if(!a) return;
-  curAgent={...a,content:null}; chatMsgs=[]; attachedFile=null; renderAttachChip();
+  curAgent={...a,content:null}; chatMsgs=loadHistory(a.id); attachedFile=null; renderAttachChip();
   const h=colorHex(a.color);
   document.getElementById('ch-name').textContent=a.name;
   document.getElementById('ch-sub').textContent='Loading…';
@@ -1358,7 +1358,29 @@ async function openAgent(id){
   renderChat();
   setTimeout(()=>document.getElementById('msg-input').focus(),150);
 }
-function clearChat(){ chatMsgs=[]; attachedFile=null; renderAttachChip(); renderChat(); }
+function clearChat(){
+  chatMsgs=[]; attachedFile=null; renderAttachChip(); renderChat();
+  if(curAgent){ try{ localStorage.removeItem(chatKey(curAgent.id)); }catch(e){} }
+}
+// ── Conversation history (persists per agent in localStorage) ──────────────────
+function chatKey(id){ return 'ag_chat_'+id; }
+function saveHistory(){
+  if(!curAgent) return;
+  try{
+    const slim=chatMsgs.filter(m=>!m.streaming).slice(-40).map(m=>{
+      const o={role:m.role,content:m.content};
+      if(m.meta) o.meta=m.meta;
+      if(m.file) o.file={name:m.file.name,chars:m.file.chars}; // drop heavy content to save space
+      return o;
+    });
+    if(slim.length) localStorage.setItem(chatKey(curAgent.id), JSON.stringify({t:Date.now(),msgs:slim}));
+    else localStorage.removeItem(chatKey(curAgent.id));
+  }catch(e){/* quota — ignore */}
+}
+function loadHistory(id){
+  try{ const d=JSON.parse(localStorage.getItem(chatKey(id))||'null'); return (d&&d.msgs)?d.msgs:[]; }
+  catch(e){ return []; }
+}
 
 // ── File attachment (client-side, free, offline) ──────────────────────────────
 function onFilePicked(e){
@@ -1573,7 +1595,7 @@ async function sendMsg(){
     ai.meta={t:((Date.now()-t0)/1000).toFixed(1)};
   }catch(e){ai.content='**Error:** '+e.message;}
   ai.streaming=false; chatBusy=false;
-  document.getElementById('send-btn').disabled=false; renderChat();
+  document.getElementById('send-btn').disabled=false; renderChat(); saveHistory();
 }
 
 // ── Cloud engine rate-limit helpers ───────────────────────────────────────────────────
