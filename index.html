@@ -87,6 +87,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .acct-av{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
 .ghost-btn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:10px;cursor:pointer;margin-top:8px}
 #tab-account.verified{border-color:var(--green);color:var(--green)}
+.upg-li{font-size:14px;padding:7px 0;border-bottom:1px solid var(--border)}.upg-li:last-child{border:none}
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .step{display:flex;gap:11px;align-items:flex-start}
 .snum{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -266,6 +267,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
+      <button class="icon-btn" id="tab-pro" onclick="openUpgrade()" title="Go Pro" style="border-color:var(--accent);color:var(--accent2)">⭐</button>
       <button class="icon-btn" id="tab-account" onclick="openAuth()" title="Account">👤</button>
     </div>
   </div>
@@ -309,6 +311,20 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <button class="ghost-btn" id="acct-resend" onclick="resendVerification()" style="display:none">Resend verification email</button>
         <button class="ghost-btn" onclick="signOutUser()">Log out</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ UPGRADE / PAYWALL ═══════════ -->
+  <div class="auth-overlay" id="upgrade-overlay">
+    <div class="auth-box" style="position:relative;max-width:400px">
+      <button class="auth-close" onclick="closeUpgrade()">×</button>
+      <h2>Go <span style="color:var(--accent2)">Pro</span></h2>
+      <p class="sub">Unlock the full power of AgentForge. Keep using your own free AI key — Pro unlocks the platform.</p>
+      <div class="auth-msg ok" id="upg-why" style="display:none"></div>
+      <div id="upg-list" style="margin:6px 0 16px"></div>
+      <button class="primary-btn" onclick="startCheckout('monthly')" style="margin-top:4px">Get Pro — monthly →</button>
+      <button class="ghost-btn" onclick="startCheckout('lifetime')">Or pay once — Lifetime access</button>
+      <div style="font-size:11px;color:var(--text2);text-align:center;margin-top:10px">Secure checkout · cancel anytime</div>
     </div>
   </div>
 
@@ -837,6 +853,46 @@ async function connectGroq(){
     btn.textContent='✗ Invalid key'; btn.style.background='var(--red)';
     setTimeout(()=>{ btn.textContent='Connect & Start →'; btn.disabled=false; btn.style.background=''; },2500);
   }
+}
+
+// ── Plans / Paywall ────────────────────────────────────────────────────────────
+// Owner-controlled. Paste your Lemon Squeezy / Paddle checkout links, then push.
+const CHECKOUT_PRO_MONTHLY = '';   // e.g. https://yourstore.lemonsqueezy.com/buy/xxxx
+const CHECKOUT_LIFETIME    = '';
+const PRO_FEATURES = [
+  '☁️ Cloud sync across all your devices',
+  '♾️ Unlimited conversation history & memory',
+  '🛠️ Custom Agent Creator + private library',
+  '🔗 Saved pipelines & 1-click rerun',
+  '📄 Pro export — PDF · DOCX · Notion',
+  '🤖 Bigger teams, pipelines & debates',
+  '⏰ Scheduled & automated agents',
+  '👥 Team workspaces & sharing',
+];
+function getPlan(){
+  const m=currentUser&&currentUser.user_metadata;
+  if(m&&m.plan) return m.plan;                       // set by backend webhook
+  return localStorage.getItem('ag_plan')||'free';     // local fallback for testing
+}
+function isPro(){ const p=getPlan(); return p==='pro'||p==='lifetime'||p==='team'; }
+function openUpgrade(reason){
+  const o=document.getElementById('upgrade-overlay'); if(!o) return;
+  const why=document.getElementById('upg-why');
+  why.style.display=reason?'block':'none';
+  if(reason) why.textContent='🔒 '+reason+' is a Pro feature.';
+  document.getElementById('upg-list').innerHTML=PRO_FEATURES.map(f=>`<div class="upg-li">${f}</div>`).join('');
+  o.classList.add('show');
+}
+function closeUpgrade(){ document.getElementById('upgrade-overlay').classList.remove('show'); }
+function startCheckout(which){
+  const url = which==='lifetime'?CHECKOUT_LIFETIME:CHECKOUT_PRO_MONTHLY;
+  if(!url){ alert('Checkout opens soon — the owner is finishing payment setup.'); return; }
+  window.open(url,'_blank','noopener');
+}
+// Returns true if allowed; otherwise shows the upgrade screen and returns false.
+function gatePro(featureName){
+  if(isPro()) return true;
+  openUpgrade(featureName); return false;
 }
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
