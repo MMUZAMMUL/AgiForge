@@ -556,6 +556,18 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <input class="field-input" id="s-gm-key" type="password" placeholder="Gemini key…" style="margin:4px 0 4px"/>
         <button class="primary-btn" onclick="saveBackupKeys()" style="margin-top:10px;background:var(--purple);font-size:13px;padding:10px">Save Backup Engines</button>
       </div>
+
+      <!-- Automations / Webhook -->
+      <div class="card">
+        <div class="card-title">⚡ Automations (optional)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div id="wh-dot" class="dot warn" style="width:8px;height:8px"></div>
+          <span id="wh-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+        </div>
+        <input class="field-input" id="s-webhook-url" placeholder="https://hooks.zapier.com/hooks/catch/…"/>
+        <div class="field-hint">Paste any Zapier, Make, or webhook URL. Pipeline/debate/benchmark output is POSTed as JSON so you can route it to Notion, Slack, email, or any app. <a href="https://zapier.com/apps/webhook/integrations" target="_blank" rel="noopener">Create a Zapier webhook ↗</a></div>
+        <button class="primary-btn" onclick="saveWebhookUrl()" style="margin-top:8px;background:var(--green);font-size:13px;padding:10px">Save Webhook URL</button>
+      </div>
     </div>
   </div>
 
@@ -822,6 +834,8 @@ const cfg = {
   set ollamaHost(v){ localStorage.setItem('ag_ollama_host',v); },
   get braveKey(){ return localStorage.getItem('ag_brave_key')||''; },
   set braveKey(v){ localStorage.setItem('ag_brave_key',v); },
+  get webhookUrl(){ return localStorage.getItem('ag_webhook_url')||''; },
+  set webhookUrl(v){ localStorage.setItem('ag_webhook_url',v); },
   get orKey(){ return localStorage.getItem('ag_or_key')||''; },
   set orKey(v){ localStorage.setItem('ag_or_key',v); },
   get cerebrasKey(){ return localStorage.getItem('ag_cb_key')||''; },
@@ -1554,6 +1568,8 @@ ${outputs[i]}`).join('\n\n---\n\n');
         <button class="save-btn2" onclick="continueFromPipeline()">💬 Continue in Chat</button>
         <button class="save-btn2" onclick="downloadPipeline()">⬇️ Download .md</button>
         <button class="save-btn2" onclick="savePipelineToMemory('${esc(document.getElementById('pl-goal').value)}')">💾 Save to Memory</button>
+        <button class="save-btn2" onclick="gistOutput('pipeline')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+        <button class="save-btn2" onclick="sendToWebhook('pipeline')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
       </div>`;
     window._lastPipelineOutput=combined;
     window._lastPipelineGoal=document.getElementById('pl-goal').value;
@@ -1828,6 +1844,7 @@ function renderChat(){
     const acts=(!m.streaming&&m.content)?`<div class="msg-actions">
         <button class="msg-act" onclick="copyMsg(${idx})">📋 Copy</button>
         <button class="msg-act" onclick="quoteMsg(${idx})">❝ Quote</button>
+        ${!u?`<button class="msg-act" onclick="gistMsg(${idx})">🔗 Gist</button>`:''}
         ${hasCode?`<button class="msg-act" onclick="saveAllFiles(${idx})">📂 Save all files</button>`:''}
       </div>`:'';
     return `<div class="msg ${u?'user':'assistant'}">
@@ -2137,6 +2154,13 @@ function loadSettingsUI(){
     if(n){od.className='dot ok';os.textContent=`${n} backup engine${n>1?'s':''} active — auto fail-over on`;}
     else{od.className='dot warn';os.textContent='Not configured — single provider only';}
   }
+  // update webhook/automation status
+  const whk=document.getElementById('s-webhook-url'); if(whk) whk.value=cfg.webhookUrl;
+  const whdot=document.getElementById('wh-dot'),whst=document.getElementById('wh-status');
+  if(whdot&&whst){
+    if(cfg.webhookUrl){whdot.className='dot ok';whst.textContent='Automation connected — outputs will be POSTed as JSON';}
+    else{whdot.className='dot warn';whst.textContent='Not configured — outputs stay in browser';}
+  }
 }
 
 async function saveBraveKey(){
@@ -2151,6 +2175,47 @@ async function saveBackupKeys(){
   loadSettingsUI();
   const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
   alert(n ? `✓ Saved ${n} backup engine${n>1?'s':''}! Jobs will auto-fail-over instead of stalling.` : 'Backup engines cleared.');
+}
+function saveWebhookUrl(){
+  cfg.webhookUrl=document.getElementById('s-webhook-url').value.trim();
+  loadSettingsUI();
+  showShareToast(cfg.webhookUrl ? '⚡ Webhook saved!' : 'Webhook cleared');
+}
+
+// ── Output → Action bridges ──────────────────────────────────────────────────
+function gistOutput(source){
+  let content='';
+  if(source==='pipeline') content=window._lastPipelineOutput||'';
+  else if(source==='debate') content=window._lastDebateEl?.innerText||'';
+  else if(source==='benchmark') content=window._lastBenchReport||'';
+  if(!content){ alert('Nothing to export yet'); return; }
+  const done=()=>{ window.open('https://gist.github.com/','_blank','noopener'); showShareToast('Copied! Paste into Gist editor ↗'); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(content).then(done).catch(()=>fallbackCopy(content,done)); }
+  else fallbackCopy(content,done);
+}
+function gistMsg(idx){
+  const m=chatMsgs[idx]; if(!m||!m.content) return;
+  const header=`# ${curAgent?.name||'AgentForge'} — ${new Date().toLocaleDateString()}\n\n`;
+  const done=()=>{ window.open('https://gist.github.com/','_blank','noopener'); showShareToast('Copied! Paste into Gist editor ↗'); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(header+m.content).then(done).catch(()=>fallbackCopy(header+m.content,done)); }
+  else fallbackCopy(header+m.content,done);
+}
+async function sendToWebhook(source){
+  if(!cfg.webhookUrl){ showShareToast('⚙️ No webhook — check Settings'); return; }
+  let output='',goal='',agents=[];
+  if(source==='pipeline'){
+    output=window._lastPipelineOutput||''; goal=window._lastPipelineGoal||''; agents=pipeline.map(a=>a.name);
+  } else if(source==='debate'){
+    output=window._lastDebateEl?.innerText||''; goal=document.getElementById('debate-topic')?.value||'';
+  } else if(source==='benchmark'){
+    output=window._lastBenchReport||''; goal=document.getElementById('bench-prompt')?.value||'';
+  }
+  if(!output){ alert('Nothing to send yet'); return; }
+  try{
+    await fetch(cfg.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',
+      body:JSON.stringify({source:'agentforge',mode:source,timestamp:new Date().toISOString(),goal,agents,output})});
+    showShareToast('⚡ Sent to automation!');
+  }catch(e){ alert('Webhook error: '+e.message); }
 }
 function setProvider(p,save=true){
   cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
@@ -2339,6 +2404,8 @@ async function runDebate(){
         </p>
         <button class="copy-btn" style="background:var(--purple)22;border-color:var(--purple)44;color:var(--purple);margin-top:10px" onclick="copyDebateOutput()">📋 Copy Debate</button>
         <button class="save-btn2" onclick="downloadDebate()">⬇️ Download .md</button>
+        <button class="save-btn2" onclick="gistOutput('debate')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+        <button class="save-btn2" onclick="sendToWebhook('debate')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
       </div>`;
     window._lastDebateEl=screen;
     window._lastDebateTopic=topic;
@@ -2490,6 +2557,8 @@ async function runBenchmark(){
         </div>`).join('')}
       <p style="font-size:12px;color:var(--text2);margin-top:8px">${judged?'⚖️ Scored by an impartial AI judge on relevance, depth & correctness.':'Heuristic score = depth(50) + code(20) + structure(15) + speed(15). Connect AI for AI-judged scoring.'}</p>
       <button class="save-btn2" onclick="downloadBenchmark()">⬇️ Download Full Report .md</button>
+      <button class="save-btn2" onclick="gistOutput('benchmark')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+      <button class="save-btn2" onclick="sendToWebhook('benchmark')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
     </div>`;
 
   // Build exportable markdown report (rankings + full answers)
