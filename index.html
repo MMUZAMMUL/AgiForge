@@ -254,6 +254,22 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
 .bench-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:7px}
 .bench-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .6s ease}
 .bench-winner{border-color:var(--green)!important;background:var(--green)08!important}
+
+/* ── CREATOR SCREEN ── */
+.creator-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px}
+.creator-field{display:flex;flex-direction:column;gap:4px}
+.creator-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.creator-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;font-family:inherit;width:100%}
+.creator-input:focus{border-color:var(--accent)}
+.creator-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;width:100%;cursor:pointer}
+.creator-ta{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;resize:vertical;font-family:inherit;width:100%;min-height:90px;line-height:1.5}
+.creator-ta:focus,.creator-select:focus{border-color:var(--accent)}
+.creator-row{display:flex;gap:8px}
+.creator-row .creator-field{flex:1}
+.creator-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:12px;color:var(--text2);white-space:pre-wrap;font-family:monospace;max-height:200px;overflow-y:auto;display:none}
+.my-agent-item{display:flex;align-items:center;gap:11px;padding:11px;border-radius:var(--radius);cursor:pointer;margin-bottom:3px;background:var(--bg2);border:1px solid var(--border)88;position:relative}
+.my-agent-del{background:none;border:none;color:var(--red);font-size:16px;padding:4px 6px;cursor:pointer;opacity:.7;flex-shrink:0}
+.my-agent-del:hover{opacity:1}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 </head>
@@ -270,6 +286,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-memory" onclick="showScreen('memory')" title="Memory">🧠</button>
       <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
+      <button class="icon-btn" id="tab-creator" onclick="showScreen('creator')" title="Create Agent">✏️</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
       <button class="icon-btn" id="tab-pro" onclick="openUpgrade()" title="Go Pro" style="border-color:var(--accent);color:var(--accent2)">⭐</button>
       <button class="icon-btn" id="tab-admin" onclick="openAdmin()" title="Admin" style="display:none;border-color:var(--accent2)">🛡️</button>
@@ -567,6 +584,82 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <input class="field-input" id="s-webhook-url" placeholder="https://hooks.zapier.com/hooks/catch/…"/>
         <div class="field-hint">Paste any Zapier, Make, or webhook URL. Pipeline/debate/benchmark output is POSTed as JSON so you can route it to Notion, Slack, email, or any app. <a href="https://zapier.com/apps/webhook/integrations" target="_blank" rel="noopener">Create a Zapier webhook ↗</a></div>
         <button class="primary-btn" onclick="saveWebhookUrl()" style="margin-top:8px;background:var(--green);font-size:13px;padding:10px">Save Webhook URL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ CREATOR ═══════════ -->
+  <div id="screen-creator" class="screen">
+    <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <span style="font-weight:700;font-size:15px">✏️ Agent Creator</span>
+      <span style="font-size:12px;color:var(--text2)">Build your own specialist</span>
+    </div>
+    <div class="creator-body">
+      <div class="creator-row">
+        <div class="creator-field">
+          <div class="creator-label">Agent Name *</div>
+          <input class="creator-input" id="cr-name" placeholder="e.g. Crypto Analyst"/>
+        </div>
+        <div class="creator-field" style="max-width:80px">
+          <div class="creator-label">Emoji</div>
+          <input class="creator-input" id="cr-emoji" placeholder="🔍" maxlength="2"/>
+        </div>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Division *</div>
+        <select class="creator-select" id="cr-division">
+          <option value="">Select division…</option>
+          <option>academic</option><option>design</option><option>engineering</option>
+          <option>finance</option><option>game-development</option><option>gis</option>
+          <option>marketing</option><option>paid-media</option><option>product</option>
+          <option>project-management</option><option>sales</option><option>security</option>
+          <option>spatial-computing</option><option>specialized</option><option>support</option><option>testing</option>
+        </select>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">One-line description *</div>
+        <input class="creator-input" id="cr-desc" placeholder="e.g. Expert in DeFi, tokenomics, and on-chain analytics"/>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Personality vibe</div>
+        <input class="creator-input" id="cr-vibe" placeholder="e.g. Reads the blockchain so you don't have to"/>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Core expertise &amp; knowledge areas</div>
+        <textarea class="creator-ta" id="cr-expertise" placeholder="What does this agent deeply know?&#10;e.g. DeFi protocols, tokenomics, whale tracking, on-chain data analysis, smart contract auditing"></textarea>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Communication style</div>
+        <select class="creator-select" id="cr-style">
+          <option value="direct">Direct &amp; concise — gets to the point fast</option>
+          <option value="thorough">Thorough &amp; detailed — comprehensive breakdowns</option>
+          <option value="creative">Creative &amp; energetic — bold ideas and enthusiasm</option>
+          <option value="academic">Academic &amp; precise — citations, rigor, structure</option>
+          <option value="coaching">Coaching &amp; socratic — asks questions, guides thinking</option>
+        </select>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Key deliverables (what outputs does this agent produce?)</div>
+        <textarea class="creator-ta" id="cr-deliverables" placeholder="e.g. Token analysis reports, smart contract risk assessments, market trend summaries, DeFi yield comparisons" style="min-height:70px"></textarea>
+      </div>
+      <button class="run-btn" id="cr-gen-btn" onclick="generateAgentWithAI()" style="background:linear-gradient(135deg,var(--accent),var(--purple));margin-top:2px">✨ Generate System Prompt with AI</button>
+      <div id="cr-gen-status" style="font-size:12px;color:var(--text2);text-align:center;min-height:14px"></div>
+      <div class="creator-field">
+        <div class="creator-label" style="display:flex;justify-content:space-between">
+          <span>System Prompt <span style="color:var(--text2);font-weight:400">(auto-generated or write your own)</span></span>
+          <span id="cr-char-count" style="color:var(--text2)"></span>
+        </div>
+        <textarea class="creator-ta" id="cr-prompt" placeholder="Your agent's full system prompt…&#10;&#10;Or click '✨ Generate' above to create one from your inputs." style="min-height:160px" oninput="updateCharCount()"></textarea>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="run-btn" onclick="saveCustomAgent()" style="flex:1">💾 Save &amp; Use Agent</button>
+        <button class="save-btn2" onclick="copyAgentMd()" style="flex:0 0 auto;width:auto;padding:0 16px;margin:0">📋 Copy .md</button>
+      </div>
+
+      <!-- Saved custom agents -->
+      <div id="my-agents-section" style="display:none">
+        <div class="list-section" style="margin-top:4px">🛠️ My Custom Agents<span class="ls-line"></span></div>
+        <div id="my-agents-list"></div>
       </div>
     </div>
   </div>
@@ -888,13 +981,14 @@ async function waitForSupa(ms=5000){
 function showScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+n).classList.add('active');
-  ['agents','pipeline','memory','debate','benchmark','settings'].forEach(t=>{
+  ['agents','pipeline','memory','debate','benchmark','creator','settings'].forEach(t=>{
     const el=document.getElementById('tab-'+t);
     if(el) el.classList.toggle('active-tab',t===n);
   });
   if(n==='memory') renderMemory();
   if(n==='debate') initDebateSelects();
   if(n==='benchmark') initBenchmarkAgents();
+  if(n==='creator') renderMyAgents();
 }
 
 function updateHdr(){
@@ -1218,6 +1312,8 @@ function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrol
 
 // ── Fetch full agent content ───────────────────────────────────────────────────
 async function fetchAgentContent(a){
+  // Custom agents have their system prompt stored directly
+  if(a._custom && a.systemPrompt) return a.systemPrompt;
   // Try GitHub raw — agents live in this repo alongside index.html
   try{
     const url=`${GITHUB_RAW}/${a.division}/${a.id}.md`;
@@ -1276,24 +1372,130 @@ function section(label){ return `<div class="list-section">${label}<span class="
 function renderList(){
   const q=document.getElementById('search').value.toLowerCase();
   const el=document.getElementById('agent-list');
+  const customs=getCustomAgents();
+  const allAgents=[...AGENTS,...customs];
   // Home view (no search, no division filter, not in pipeline mode): show shelves
   if(!q && !selectedDiv && !pipelineMode){
-    const favs=getFavs().map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+    const favs=getFavs().map(id=>allAgents.find(a=>a.id===id)).filter(Boolean);
     const popular=POPULAR_IDS.map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
     let html='';
+    if(customs.length) html+=section(`🛠️ My Agents · ${customs.length}`)+customs.map(agentCard).join('');
     if(favs.length) html+=section('⭐ Your Favorites')+favs.map(agentCard).join('');
     html+=section('🔥 Popular')+popular.map(agentCard).join('');
     html+=section(`📁 All Specialists · ${AGENTS.length}`)+AGENTS.map(agentCard).join('');
     el.innerHTML=html;
     return;
   }
-  const f=AGENTS.filter(a=>(!q||a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q)||a.division.includes(q))&&(!selectedDiv||a.division===selectedDiv));
+  const f=allAgents.filter(a=>(!q||a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q)||a.division.includes(q))&&(!selectedDiv||a.division===selectedDiv));
   if(!f.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--text2)">No agents found</div>';return;}
   el.innerHTML=f.map(agentCard).join('');
 }
 function agentTap(id){
   if(pipelineMode){ togglePipelineAgent(id); }
   else { openAgent(id); }
+}
+
+// ── Agent Creator Studio ──────────────────────────────────────────────────────
+function getCustomAgents(){ try{ return JSON.parse(localStorage.getItem('ag_custom_agents')||'[]'); }catch(e){ return []; } }
+function saveCustomAgents(list){ localStorage.setItem('ag_custom_agents',JSON.stringify(list)); }
+
+function updateCharCount(){
+  const v=document.getElementById('cr-prompt').value;
+  document.getElementById('cr-char-count').textContent=v.length?`${v.length} chars`:'';
+}
+
+async function generateAgentWithAI(){
+  const name=document.getElementById('cr-name').value.trim();
+  const division=document.getElementById('cr-division').value;
+  const expertise=document.getElementById('cr-expertise').value.trim();
+  const style=document.getElementById('cr-style').value;
+  const deliverables=document.getElementById('cr-deliverables').value.trim();
+  const status=document.getElementById('cr-gen-status');
+  if(!name||!division){ status.textContent='↑ Name and division are required'; return; }
+  if(cfg.provider==='demo'||!cfg.groqKey.startsWith('gsk_')){
+    status.innerHTML='<span style="color:var(--orange)">Connect AI first — tap ⚙️ Settings</span>'; return;
+  }
+  const btn=document.getElementById('cr-gen-btn');
+  btn.disabled=true; btn.textContent='✨ Generating…'; status.textContent='Writing system prompt…';
+  const styleDesc={direct:'direct and concise — answers fast, no fluff',thorough:'thorough and detailed — comprehensive breakdowns with examples',creative:'creative and energetic — bold ideas, enthusiasm, lateral thinking',academic:'academic and precise — cites reasoning, rigorous structure, nuanced',coaching:'coaching and Socratic — asks clarifying questions, guides the user to think'}[style]||style;
+  const sys='You are an expert AI system prompt engineer. You write high-quality, professional agent system prompts.';
+  const prompt=`Create a professional AI agent system prompt for a specialist named "${name}" in the ${division} division.
+
+Details:
+- Core expertise: ${expertise||'General '+division+' knowledge'}
+- Communication style: ${styleDesc}
+- Key deliverables: ${deliverables||'Expert analysis and actionable recommendations'}
+
+Write a system prompt of 350–500 words with these sections:
+## 🧠 Identity & Memory
+## 🎯 Core Mission (3-4 bullet points)
+## 🔒 Critical Rules (3-5 non-negotiables)
+## 📋 Deliverable Templates (2 concrete output formats with headers)
+## 💬 Communication Style
+
+Output ONLY the system prompt text, no extra explanation.`;
+  try{
+    const res=await groqFetchWithRetry({model:cfg.groqModel,max_tokens:1024,temperature:0.7,messages:[{role:'system',content:sys},{role:'user',content:prompt}]},s=>status.textContent=s);
+    const text=res.choices?.[0]?.message?.content||'';
+    if(text){ document.getElementById('cr-prompt').value=text; updateCharCount(); status.textContent='✓ System prompt generated! Review and save.'; }
+    else status.textContent='No output — try again';
+  }catch(e){ status.textContent='Error: '+e.message; }
+  btn.disabled=false; btn.textContent='✨ Generate System Prompt with AI';
+}
+
+function saveCustomAgent(){
+  const name=document.getElementById('cr-name').value.trim();
+  const division=document.getElementById('cr-division').value;
+  const desc=document.getElementById('cr-desc').value.trim();
+  const prompt=document.getElementById('cr-prompt').value.trim();
+  const emoji=document.getElementById('cr-emoji').value.trim()||'🤖';
+  const vibe=document.getElementById('cr-vibe').value.trim();
+  if(!name||!division||!desc){ alert('Name, division, and description are required.'); return; }
+  if(!prompt){ alert('System prompt is required. Use ✨ Generate or write your own.'); return; }
+  const id='custom-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  const agent={id,name,division,description:desc,color:'var(--accent)',emoji,vibe,systemPrompt:prompt,_custom:true};
+  const list=getCustomAgents().filter(a=>a.id!==id);
+  list.unshift(agent);
+  saveCustomAgents(list);
+  renderList(); renderMyAgents();
+  showShareToast('✅ Agent saved! Find it in 🏠 Agents → My Agents');
+}
+
+function deleteCustomAgent(id){
+  const list=getCustomAgents().filter(a=>a.id!==id);
+  saveCustomAgents(list);
+  renderMyAgents(); renderList();
+}
+
+function renderMyAgents(){
+  const list=getCustomAgents();
+  const sec=document.getElementById('my-agents-section');
+  const el=document.getElementById('my-agents-list');
+  if(!sec||!el) return;
+  sec.style.display=list.length?'block':'none';
+  el.innerHTML=list.map(a=>`
+    <div class="my-agent-item" onclick="openAgent('${a.id}')">
+      <div class="agi-emoji" style="background:var(--accent)22;color:var(--accent);border:1px solid var(--accent)44;width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${a.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${a.name}</div>
+        <div style="font-size:11px;color:var(--text2)">${a.division}</div>
+        <div style="font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.description}</div>
+      </div>
+      <button class="my-agent-del" onclick="event.stopPropagation();deleteCustomAgent('${a.id}')" title="Delete">✕</button>
+    </div>`).join('');
+}
+
+function copyAgentMd(){
+  const name=document.getElementById('cr-name').value.trim()||'My Agent';
+  const division=document.getElementById('cr-division').value||'specialized';
+  const desc=document.getElementById('cr-desc').value.trim()||'A custom specialist';
+  const emoji=document.getElementById('cr-emoji').value.trim()||'🤖';
+  const prompt=document.getElementById('cr-prompt').value.trim();
+  if(!prompt){ alert('Generate or write a system prompt first.'); return; }
+  const md=`---\nname: ${name}\ndescription: ${desc}\ndivision: ${division}\nemoji: ${emoji}\ncolor: "#f59e0b"\n---\n\n${prompt}`;
+  const done=()=>showShareToast('📋 .md copied! Paste into agents/'+division+'/');
+  if(navigator.clipboard){ navigator.clipboard.writeText(md).then(done).catch(()=>fallbackCopy(md,done)); }
+  else fallbackCopy(md,done);
 }
 
 // ── Pipeline mode toggle ──────────────────────────────────────────────────────
@@ -1633,7 +1835,7 @@ function downloadChat(){
 
 // ── Chat ──────────────────────────────────────────────────────────────────────
 async function openAgent(id){
-  const a=AGENTS.find(x=>x.id===id); if(!a) return;
+  const a=AGENTS.find(x=>x.id===id)||getCustomAgents().find(x=>x.id===id); if(!a) return;
   curAgent={...a,content:null}; chatMsgs=loadHistory(a.id); attachedFile=null; renderAttachChip();
   const h=colorHex(a.color);
   document.getElementById('ch-name').textContent=a.name;
