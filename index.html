@@ -88,6 +88,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .ghost-btn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:10px;cursor:pointer;margin-top:8px}
 #tab-account.verified{border-color:var(--green);color:var(--green)}
 .upg-li{font-size:14px;padding:7px 0;border-bottom:1px solid var(--border)}.upg-li:last-child{border:none}
+.rev-item{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px 11px;margin-bottom:7px}
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .step{display:flex;gap:11px;align-items:flex-start}
 .snum{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -268,9 +269,11 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
       <button class="icon-btn" id="tab-pro" onclick="openUpgrade()" title="Go Pro" style="border-color:var(--accent);color:var(--accent2)">⭐</button>
+      <button class="icon-btn" id="tab-admin" onclick="openAdmin()" title="Admin" style="display:none;border-color:var(--accent2)">🛡️</button>
       <button class="icon-btn" id="tab-account" onclick="openAuth()" title="Account">👤</button>
     </div>
   </div>
+  <div id="announce-bar" style="display:none;background:var(--accent)22;border-bottom:1px solid var(--accent)55;color:var(--accent2);font-size:12px;padding:7px 14px;text-align:center"></div>
 
   <!-- ═══════════ AUTH MODAL ═══════════ -->
   <div class="auth-overlay" id="auth-overlay">
@@ -309,6 +312,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         </div>
         <div class="auth-msg" id="acct-msg"></div>
         <button class="ghost-btn" id="acct-resend" onclick="resendVerification()" style="display:none">Resend verification email</button>
+        <button class="ghost-btn" onclick="closeAuth();openReviews()">⭐ Rate AgentForge</button>
         <button class="ghost-btn" onclick="signOutUser()">Log out</button>
       </div>
     </div>
@@ -328,6 +332,38 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
     </div>
   </div>
 
+  <!-- ═══════════ REVIEWS ═══════════ -->
+  <div class="auth-overlay" id="reviews-overlay">
+    <div class="auth-box" style="position:relative;max-width:400px">
+      <button class="auth-close" onclick="closeReviews()">×</button>
+      <h2>Rate Agent<span style="color:var(--accent2)">Forge</span></h2>
+      <p class="sub">Your feedback helps others discover the app.</p>
+      <div id="star-pick" style="display:flex;gap:4px;margin-bottom:10px"></div>
+      <textarea class="auth-input" id="review-body" rows="3" placeholder="What do you love? (optional)"></textarea>
+      <div class="auth-msg" id="review-msg"></div>
+      <button class="primary-btn" onclick="submitReview()">Submit review</button>
+      <div id="review-list" style="margin-top:16px;max-height:30vh;overflow-y:auto"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ ADMIN PORTAL ═══════════ -->
+  <div class="auth-overlay" id="admin-overlay">
+    <div class="auth-box" style="position:relative;max-width:420px">
+      <button class="auth-close" onclick="closeAdmin()">×</button>
+      <h2>🛡️ Admin portal</h2>
+      <p class="sub">Owner-only controls. Visible only to your account.</p>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-members">—</div><div class="card-title" style="margin:0">Members</div></div>
+        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-reviews">—</div><div class="card-title" style="margin:0">Reviews</div></div>
+        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-rating">—</div><div class="card-title" style="margin:0">Rating</div></div>
+      </div>
+      <label style="font-size:12px;color:var(--text2)">Announcement banner (shown to all users)</label>
+      <textarea class="auth-input" id="adm-announce" rows="2" placeholder="e.g. 🎉 Pro is now live — 50% off this week!"></textarea>
+      <div class="auth-msg" id="adm-msg"></div>
+      <button class="primary-btn" onclick="saveAnnouncement()">Save announcement</button>
+    </div>
+  </div>
+
   <!-- ═══════════ SETUP ═══════════ -->
   <div id="screen-setup" class="screen active">
     <div class="welcome">
@@ -335,6 +371,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <div class="big">⚡</div>
         <h1>Agent<span style="color:var(--accent2)">Forge</span></h1>
         <p>183 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
+        <div id="review-summary" style="display:none;font-size:13px;margin-top:8px"></div>
       </div>
       <div class="card">
         <div class="card-title">⚡ Activate Free AI — 2 minutes on mobile</div>
@@ -362,6 +399,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <span id="pl-count" style="background:var(--purple);color:#fff;padding:1px 8px;border-radius:99px;font-size:11px;font-weight:700">0</span>
       <button onclick="goToPipeline()" style="margin-left:auto;background:var(--purple);border:none;color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer">Build →</button>
     </div>
+    <div style="padding:0 12px"><span id="member-pill" style="display:none;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:3px 10px;border-radius:99px;margin-bottom:6px"></span></div>
     <div class="div-scroll" id="div-tabs"></div>
     <div class="agent-list" id="agent-list"></div>
   </div>
@@ -895,6 +933,115 @@ function gatePro(featureName){
   openUpgrade(featureName); return false;
 }
 
+// ── Admin / Owner ──────────────────────────────────────────────────────────────
+const ADMIN_EMAILS = ['munagreat123@gmail.com']; // owner-only controls
+function isAdmin(){ return !!currentUser && ADMIN_EMAILS.includes((currentUser.email||'').toLowerCase()); }
+
+// ── Live member count ──────────────────────────────────────────────────────────
+async function fetchMemberCount(){
+  if(!authReady()) return null;
+  try{ const {count,error}=await supa.from('profiles').select('*',{count:'exact',head:true}); return error?null:count; }
+  catch(e){ return null; }
+}
+async function refreshMemberCount(){
+  const el=document.getElementById('member-pill'); if(!el) return;
+  const n=await fetchMemberCount();
+  if(n===null){ el.style.display='none'; return; }
+  el.style.display='inline-flex';
+  el.textContent='👥 '+n.toLocaleString()+(n===1?' member':' members');
+}
+
+// ── Reviews ─────────────────────────────────────────────────────────────────────
+async function fetchReviews(){
+  if(!authReady()) return [];
+  try{ const {data,error}=await supa.from('reviews').select('*').order('created_at',{ascending:false}).limit(20); return error?[]:(data||[]); }
+  catch(e){ return []; }
+}
+async function refreshReviewSummary(){
+  const box=document.getElementById('review-summary'); if(!box) return;
+  const r=await fetchReviews();
+  if(!r.length){ box.style.display='none'; return; }
+  const avg=(r.reduce((s,x)=>s+(x.rating||0),0)/r.length);
+  const stars='★★★★★'.slice(0,Math.round(avg))+'☆☆☆☆☆'.slice(0,5-Math.round(avg));
+  box.style.display='block';
+  box.innerHTML=`<span style="color:var(--accent2)">${stars}</span> ${avg.toFixed(1)} · ${r.length} review${r.length>1?'s':''}`;
+}
+let _reviewRating=5;
+function openReviews(){
+  if(!authReady()){ alert('Reviews open once the owner finishes backend setup.'); return; }
+  if(!currentUser){ closeAuth(); openAuth(); return; }
+  document.getElementById('reviews-overlay').classList.add('show');
+  setReviewStars(5); document.getElementById('review-body').value='';
+  document.getElementById('review-msg').className='auth-msg';
+  loadReviewList();
+}
+function closeReviews(){ document.getElementById('reviews-overlay').classList.remove('show'); }
+function setReviewStars(n){
+  _reviewRating=n;
+  document.getElementById('star-pick').innerHTML=[1,2,3,4,5].map(i=>
+    `<span onclick="setReviewStars(${i})" style="cursor:pointer;font-size:26px;color:${i<=n?'var(--accent2)':'var(--border)'}">★</span>`).join('');
+}
+async function submitReview(){
+  const body=document.getElementById('review-body').value.trim();
+  const msg=document.getElementById('review-msg');
+  const name=(currentUser.user_metadata||{}).full_name||currentUser.email.split('@')[0];
+  try{
+    const {error}=await supa.from('reviews').insert({user_id:currentUser.id,name,rating:_reviewRating,body});
+    if(error) throw error;
+    msg.textContent='Thanks for your review!'; msg.className='auth-msg ok';
+    loadReviewList(); refreshReviewSummary();
+  }catch(e){ msg.textContent=e.message; msg.className='auth-msg err'; }
+}
+async function loadReviewList(){
+  const list=document.getElementById('review-list');
+  const r=await fetchReviews();
+  list.innerHTML=r.length?r.map(x=>`<div class="rev-item">
+    <div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:13px">${esc(x.name||'User')}</b>
+    <span style="color:var(--accent2);font-size:12px">${'★'.repeat(x.rating||0)}</span></div>
+    ${x.body?`<div style="font-size:13px;color:var(--text2);margin-top:3px">${esc(x.body)}</div>`:''}</div>`).join('')
+    :'<div style="color:var(--text2);font-size:13px;text-align:center;padding:12px">Be the first to review!</div>';
+}
+
+// ── Admin portal ─────────────────────────────────────────────────────────────────
+function openAdmin(){
+  if(!isAdmin()){ alert('Owner only.'); return; }
+  document.getElementById('admin-overlay').classList.add('show');
+  loadAdmin();
+}
+function closeAdmin(){ document.getElementById('admin-overlay').classList.remove('show'); }
+async function loadAdmin(){
+  const n=await fetchMemberCount();
+  const r=await fetchReviews();
+  const avg=r.length?(r.reduce((s,x)=>s+(x.rating||0),0)/r.length).toFixed(1):'—';
+  document.getElementById('adm-members').textContent=n===null?'—':n.toLocaleString();
+  document.getElementById('adm-reviews').textContent=r.length;
+  document.getElementById('adm-rating').textContent=avg;
+  // load announcement
+  try{
+    const {data}=await supa.from('app_config').select('value').eq('key','announcement').maybeSingle();
+    document.getElementById('adm-announce').value=(data&&data.value&&data.value.text)||'';
+  }catch(e){}
+}
+async function saveAnnouncement(){
+  const text=document.getElementById('adm-announce').value.trim();
+  const msg=document.getElementById('adm-msg');
+  try{
+    const {error}=await supa.from('app_config').upsert({key:'announcement',value:{text},updated_at:new Date().toISOString()});
+    if(error) throw error;
+    msg.textContent='Saved — visible to all users.'; msg.className='auth-msg ok';
+    applyAnnouncement();
+  }catch(e){ msg.textContent=e.message; msg.className='auth-msg err'; }
+}
+async function applyAnnouncement(){
+  const bar=document.getElementById('announce-bar'); if(!bar||!authReady()) return;
+  try{
+    const {data}=await supa.from('app_config').select('value').eq('key','announcement').maybeSingle();
+    const text=data&&data.value&&data.value.text;
+    if(text){ bar.textContent='📢 '+text; bar.style.display='block'; }
+    else bar.style.display='none';
+  }catch(e){}
+}
+
 // ── Auth ──────────────────────────────────────────────────────────────────────
 function openAuth(){
   document.getElementById('auth-overlay').classList.add('show');
@@ -988,6 +1135,7 @@ function updateAuthUI(){
   } else {
     btn.textContent='👤'; btn.classList.remove('verified'); btn.title='Sign in';
   }
+  const adm=document.getElementById('tab-admin'); if(adm) adm.style.display=isAdmin()?'inline-block':'none';
 }
 async function initAuth(){
   initSupa();
@@ -1001,6 +1149,7 @@ async function initAuth(){
     if(document.getElementById('auth-overlay').classList.contains('show')) renderAuth();
   });
   updateAuthUI();
+  refreshMemberCount(); refreshReviewSummary(); applyAnnouncement();
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
