@@ -1,8 +1,6 @@
 /* AgentForge service worker — offline app shell + runtime caching */
-const VERSION = 'agentforge-v1';
+const VERSION = 'agentforge-v3';
 const SHELL = [
-  './',
-  './index.html',
   './manifest.webmanifest',
   './assets/logo.svg',
   './assets/icon-192.png',
@@ -27,8 +25,8 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Never cache AI/provider/search/code-exec calls — always go to network.
-  const liveHosts = ['api.groq.com', 'localhost', '127.0.0.1', 'api.search.brave.com', 'emkc.org'];
+  // Never cache AI/provider/search/code-exec/backend calls — always go to network.
+  const liveHosts = ['api.groq.com', 'localhost', '127.0.0.1', 'api.search.brave.com', 'emkc.org', 'supabase.co', 'jsdelivr.net'];
   if (liveHosts.some((h) => url.hostname.includes(h))) return;
 
   // Agent prompt files (raw.githubusercontent): stale-while-revalidate.
@@ -46,18 +44,34 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Same-origin app shell: cache-first, fall back to network.
-  if (url.origin === location.origin) {
+  if (url.origin !== location.origin) return;
+
+  // HTML / navigation: NETWORK-FIRST so the app is always up to date,
+  // falling back to cache only when offline. Prevents stale-app bugs.
+  const isHTML = req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('.html');
+  if (isHTML) {
     e.respondWith(
-      caches.match(req).then((cached) =>
-        cached || fetch(req).then((res) => {
-          if (res && res.ok) {
-            const copy = res.clone();
-            caches.open(VERSION).then((c) => c.put(req, copy));
-          }
-          return res;
-        }).catch(() => caches.match('./index.html'))
-      )
+      fetch(req).then((res) => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(VERSION).then((c) => c.put(req, copy));
+        }
+        return res;
+      }).catch(() => caches.match(req).then((c) => c || caches.match('./index.html')))
     );
+    return;
   }
+
+  // Other same-origin assets: cache-first, fall back to network.
+  e.respondWith(
+    caches.match(req).then((cached) =>
+      cached || fetch(req).then((res) => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(VERSION).then((c) => c.put(req, copy));
+        }
+        return res;
+      })
+    )
+  );
 });

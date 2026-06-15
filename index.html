@@ -2456,10 +2456,15 @@ function stopBenchmark(){
   _benchInit=false;initBenchmarkAgents();
 }
 
-/* PWA: register service worker for offline + installability */
+/* PWA: register service worker for offline + installability.
+   Auto-reload once when a new version takes control, so updates are seamless. */
 if('serviceWorker' in navigator){
+  let _reloaded=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(_reloaded) return; _reloaded=true; location.reload();
+  });
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
+    navigator.serviceWorker.register('sw.js').then((reg)=>{ reg.update(); }).catch(()=>{});
   });
 }
 </script>
