@@ -67,6 +67,26 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .field-hint{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5}
 .primary-btn{width:100%;padding:13px;background:var(--accent);border:none;color:#fff;font-size:15px;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-top:10px}
 .primary-btn:disabled{opacity:.5}
+/* ── Auth ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(8,9,14,.82);backdrop-filter:blur(4px);z-index:10000;display:none;align-items:center;justify-content:center;padding:18px}
+.auth-overlay.show{display:flex}
+.auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:22px;width:100%;max-width:380px;box-shadow:0 24px 60px -16px #000;max-height:92vh;overflow-y:auto}
+.auth-box h2{font-size:20px;font-weight:700;margin-bottom:4px}.auth-box .sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+.auth-box label{display:block;font-size:12px;color:var(--text2);margin:10px 0 4px}
+.auth-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:12px 13px;border-radius:10px;font-size:15px;outline:none}
+.auth-input:focus{border-color:var(--accent)}
+.auth-tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--bg3);padding:4px;border-radius:10px}
+.auth-tab{flex:1;text-align:center;padding:9px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text2)}
+.auth-tab.on{background:var(--accent);color:#fff}
+.auth-msg{font-size:13px;border-radius:9px;padding:10px 12px;margin-top:12px;display:none;line-height:1.5}
+.auth-msg.err{display:block;background:#ef444422;border:1px solid #ef444455;color:#fca5a5}
+.auth-msg.ok{display:block;background:#22c55e22;border:1px solid #22c55e55;color:#86efac}
+.auth-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer}
+.auth-x{display:flex;justify-content:space-between;align-items:flex-start}
+.acct-row{display:flex;align-items:center;gap:11px;padding:12px;background:var(--bg3);border-radius:11px;margin-bottom:14px}
+.acct-av{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
+.ghost-btn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:10px;cursor:pointer;margin-top:8px}
+#tab-account.verified{border-color:var(--green);color:var(--green)}
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .step{display:flex;gap:11px;align-items:flex-start}
 .snum{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -230,6 +250,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
 .bench-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .6s ease}
 .bench-winner{border-color:var(--green)!important;background:var(--green)08!important}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="app">
@@ -245,6 +266,49 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
+      <button class="icon-btn" id="tab-account" onclick="openAuth()" title="Account">👤</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ AUTH MODAL ═══════════ -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-box" style="position:relative">
+      <button class="auth-close" onclick="closeAuth()">×</button>
+      <!-- Signed-OUT view -->
+      <div id="auth-signedout">
+        <h2>Welcome to Agent<span style="color:var(--accent2)">Forge</span></h2>
+        <p class="sub">Create a free account to save your work and join the community.</p>
+        <div class="auth-tabs">
+          <div class="auth-tab on" id="atab-login" onclick="authTab('login')">Log in</div>
+          <div class="auth-tab" id="atab-signup" onclick="authTab('signup')">Sign up</div>
+        </div>
+        <div id="auth-name-wrap" style="display:none">
+          <label>Full name</label>
+          <input class="auth-input" id="auth-name" placeholder="Jane Doe" autocomplete="name"/>
+        </div>
+        <label>Email</label>
+        <input class="auth-input" id="auth-email" type="email" placeholder="you@email.com" autocomplete="email"/>
+        <label>Password</label>
+        <input class="auth-input" id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+        <div class="auth-msg" id="auth-msg"></div>
+        <button class="primary-btn" id="auth-submit" onclick="authSubmit()">Log in →</button>
+        <button class="ghost-btn" onclick="closeAuth()">Maybe later — just browse</button>
+      </div>
+      <!-- Signed-IN view -->
+      <div id="auth-signedin" style="display:none">
+        <div class="auth-x"><h2>Your account</h2></div>
+        <div class="acct-row" style="margin-top:12px">
+          <div class="acct-av" id="acct-av">?</div>
+          <div style="min-width:0">
+            <div id="acct-name" style="font-weight:600;font-size:15px"></div>
+            <div id="acct-email" style="font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis"></div>
+            <div id="acct-verify" style="font-size:12px;margin-top:3px"></div>
+          </div>
+        </div>
+        <div class="auth-msg" id="acct-msg"></div>
+        <button class="ghost-btn" id="acct-resend" onclick="resendVerification()" style="display:none">Resend verification email</button>
+        <button class="ghost-btn" onclick="signOutUser()">Log out</button>
+      </div>
     </div>
   </div>
 
@@ -713,9 +777,22 @@ let curAgent=null, chatMsgs=[], chatBusy=false, attachedFile=null;
 let selectedDiv='', pipelineMode=false, pipeline=[];
 let pipelineRunning=false, stopFlag=false;
 
+// ── Backend (Supabase) ─────────────────────────────────────────────────────────
+// Owner-controlled. Paste your project's URL + anon (public) key here, then push.
+// Until filled, the app works exactly as before and Account shows a friendly notice.
+const SUPABASE_URL  = '';
+const SUPABASE_ANON  = '';
+let supa=null, currentUser=null, authMode='login';
+function authReady(){ return !!supa; }
+function initSupa(){
+  if(SUPABASE_URL && SUPABASE_ANON && window.supabase){
+    try{ supa=window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON); }catch(e){ supa=null; }
+  }
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
-  renderDivTabs(); renderList(); loadSettingsUI(); renderMemory();
+  renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
   if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
     showScreen('agents'); updateHdr();
   }
@@ -760,6 +837,114 @@ async function connectGroq(){
     btn.textContent='✗ Invalid key'; btn.style.background='var(--red)';
     setTimeout(()=>{ btn.textContent='Connect & Start →'; btn.disabled=false; btn.style.background=''; },2500);
   }
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+function openAuth(){
+  document.getElementById('auth-overlay').classList.add('show');
+  renderAuth();
+}
+function closeAuth(){ document.getElementById('auth-overlay').classList.remove('show'); }
+function authTab(m){
+  authMode=m;
+  document.getElementById('atab-login').classList.toggle('on',m==='login');
+  document.getElementById('atab-signup').classList.toggle('on',m==='signup');
+  document.getElementById('auth-name-wrap').style.display = m==='signup'?'block':'none';
+  document.getElementById('auth-submit').textContent = m==='signup'?'Create account →':'Log in →';
+  authMsg('');
+}
+function authMsg(t,kind){
+  const el=document.getElementById('auth-msg');
+  el.textContent=t||''; el.className='auth-msg'+(t?(' '+(kind||'err')):'');
+}
+function renderAuth(){
+  const so=document.getElementById('auth-signedout'), si=document.getElementById('auth-signedin');
+  if(currentUser){
+    so.style.display='none'; si.style.display='block';
+    const meta=currentUser.user_metadata||{};
+    const name=meta.full_name||currentUser.email.split('@')[0];
+    document.getElementById('acct-name').textContent=name;
+    document.getElementById('acct-email').textContent=currentUser.email;
+    document.getElementById('acct-av').textContent=(name[0]||'?').toUpperCase();
+    const verified=!!currentUser.email_confirmed_at;
+    const v=document.getElementById('acct-verify');
+    v.innerHTML = verified
+      ? '<span style="color:var(--green)">✓ Email verified</span>'
+      : '<span style="color:var(--orange)">⚠ Email not verified — check your inbox</span>';
+    document.getElementById('acct-resend').style.display=verified?'none':'block';
+  } else {
+    so.style.display='block'; si.style.display='none';
+    authTab(authMode);
+    if(!authReady()){
+      authMsg('Accounts are being set up by the owner. You can keep using the app — sign-in opens soon.','ok');
+    }
+  }
+}
+async function authSubmit(){
+  if(!authReady()){ authMsg('Accounts not configured yet — the owner is finishing setup.'); return; }
+  const email=document.getElementById('auth-email').value.trim();
+  const pass=document.getElementById('auth-pass').value;
+  const name=document.getElementById('auth-name').value.trim();
+  if(!email||!pass){ authMsg('Enter your email and password.'); return; }
+  if(authMode==='signup'&&!name){ authMsg('Please enter your name.'); return; }
+  if(authMode==='signup'&&pass.length<6){ authMsg('Password must be at least 6 characters.'); return; }
+  const btn=document.getElementById('auth-submit'); const orig=btn.textContent;
+  btn.disabled=true; btn.textContent='Please wait…'; authMsg('');
+  try{
+    if(authMode==='signup'){
+      const {data,error}=await supa.auth.signUp({
+        email,password:pass,
+        options:{ data:{full_name:name}, emailRedirectTo: location.href.split('#')[0] }
+      });
+      if(error) throw error;
+      authMsg('✓ Account created! We sent a verification link to '+email+'. Open it to verify, then log in.','ok');
+      authMode='login'; authTab('login');
+    } else {
+      const {data,error}=await supa.auth.signInWithPassword({email,password:pass});
+      if(error) throw error;
+      currentUser=data.user; updateAuthUI(); renderAuth();
+      toast('Welcome back, '+((currentUser.user_metadata||{}).full_name||'').split(' ')[0]+'!');
+      setTimeout(closeAuth,800);
+    }
+  }catch(e){ authMsg(e.message||'Something went wrong.'); }
+  btn.disabled=false; btn.textContent=orig;
+}
+async function resendVerification(){
+  if(!authReady()||!currentUser) return;
+  try{
+    await supa.auth.resend({type:'signup',email:currentUser.email});
+    const m=document.getElementById('acct-msg'); m.textContent='Verification email re-sent.'; m.className='auth-msg ok';
+  }catch(e){ const m=document.getElementById('acct-msg'); m.textContent=e.message; m.className='auth-msg err'; }
+}
+async function signOutUser(){
+  if(authReady()) try{ await supa.auth.signOut(); }catch(e){}
+  currentUser=null; updateAuthUI(); renderAuth(); toast('Logged out');
+}
+function updateAuthUI(){
+  const btn=document.getElementById('tab-account');
+  if(!btn) return;
+  if(currentUser){
+    const meta=currentUser.user_metadata||{};
+    const init=((meta.full_name||currentUser.email||'?')[0]||'?').toUpperCase();
+    btn.textContent=init;
+    btn.classList.toggle('verified',!!currentUser.email_confirmed_at);
+    btn.title='Account: '+(meta.full_name||currentUser.email);
+  } else {
+    btn.textContent='👤'; btn.classList.remove('verified'); btn.title='Sign in';
+  }
+}
+async function initAuth(){
+  initSupa();
+  if(!authReady()){ updateAuthUI(); return; }
+  try{
+    const {data}=await supa.auth.getSession();
+    currentUser=data.session?.user||null;
+  }catch(e){}
+  supa.auth.onAuthStateChange((_e,session)=>{
+    currentUser=session?.user||null; updateAuthUI();
+    if(document.getElementById('auth-overlay').classList.contains('show')) renderAuth();
+  });
+  updateAuthUI();
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
