@@ -315,8 +315,19 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <input class="auth-input" id="auth-email" type="email" placeholder="you@email.com" autocomplete="email"/>
         <label>Password</label>
         <input class="auth-input" id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+        <div id="auth-forgot-wrap" style="text-align:right;margin-top:4px">
+          <button onclick="forgotPassword()" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;padding:0">Forgot password?</button>
+        </div>
         <div class="auth-msg" id="auth-msg"></div>
         <button class="primary-btn" id="auth-submit" onclick="authSubmit()">Log in →</button>
+        <!-- Password reset form (hidden by default) -->
+        <div id="auth-reset-wrap" style="display:none">
+          <div class="auth-msg ok" style="display:block;margin-bottom:10px">Check your email for a reset link. Click it, then set a new password below.</div>
+          <label>New password (6+ characters)</label>
+          <input class="auth-input" id="auth-new-pass" type="password" placeholder="New password" autocomplete="new-password"/>
+          <div class="auth-msg" id="auth-reset-msg"></div>
+          <button class="primary-btn" onclick="setNewPassword()">Set new password →</button>
+        </div>
         <button class="ghost-btn" onclick="closeAuth()">Maybe later — just browse</button>
       </div>
       <!-- Signed-IN view -->
@@ -1309,6 +1320,13 @@ function authTab(m){
   document.getElementById('atab-signup').classList.toggle('on',m==='signup');
   document.getElementById('auth-name-wrap').style.display = m==='signup'?'block':'none';
   document.getElementById('auth-submit').textContent = m==='signup'?'Create account →':'Log in →';
+  document.getElementById('auth-submit').style.display='';
+  const fw=document.getElementById('auth-forgot-wrap');
+  if(fw) fw.style.display = m==='login'?'block':'none';
+  const rw=document.getElementById('auth-reset-wrap');
+  if(rw) rw.style.display='none';
+  const tabs=document.querySelector('#auth-signedout .auth-tabs');
+  if(tabs) tabs.style.display='';
   authMsg('');
 }
 function authMsg(t,kind){
@@ -1368,6 +1386,40 @@ async function authSubmit(){
   }catch(e){ authMsg(e.message||'Something went wrong.'); }
   btn.disabled=false; btn.textContent=orig;
 }
+async function forgotPassword(){
+  await ensureSupa();
+  if(!authReady()){ authMsg('Could not connect to server. Try again.'); return; }
+  const email=document.getElementById('auth-email').value.trim();
+  if(!email){ authMsg('Enter your email address first.'); return; }
+  const btn=document.getElementById('auth-submit');
+  btn.disabled=true;
+  try{
+    const {error}=await supa.auth.resetPasswordForEmail(email,{
+      redirectTo: location.href.split('#')[0]+'#reset'
+    });
+    if(error) throw error;
+    authMsg('✓ Reset email sent to '+email+'. Check your inbox (and spam folder).','ok');
+  }catch(e){ authMsg(e.message||'Could not send reset email.'); }
+  btn.disabled=false;
+}
+async function setNewPassword(){
+  await ensureSupa();
+  if(!authReady()){ return; }
+  const pass=document.getElementById('auth-new-pass').value;
+  const msgEl=document.getElementById('auth-reset-msg');
+  if(pass.length<6){ msgEl.textContent='Password must be at least 6 characters.'; msgEl.className='auth-msg err'; return; }
+  try{
+    const {error}=await supa.auth.updateUser({password:pass});
+    if(error) throw error;
+    msgEl.textContent='✓ Password updated! You are now logged in.'; msgEl.className='auth-msg ok';
+    document.getElementById('auth-reset-wrap').style.display='none';
+    document.getElementById('auth-forgot-wrap').style.display='block';
+    await supa.auth.getSession().then(({data})=>{
+      currentUser=data.session?.user||null; updateAuthUI();
+    });
+    setTimeout(closeAuth,1500);
+  }catch(e){ msgEl.textContent=e.message||'Could not update password.'; msgEl.className='auth-msg err'; }
+}
 async function resendVerification(){
   if(!authReady()||!currentUser) return;
   try{
@@ -1400,7 +1452,17 @@ async function initAuth(){
     const {data}=await supa.auth.getSession();
     currentUser=data.session?.user||null;
   }catch(e){}
-  supa.auth.onAuthStateChange((_e,session)=>{
+  supa.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){
+      // User clicked reset link in email — show the new password form
+      openAuth();
+      document.getElementById('auth-forgot-wrap').style.display='none';
+      document.getElementById('auth-reset-wrap').style.display='block';
+      document.getElementById('auth-submit').style.display='none';
+      document.getElementById('auth-signedout').querySelector('.auth-tabs').style.display='none';
+      document.getElementById('auth-name-wrap').style.display='none';
+      return;
+    }
     currentUser=session?.user||null; updateAuthUI();
     if(document.getElementById('auth-overlay').classList.contains('show')) renderAuth();
   });
