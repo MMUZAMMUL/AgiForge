@@ -1111,6 +1111,7 @@ async function waitForSupa(ms=5000){
   });
   initSupa();
 }
+const POPULAR_IDS=['engineering-backend-architect','engineering-frontend-developer','engineering-ai-engineer','marketing-growth-hacker','product-manager','design-ui-designer','marketing-seo-specialist','security-penetration-tester','business-strategist','marketing-content-creator'];
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
@@ -1549,8 +1550,6 @@ function toggleFav(id){
   localStorage.setItem('ag_favs', JSON.stringify(favs));
   renderList();
 }
-// Curated "Popular" picks shown on the home screen (ids that exist in AGENTS)
-const POPULAR_IDS=['engineering-backend-architect','engineering-frontend-developer','engineering-ai-engineer','marketing-growth-hacker','product-manager','design-ui-designer','marketing-seo-specialist','security-penetration-tester','business-strategist','marketing-content-creator'];
 
 function agentCard(a){
   const h=colorHex(a.color);
