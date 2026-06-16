@@ -1034,6 +1034,23 @@ let curAgent=null, chatMsgs=[], chatBusy=false, attachedFile=null;
 let selectedDiv='', pipelineMode=false, pipeline=[];
 let pipelineRunning=false, stopFlag=false;
 
+// ── Cloud engine model pools (declared early so they're never in TDZ) ─────────
+const GROQ_MODELS = [
+  'llama-3.1-8b-instant',
+  'llama-3.3-70b-versatile',
+  'gemma2-9b-it',
+];
+let _groqModelIdx = 0;
+const OPENROUTER_MODELS = [
+  'meta-llama/llama-3.3-70b-instruct:free',
+  'google/gemini-2.0-flash-exp:free',
+  'qwen/qwen-2.5-72b-instruct:free',
+  'mistralai/mistral-small-3.1-24b-instruct:free',
+  'meta-llama/llama-3.1-8b-instruct:free',
+];
+const CEREBRAS_MODELS=['llama-3.3-70b','llama3.1-8b'];
+const GEMINI_MODELS=['gemini-2.0-flash','gemini-1.5-flash'];
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
   applyEdition(); renderDivTabs(); renderList(); loadSettingsUI(); renderMemory();
@@ -1466,7 +1483,12 @@ async function autoBuildTeam(){
   const status=document.getElementById('auto-build-status');
   const btn=document.getElementById('auto-build-btn');
   if(!goal){ status.textContent='↑ Describe your goal first'; return; }
-  if(cfg.provider!=='groq'||!cfg.groqKey.startsWith('gsk_')){
+  const _hasKey=(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_'))
+    ||(cfg.provider==='cerebras'&&cfg.cerebrasKey)
+    ||(cfg.provider==='gemini'&&cfg.geminiKey)
+    ||(cfg.provider==='openrouter'&&cfg.orKey)
+    ||(cfg.provider==='ollama');
+  if(!_hasKey){
     status.innerHTML='<span style="color:var(--orange)">Connect AI first — tap ⚙️</span>'; return;
   }
   btn.disabled=true; btn.textContent='✨ Assembling team…';
@@ -1937,14 +1959,6 @@ async function sendMsg(){
 }
 
 // ── Cloud engine rate-limit helpers ───────────────────────────────────────────────────
-// Engine pool — each tier has its own rate bucket; rotate on limit
-const GROQ_MODELS = [
-  'llama-3.1-8b-instant',
-  'llama-3.3-70b-versatile',
-  'gemma2-9b-it',
-];
-let _groqModelIdx = 0; // round-robin pointer
-
 function nextGroqModel(current){
   const pool = GROQ_MODELS.filter(m => m !== current);
   const m = pool[_groqModelIdx % pool.length];
@@ -1956,19 +1970,6 @@ function parseRetryAfter(msg){
   const m = String(msg).match(/try again in ([\d.]+)s/i);
   return m ? Math.ceil(parseFloat(m[1]) * 1000) + 500 : 15000;
 }
-
-// Free fallback engines on OpenRouter (one key → many models, each its own limits).
-const OPENROUTER_MODELS = [
-  'meta-llama/llama-3.3-70b-instruct:free',
-  'google/gemini-2.0-flash-exp:free',
-  'qwen/qwen-2.5-72b-instruct:free',
-  'mistralai/mistral-small-3.1-24b-instruct:free',
-  'meta-llama/llama-3.1-8b-instruct:free',
-];
-
-// Build the ordered list of (provider, model) attempts for one request.
-const CEREBRAS_MODELS=['llama-3.3-70b','llama3.1-8b'];
-const GEMINI_MODELS=['gemini-2.0-flash','gemini-1.5-flash'];
 
 function buildEngineChain(startModel){
   const chain=[];
