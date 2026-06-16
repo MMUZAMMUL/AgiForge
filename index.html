@@ -67,28 +67,6 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .field-hint{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5}
 .primary-btn{width:100%;padding:13px;background:var(--accent);border:none;color:#fff;font-size:15px;font-weight:700;border-radius:var(--radius);cursor:pointer;margin-top:10px}
 .primary-btn:disabled{opacity:.5}
-/* ── Auth ── */
-.auth-overlay{position:fixed;inset:0;background:rgba(8,9,14,.82);backdrop-filter:blur(4px);z-index:10000;display:none;align-items:center;justify-content:center;padding:18px}
-.auth-overlay.show{display:flex}
-.auth-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:22px;width:100%;max-width:380px;box-shadow:0 24px 60px -16px #000;max-height:92vh;overflow-y:auto}
-.auth-box h2{font-size:20px;font-weight:700;margin-bottom:4px}.auth-box .sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5}
-.auth-box label{display:block;font-size:12px;color:var(--text2);margin:10px 0 4px}
-.auth-input{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:12px 13px;border-radius:10px;font-size:15px;outline:none}
-.auth-input:focus{border-color:var(--accent)}
-.auth-tabs{display:flex;gap:6px;margin-bottom:14px;background:var(--bg3);padding:4px;border-radius:10px}
-.auth-tab{flex:1;text-align:center;padding:9px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text2)}
-.auth-tab.on{background:var(--accent);color:#fff}
-.auth-msg{font-size:13px;border-radius:9px;padding:10px 12px;margin-top:12px;display:none;line-height:1.5}
-.auth-msg.err{display:block;background:#ef444422;border:1px solid #ef444455;color:#fca5a5}
-.auth-msg.ok{display:block;background:#22c55e22;border:1px solid #22c55e55;color:#86efac}
-.auth-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer}
-.auth-x{display:flex;justify-content:space-between;align-items:flex-start}
-.acct-row{display:flex;align-items:center;gap:11px;padding:12px;background:var(--bg3);border-radius:11px;margin-bottom:14px}
-.acct-av{width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
-.ghost-btn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:10px;cursor:pointer;margin-top:8px}
-#tab-account.verified{border-color:var(--green);color:var(--green)}
-.upg-li{font-size:14px;padding:7px 0;border-bottom:1px solid var(--border)}.upg-li:last-child{border:none}
-.rev-item{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px 11px;margin-bottom:7px}
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
 .step{display:flex;gap:11px;align-items:flex-start}
 .snum{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
@@ -97,6 +75,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .cmd{display:block;margin-top:3px;font-family:monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);padding:6px 9px;border-radius:6px;color:var(--accent2);word-break:break-all}
 .skip-link{text-align:center;font-size:13px;color:var(--text2)}
 .skip-link span{color:var(--accent2);cursor:pointer;text-decoration:underline}
+/* ── Multi-provider setup ── */
+.setup-prov-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 8px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;font-size:13px;transition:border-color .15s;width:100%}
+.setup-prov-btn.on{border-color:var(--accent);background:var(--accent)22;color:var(--accent2)}
+.setup-prov-info{margin-bottom:12px}
+.setup-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 a{color:var(--accent2)}
 
 /* ── AGENTS SCREEN ── */
@@ -271,7 +254,6 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
 .my-agent-del{background:none;border:none;color:var(--red);font-size:16px;padding:4px 6px;cursor:pointer;opacity:.7;flex-shrink:0}
 .my-agent-del:hover{opacity:1}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="app">
@@ -288,110 +270,6 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
       <button class="icon-btn" id="tab-creator" onclick="showScreen('creator')" title="Create Agent">✏️</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
-      <button class="icon-btn" id="tab-pro" onclick="openUpgrade()" title="Go Pro" style="border-color:var(--accent);color:var(--accent2)">⭐</button>
-      <button class="icon-btn" id="tab-admin" onclick="openAdmin()" title="Admin" style="display:none;border-color:var(--accent2)">🛡️</button>
-      <button class="icon-btn" id="tab-account" onclick="openAuth()" title="Account">👤</button>
-    </div>
-  </div>
-  <div id="announce-bar" style="display:none;background:var(--accent)22;border-bottom:1px solid var(--accent)55;color:var(--accent2);font-size:12px;padding:7px 14px;text-align:center"></div>
-
-  <!-- ═══════════ AUTH MODAL ═══════════ -->
-  <div class="auth-overlay" id="auth-overlay">
-    <div class="auth-box" style="position:relative">
-      <button class="auth-close" onclick="closeAuth()">×</button>
-      <!-- Signed-OUT view -->
-      <div id="auth-signedout">
-        <h2>Welcome to Agent<span style="color:var(--accent2)">Forge</span></h2>
-        <p class="sub">Create a free account to save your work and join the community.</p>
-        <div class="auth-tabs">
-          <div class="auth-tab on" id="atab-login" onclick="authTab('login')">Log in</div>
-          <div class="auth-tab" id="atab-signup" onclick="authTab('signup')">Sign up</div>
-        </div>
-        <div id="auth-name-wrap" style="display:none">
-          <label>Full name</label>
-          <input class="auth-input" id="auth-name" placeholder="Jane Doe" autocomplete="name"/>
-        </div>
-        <label>Email</label>
-        <input class="auth-input" id="auth-email" type="email" placeholder="you@email.com" autocomplete="email"/>
-        <label>Password</label>
-        <input class="auth-input" id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-        <div id="auth-forgot-wrap" style="text-align:right;margin-top:4px">
-          <button onclick="forgotPassword()" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;padding:0">Forgot password?</button>
-        </div>
-        <div class="auth-msg" id="auth-msg"></div>
-        <button class="primary-btn" id="auth-submit" onclick="authSubmit()">Log in →</button>
-        <!-- Password reset form (hidden by default) -->
-        <div id="auth-reset-wrap" style="display:none">
-          <div class="auth-msg ok" style="display:block;margin-bottom:10px">Check your email for a reset link. Click it, then set a new password below.</div>
-          <label>New password (6+ characters)</label>
-          <input class="auth-input" id="auth-new-pass" type="password" placeholder="New password" autocomplete="new-password"/>
-          <div class="auth-msg" id="auth-reset-msg"></div>
-          <button class="primary-btn" onclick="setNewPassword()">Set new password →</button>
-        </div>
-        <button class="ghost-btn" onclick="closeAuth()">Maybe later — just browse</button>
-      </div>
-      <!-- Signed-IN view -->
-      <div id="auth-signedin" style="display:none">
-        <div class="auth-x"><h2>Your account</h2></div>
-        <div class="acct-row" style="margin-top:12px">
-          <div class="acct-av" id="acct-av">?</div>
-          <div style="min-width:0">
-            <div id="acct-name" style="font-weight:600;font-size:15px"></div>
-            <div id="acct-email" style="font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis"></div>
-            <div id="acct-verify" style="font-size:12px;margin-top:3px"></div>
-          </div>
-        </div>
-        <div class="auth-msg" id="acct-msg"></div>
-        <button class="ghost-btn" id="acct-resend" onclick="resendVerification()" style="display:none">Resend verification email</button>
-        <button class="ghost-btn" onclick="closeAuth();openReviews()">⭐ Rate AgentForge</button>
-        <button class="ghost-btn" onclick="signOutUser()">Log out</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════ UPGRADE / PAYWALL ═══════════ -->
-  <div class="auth-overlay" id="upgrade-overlay">
-    <div class="auth-box" style="position:relative;max-width:400px">
-      <button class="auth-close" onclick="closeUpgrade()">×</button>
-      <h2>Go <span style="color:var(--accent2)">Pro</span></h2>
-      <p class="sub">Unlock the full power of AgentForge. Keep using your own free AI key — Pro unlocks the platform.</p>
-      <div class="auth-msg ok" id="upg-why" style="display:none"></div>
-      <div id="upg-list" style="margin:6px 0 16px"></div>
-      <button class="primary-btn" onclick="startCheckout('monthly')" style="margin-top:4px">Get Pro — monthly →</button>
-      <button class="ghost-btn" onclick="startCheckout('lifetime')">Or pay once — Lifetime access</button>
-      <div style="font-size:11px;color:var(--text2);text-align:center;margin-top:10px">Secure checkout · cancel anytime</div>
-    </div>
-  </div>
-
-  <!-- ═══════════ REVIEWS ═══════════ -->
-  <div class="auth-overlay" id="reviews-overlay">
-    <div class="auth-box" style="position:relative;max-width:400px">
-      <button class="auth-close" onclick="closeReviews()">×</button>
-      <h2>Rate Agent<span style="color:var(--accent2)">Forge</span></h2>
-      <p class="sub">Your feedback helps others discover the app.</p>
-      <div id="star-pick" style="display:flex;gap:4px;margin-bottom:10px"></div>
-      <textarea class="auth-input" id="review-body" rows="3" placeholder="What do you love? (optional)"></textarea>
-      <div class="auth-msg" id="review-msg"></div>
-      <button class="primary-btn" onclick="submitReview()">Submit review</button>
-      <div id="review-list" style="margin-top:16px;max-height:30vh;overflow-y:auto"></div>
-    </div>
-  </div>
-
-  <!-- ═══════════ ADMIN PORTAL ═══════════ -->
-  <div class="auth-overlay" id="admin-overlay">
-    <div class="auth-box" style="position:relative;max-width:420px">
-      <button class="auth-close" onclick="closeAdmin()">×</button>
-      <h2>🛡️ Admin portal</h2>
-      <p class="sub">Owner-only controls. Visible only to your account.</p>
-      <div style="display:flex;gap:8px;margin-bottom:14px">
-        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-members">—</div><div class="card-title" style="margin:0">Members</div></div>
-        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-reviews">—</div><div class="card-title" style="margin:0">Reviews</div></div>
-        <div class="card" style="flex:1;text-align:center"><div style="font-size:22px;font-weight:700" id="adm-rating">—</div><div class="card-title" style="margin:0">Rating</div></div>
-      </div>
-      <label style="font-size:12px;color:var(--text2)">Announcement banner (shown to all users)</label>
-      <textarea class="auth-input" id="adm-announce" rows="2" placeholder="e.g. 🎉 Pro is now live — 50% off this week!"></textarea>
-      <div class="auth-msg" id="adm-msg"></div>
-      <button class="primary-btn" onclick="saveAnnouncement()">Save announcement</button>
     </div>
   </div>
 
@@ -401,20 +279,95 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <div class="welcome-hero">
         <div class="big">⚡</div>
         <h1>Agent<span style="color:var(--accent2)">Forge</span></h1>
-        <p>219 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
-        <div id="review-summary" style="display:none;font-size:13px;margin-top:8px"></div>
+        <p>219 AI specialists · pipelines · debate · benchmarker<br>100% free · runs in your browser · no account needed</p>
       </div>
+
       <div class="card">
-        <div class="card-title">⚡ Activate Free AI — 2 minutes on mobile</div>
-        <div class="step-list">
-          <div class="step"><div class="snum">1</div><div class="step-body"><b>Get a free access key</b>Sign up with Google — no card, takes seconds.</div></div>
-          <div class="step"><div class="snum">2</div><div class="step-body"><b>Create the key</b>Copy your access key.</div></div>
-          <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste it below</b></div></div>
+        <div class="card-title">🚀 Choose Your Free AI Provider</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">All options below are free. Pick one, get your API key, paste it, and you're live in under 2 minutes.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
+          <button class="setup-prov-btn on" id="sp-groq" onclick="selectSetupProvider('groq')">
+            <span style="font-size:18px">⚡</span>
+            <span style="font-weight:700;font-size:13px">Groq</span>
+            <span style="font-size:11px;color:var(--green)">Free · Fastest</span>
+          </button>
+          <button class="setup-prov-btn" id="sp-cerebras" onclick="selectSetupProvider('cerebras')">
+            <span style="font-size:18px">🧠</span>
+            <span style="font-weight:700;font-size:13px">Cerebras</span>
+            <span style="font-size:11px;color:var(--green)">Free · Ultra-fast</span>
+          </button>
+          <button class="setup-prov-btn" id="sp-gemini" onclick="selectSetupProvider('gemini')">
+            <span style="font-size:18px">🌟</span>
+            <span style="font-weight:700;font-size:13px">Gemini</span>
+            <span style="font-size:11px;color:var(--green)">Free · Google AI</span>
+          </button>
+          <button class="setup-prov-btn" id="sp-openrouter" onclick="selectSetupProvider('openrouter')">
+            <span style="font-size:18px">🔀</span>
+            <span style="font-weight:700;font-size:13px">OpenRouter</span>
+            <span style="font-size:11px;color:var(--green)">Free models</span>
+          </button>
+          <button class="setup-prov-btn" id="sp-ollama" onclick="selectSetupProvider('ollama')" style="grid-column:span 2">
+            <span style="font-size:18px">🖥️</span>
+            <span style="font-weight:700;font-size:13px">Ollama (Local)</span>
+            <span style="font-size:11px;color:var(--text2)">Runs on your PC · 100% private</span>
+          </button>
         </div>
-        <div class="field-hint" style="margin-bottom:8px">Get your free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys ↗</a></div>
-        <input class="field-input" id="setup-key" type="password" placeholder="Paste your access key…" autocomplete="off"/>
-        <button class="primary-btn" id="setup-btn" onclick="connectGroq()">Connect & Start →</button>
+
+        <!-- Groq -->
+        <div id="setup-groq-info" class="setup-prov-info">
+          <div class="setup-steps">
+            <div class="step"><div class="snum">1</div><div class="step-body"><b>Get free key</b><a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys ↗</a> — sign up with Google, no card.</div></div>
+            <div class="step"><div class="snum">2</div><div class="step-body"><b>Create key</b> and copy it.</div></div>
+            <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
+          </div>
+          <input class="field-input" id="setup-groq-key" type="password" placeholder="gsk_…" autocomplete="off"/>
+        </div>
+
+        <!-- Cerebras -->
+        <div id="setup-cerebras-info" class="setup-prov-info" style="display:none">
+          <div class="setup-steps">
+            <div class="step"><div class="snum">1</div><div class="step-body"><b>Get free key</b><a href="https://cloud.cerebras.ai" target="_blank" rel="noopener">cloud.cerebras.ai ↗</a> — sign up free.</div></div>
+            <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API key</b> and copy it.</div></div>
+            <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
+          </div>
+          <input class="field-input" id="setup-cerebras-key" type="password" placeholder="csk_…" autocomplete="off"/>
+        </div>
+
+        <!-- Gemini -->
+        <div id="setup-gemini-info" class="setup-prov-info" style="display:none">
+          <div class="setup-steps">
+            <div class="step"><div class="snum">1</div><div class="step-body"><b>Get free key</b><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey ↗</a> — sign in with Google.</div></div>
+            <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API key</b> and copy it.</div></div>
+            <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
+          </div>
+          <input class="field-input" id="setup-gemini-key" type="password" placeholder="AIza…" autocomplete="off"/>
+        </div>
+
+        <!-- OpenRouter -->
+        <div id="setup-openrouter-info" class="setup-prov-info" style="display:none">
+          <div class="setup-steps">
+            <div class="step"><div class="snum">1</div><div class="step-body"><b>Get free key</b><a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys ↗</a> — sign up free, no card.</div></div>
+            <div class="step"><div class="snum">2</div><div class="step-body"><b>Create key</b> and copy it.</div></div>
+            <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
+          </div>
+          <input class="field-input" id="setup-openrouter-key" type="password" placeholder="sk-or-…" autocomplete="off"/>
+        </div>
+
+        <!-- Ollama -->
+        <div id="setup-ollama-info" class="setup-prov-info" style="display:none">
+          <div class="setup-steps">
+            <div class="step"><div class="snum">1</div><div class="step-body"><b>Install Ollama</b><a href="https://ollama.com" target="_blank" rel="noopener">ollama.com ↗</a> — free, runs on your PC.</div></div>
+            <div class="step"><div class="snum">2</div><div class="step-body"><b>Pull a model:</b><span class="cmd">ollama run llama3.2</span></div></div>
+            <div class="step"><div class="snum">3</div><div class="step-body"><b>Enter your host below</b></div></div>
+          </div>
+          <input class="field-input" id="setup-ollama-host" placeholder="http://localhost:11434" autocomplete="off"/>
+        </div>
+
+        <button class="primary-btn" id="setup-connect-btn" onclick="connectProvider()">Connect & Start →</button>
+        <div id="setup-result" style="text-align:center;font-size:13px;min-height:18px;margin-top:8px"></div>
       </div>
+
       <div class="skip-link">Already set up? <span onclick="showScreen('agents')">Go to agents →</span></div>
     </div>
   </div>
@@ -430,7 +383,6 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <span id="pl-count" style="background:var(--purple);color:#fff;padding:1px 8px;border-radius:99px;font-size:11px;font-weight:700">0</span>
       <button onclick="goToPipeline()" style="margin-left:auto;background:var(--purple);border:none;color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer">Build →</button>
     </div>
-    <div style="padding:0 12px"><span id="member-pill" style="display:none;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:3px 10px;border-radius:99px;margin-bottom:6px"></span></div>
     <div class="div-scroll" id="div-tabs"></div>
     <div class="agent-list" id="agent-list"></div>
   </div>
@@ -526,28 +478,40 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <span id="set-txt" style="font-size:13px;flex:1">Not connected</span>
       </div>
       <div class="card">
-        <div class="card-title">Provider</div>
-        <div class="prov-row" style="margin-bottom:12px">
-          <button class="prov-btn" id="prov-groq" onclick="setProvider('groq')">⚡ Cloud<br><small>Free·Fast</small></button>
-          <button class="prov-btn" id="prov-ollama" onclick="setProvider('ollama')">🖥️ Local<br><small>Your PC</small></button>
+        <div class="card-title">🔌 AI Provider</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px">
+          <button class="prov-btn" id="prov-groq" onclick="setProvider('groq')">⚡ Groq<br><small>Free · Fastest</small></button>
+          <button class="prov-btn" id="prov-cerebras" onclick="setProvider('cerebras')">🧠 Cerebras<br><small>Free · Ultra-fast</small></button>
+          <button class="prov-btn" id="prov-gemini" onclick="setProvider('gemini')">🌟 Gemini<br><small>Free · Google</small></button>
+          <button class="prov-btn" id="prov-openrouter" onclick="setProvider('openrouter')">🔀 OpenRouter<br><small>Free models</small></button>
+          <button class="prov-btn" id="prov-ollama" onclick="setProvider('ollama')">🖥️ Ollama<br><small>Local · Your PC</small></button>
           <button class="prov-btn" id="prov-demo" onclick="setProvider('demo')">👁 Demo<br><small>No AI</small></button>
         </div>
         <div id="s-groq">
-          <div class="card-title">Access Key</div>
-          <input class="field-input" id="s-groq-key" type="password" placeholder="Paste your access key…"/>
-          <div class="field-hint">Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys ↗</a></div>
-          <div style="margin-top:10px">
-            <div class="card-title">Engine</div>
-            <div class="model-chips" id="groq-models">
-              <span class="mchip on" data-m="llama-3.1-8b-instant">⚡ Forge Flash</span>
-              <span class="mchip" data-m="llama-3.3-70b-versatile">🧠 Forge Max</span>
-              <span class="mchip" data-m="gemma2-9b-it">🍃 Forge Lite</span>
-            </div>
+          <label style="font-size:12px;color:var(--text2)">Groq API Key — <a href="https://console.groq.com/keys" target="_blank" rel="noopener">get free key ↗</a></label>
+          <input class="field-input" id="s-groq-key" type="password" placeholder="gsk_…" style="margin:4px 0 10px"/>
+          <div class="card-title">Engine</div>
+          <div class="model-chips" id="groq-models">
+            <span class="mchip on" data-m="llama-3.1-8b-instant">⚡ Flash</span>
+            <span class="mchip" data-m="llama-3.3-70b-versatile">🧠 Max</span>
+            <span class="mchip" data-m="gemma2-9b-it">🍃 Lite</span>
           </div>
         </div>
+        <div id="s-cerebras" style="display:none">
+          <label style="font-size:12px;color:var(--text2)">Cerebras API Key — <a href="https://cloud.cerebras.ai" target="_blank" rel="noopener">get free key ↗</a></label>
+          <input class="field-input" id="s-cb-key" type="password" placeholder="csk_…" style="margin:4px 0"/>
+        </div>
+        <div id="s-gemini" style="display:none">
+          <label style="font-size:12px;color:var(--text2)">Gemini API Key — <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">get free key ↗</a></label>
+          <input class="field-input" id="s-gm-key" type="password" placeholder="AIza…" style="margin:4px 0"/>
+        </div>
+        <div id="s-openrouter" style="display:none">
+          <label style="font-size:12px;color:var(--text2)">OpenRouter API Key — <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">get free key ↗</a></label>
+          <input class="field-input" id="s-or-key" type="password" placeholder="sk-or-…" style="margin:4px 0"/>
+        </div>
         <div id="s-ollama" style="display:none">
-          <div class="card-title">Local Host</div>
-          <input class="field-input" id="s-ollama-host" placeholder="http://192.168.1.x:11434"/>
+          <label style="font-size:12px;color:var(--text2)">Ollama Host</label>
+          <input class="field-input" id="s-ollama-host" placeholder="http://localhost:11434" style="margin:4px 0"/>
         </div>
         <button class="primary-btn" onclick="saveSettings()" style="margin-top:12px">Save & Test →</button>
         <div id="save-result" style="margin-top:7px;text-align:center;font-size:13px;min-height:18px"></div>
@@ -560,29 +524,12 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
           <div id="search-dot" class="dot warn" style="width:8px;height:8px"></div>
           <span id="search-status" style="font-size:12px;color:var(--text2)">Not configured</span>
         </div>
-        <input class="field-input" id="s-brave-key" type="password" placeholder="Paste your search key…"/>
+        <input class="field-input" id="s-brave-key" type="password" placeholder="Brave Search key…"/>
         <div class="field-hint">
-          Free 2000 searches/month at <a href="https://api.search.brave.com" target="_blank">api.search.brave.com</a><br>
+          Free 2000 searches/month at <a href="https://api.search.brave.com" target="_blank">api.search.brave.com ↗</a><br>
           When set, agents automatically search the web for real-time info.
         </div>
         <button class="primary-btn" onclick="saveBraveKey()" style="margin-top:8px;background:var(--orange);font-size:13px;padding:10px">Save Search Key</button>
-      </div>
-
-      <!-- Backup engines (auto fail-over) -->
-      <div class="card">
-        <div class="card-title">🛡️ Backup Engines (optional)</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div id="or-dot" class="dot warn" style="width:8px;height:8px"></div>
-          <span id="or-status" style="font-size:12px;color:var(--text2)">Not configured</span>
-        </div>
-        <div class="field-hint" style="margin-bottom:8px">Add any of these free keys. When one engine is busy, AgentForge fails over instantly so long jobs never stall.</div>
-        <label style="font-size:12px;color:var(--text2)">OpenRouter <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">get key ↗</a></label>
-        <input class="field-input" id="s-or-key" type="password" placeholder="OpenRouter key…" style="margin:4px 0 10px"/>
-        <label style="font-size:12px;color:var(--text2)">Cerebras <a href="https://cloud.cerebras.ai" target="_blank" rel="noopener">get key ↗</a></label>
-        <input class="field-input" id="s-cb-key" type="password" placeholder="Cerebras key…" style="margin:4px 0 10px"/>
-        <label style="font-size:12px;color:var(--text2)">Google Gemini <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">get key ↗</a></label>
-        <input class="field-input" id="s-gm-key" type="password" placeholder="Gemini key…" style="margin:4px 0 4px"/>
-        <button class="primary-btn" onclick="saveBackupKeys()" style="margin-top:10px;background:var(--purple);font-size:13px;padding:10px">Save Backup Engines</button>
       </div>
 
       <!-- Vertical Editions -->
@@ -1087,38 +1034,19 @@ let curAgent=null, chatMsgs=[], chatBusy=false, attachedFile=null;
 let selectedDiv='', pipelineMode=false, pipeline=[];
 let pipelineRunning=false, stopFlag=false;
 
-// ── Backend (Supabase) ─────────────────────────────────────────────────────────
-// Owner-controlled. Paste your project's URL + anon (public) key here, then push.
-// Until filled, the app works exactly as before and Account shows a friendly notice.
-const SUPABASE_URL  = 'https://rwpumrldstyaqvvfrodw.supabase.co';
-const SUPABASE_ANON  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3cHVtcmxkc3R5YXF2dmZyb2R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0ODg4NTksImV4cCI6MjA5NzA2NDg1OX0.F_aIdTOxkJl9Q8BvQsBL9l-inVHuFS6ulHjou5C8AkY';
-let supa=null, currentUser=null, authMode='login';
-function authReady(){ return !!supa; }
-function initSupa(){
-  if(!SUPABASE_URL || !SUPABASE_ANON) return;
-  if(window.supabase){
-    try{ supa=window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON); }catch(e){ supa=null; }
-  }
-}
-// Wait up to 5 seconds for CDN to load, then init
-async function waitForSupa(ms=5000){
-  if(window.supabase){ initSupa(); return; }
-  const t0=Date.now();
-  await new Promise(resolve=>{
-    const id=setInterval(()=>{
-      if(window.supabase||Date.now()-t0>ms){ clearInterval(id); resolve(); }
-    },100);
-  });
-  initSupa();
-}
-
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
-  applyEdition(); renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
+  applyEdition(); renderDivTabs(); renderList(); loadSettingsUI(); renderMemory();
   const fromURL=loadPipelineFromURL();
   if(fromURL){ showScreen('pipeline'); updateHdr(); }
-  else if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
-    showScreen('agents'); updateHdr();
+  else {
+    const p=cfg.provider;
+    const hasKey=(p==='groq'&&cfg.groqKey.startsWith('gsk_'))
+      ||(p==='cerebras'&&cfg.cerebrasKey)
+      ||(p==='gemini'&&cfg.geminiKey)
+      ||(p==='openrouter'&&cfg.orKey)
+      ||(p==='ollama');
+    if(hasKey){ showScreen('agents'); updateHdr(); }
   }
 })();
 
@@ -1138,345 +1066,61 @@ function showScreen(n){
 
 function updateHdr(){
   const dot=document.getElementById('hdr-dot'), txt=document.getElementById('hdr-txt');
-  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
-    dot.className='dot ok'; txt.textContent=engineLabel(cfg.groqModel);
-  } else if(cfg.provider==='ollama'){
-    dot.className='dot warn'; txt.textContent='Local';
-  } else {
-    dot.className='dot warn'; txt.textContent='Demo';
-  }
+  const p=cfg.provider;
+  if(p==='groq'&&cfg.groqKey.startsWith('gsk_')){dot.className='dot ok';txt.textContent='Groq · '+engineLabel(cfg.groqModel);}
+  else if(p==='cerebras'&&cfg.cerebrasKey){dot.className='dot ok';txt.textContent='Cerebras';}
+  else if(p==='gemini'&&cfg.geminiKey){dot.className='dot ok';txt.textContent='Gemini';}
+  else if(p==='openrouter'&&cfg.orKey){dot.className='dot ok';txt.textContent='OpenRouter';}
+  else if(p==='ollama'){dot.className='dot warn';txt.textContent='Ollama Local';}
+  else{dot.className='dot warn';txt.textContent='Demo';}
 }
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
-async function connectGroq(){
-  const key=document.getElementById('setup-key').value.trim();
-  if(!key.startsWith('gsk_')){ alert('Please paste a valid access key.'); return; }
-  const btn=document.getElementById('setup-btn');
-  btn.textContent='Testing…'; btn.disabled=true;
-  const ok=await testGroq(key);
-  if(ok){
-    cfg.groqKey=key; cfg.provider='groq';
-    btn.textContent='✓ Connected!'; btn.style.background='var(--green)';
-    setTimeout(()=>{ showScreen('agents'); updateHdr(); },700);
-  } else {
-    btn.textContent='✗ Invalid key'; btn.style.background='var(--red)';
-    setTimeout(()=>{ btn.textContent='Connect & Start →'; btn.disabled=false; btn.style.background=''; },2500);
-  }
-}
+let _setupProvider = 'groq';
 
-// ── Plans / Paywall ────────────────────────────────────────────────────────────
-// Owner-controlled. Paste your Lemon Squeezy / Paddle checkout links, then push.
-const CHECKOUT_PRO_MONTHLY = '';   // e.g. https://yourstore.lemonsqueezy.com/buy/xxxx
-const CHECKOUT_LIFETIME    = '';
-const PRO_FEATURES = [
-  '☁️ Cloud sync across all your devices',
-  '♾️ Unlimited conversation history & memory',
-  '🛠️ Custom Agent Creator + private library',
-  '🔗 Saved pipelines & 1-click rerun',
-  '📄 Pro export — PDF · DOCX · Notion',
-  '🤖 Bigger teams, pipelines & debates',
-  '⏰ Scheduled & automated agents',
-  '👥 Team workspaces & sharing',
-];
-function getPlan(){
-  const m=currentUser&&currentUser.user_metadata;
-  if(m&&m.plan) return m.plan;                       // set by backend webhook
-  return localStorage.getItem('ag_plan')||'free';     // local fallback for testing
-}
-function isPro(){ const p=getPlan(); return p==='pro'||p==='lifetime'||p==='team'; }
-function openUpgrade(reason){
-  const o=document.getElementById('upgrade-overlay'); if(!o) return;
-  const why=document.getElementById('upg-why');
-  why.style.display=reason?'block':'none';
-  if(reason) why.textContent='🔒 '+reason+' is a Pro feature.';
-  document.getElementById('upg-list').innerHTML=PRO_FEATURES.map(f=>`<div class="upg-li">${f}</div>`).join('');
-  o.classList.add('show');
-}
-function closeUpgrade(){ document.getElementById('upgrade-overlay').classList.remove('show'); }
-function startCheckout(which){
-  const url = which==='lifetime'?CHECKOUT_LIFETIME:CHECKOUT_PRO_MONTHLY;
-  if(!url){ alert('Checkout opens soon — the owner is finishing payment setup.'); return; }
-  window.open(url,'_blank','noopener');
-}
-// Returns true if allowed; otherwise shows the upgrade screen and returns false.
-function gatePro(featureName){
-  if(isPro()) return true;
-  openUpgrade(featureName); return false;
-}
-
-// ── Admin / Owner ──────────────────────────────────────────────────────────────
-const ADMIN_EMAILS = ['munagreat123@gmail.com']; // owner-only controls
-function isAdmin(){ return !!currentUser && ADMIN_EMAILS.includes((currentUser.email||'').toLowerCase()); }
-
-// ── Live member count ──────────────────────────────────────────────────────────
-async function fetchMemberCount(){
-  if(!authReady()) return null;
-  try{ const {count,error}=await supa.from('profiles').select('*',{count:'exact',head:true}); return error?null:count; }
-  catch(e){ return null; }
-}
-async function refreshMemberCount(){
-  const el=document.getElementById('member-pill'); if(!el) return;
-  const n=await fetchMemberCount();
-  if(n===null){ el.style.display='none'; return; }
-  el.style.display='inline-flex';
-  el.textContent='👥 '+n.toLocaleString()+(n===1?' member':' members');
-}
-
-// ── Reviews ─────────────────────────────────────────────────────────────────────
-async function fetchReviews(){
-  if(!authReady()) return [];
-  try{ const {data,error}=await supa.from('reviews').select('*').order('created_at',{ascending:false}).limit(20); return error?[]:(data||[]); }
-  catch(e){ return []; }
-}
-async function refreshReviewSummary(){
-  const box=document.getElementById('review-summary'); if(!box) return;
-  const r=await fetchReviews();
-  if(!r.length){ box.style.display='none'; return; }
-  const avg=(r.reduce((s,x)=>s+(x.rating||0),0)/r.length);
-  const stars='★★★★★'.slice(0,Math.round(avg))+'☆☆☆☆☆'.slice(0,5-Math.round(avg));
-  box.style.display='block';
-  box.innerHTML=`<span style="color:var(--accent2)">${stars}</span> ${avg.toFixed(1)} · ${r.length} review${r.length>1?'s':''}`;
-}
-let _reviewRating=5;
-function openReviews(){
-  if(!authReady()){ alert('Reviews open once the owner finishes backend setup.'); return; }
-  if(!currentUser){ closeAuth(); openAuth(); return; }
-  document.getElementById('reviews-overlay').classList.add('show');
-  setReviewStars(5); document.getElementById('review-body').value='';
-  document.getElementById('review-msg').className='auth-msg';
-  loadReviewList();
-}
-function closeReviews(){ document.getElementById('reviews-overlay').classList.remove('show'); }
-function setReviewStars(n){
-  _reviewRating=n;
-  document.getElementById('star-pick').innerHTML=[1,2,3,4,5].map(i=>
-    `<span onclick="setReviewStars(${i})" style="cursor:pointer;font-size:26px;color:${i<=n?'var(--accent2)':'var(--border)'}">★</span>`).join('');
-}
-async function submitReview(){
-  const body=document.getElementById('review-body').value.trim();
-  const msg=document.getElementById('review-msg');
-  const name=(currentUser.user_metadata||{}).full_name||currentUser.email.split('@')[0];
-  try{
-    const {error}=await supa.from('reviews').insert({user_id:currentUser.id,name,rating:_reviewRating,body});
-    if(error) throw error;
-    msg.textContent='Thanks for your review!'; msg.className='auth-msg ok';
-    loadReviewList(); refreshReviewSummary();
-  }catch(e){ msg.textContent=e.message; msg.className='auth-msg err'; }
-}
-async function loadReviewList(){
-  const list=document.getElementById('review-list');
-  const r=await fetchReviews();
-  list.innerHTML=r.length?r.map(x=>`<div class="rev-item">
-    <div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:13px">${esc(x.name||'User')}</b>
-    <span style="color:var(--accent2);font-size:12px">${'★'.repeat(x.rating||0)}</span></div>
-    ${x.body?`<div style="font-size:13px;color:var(--text2);margin-top:3px">${esc(x.body)}</div>`:''}</div>`).join('')
-    :'<div style="color:var(--text2);font-size:13px;text-align:center;padding:12px">Be the first to review!</div>';
-}
-
-// ── Admin portal ─────────────────────────────────────────────────────────────────
-function openAdmin(){
-  if(!isAdmin()){ alert('Owner only.'); return; }
-  document.getElementById('admin-overlay').classList.add('show');
-  loadAdmin();
-}
-function closeAdmin(){ document.getElementById('admin-overlay').classList.remove('show'); }
-async function loadAdmin(){
-  const n=await fetchMemberCount();
-  const r=await fetchReviews();
-  const avg=r.length?(r.reduce((s,x)=>s+(x.rating||0),0)/r.length).toFixed(1):'—';
-  document.getElementById('adm-members').textContent=n===null?'—':n.toLocaleString();
-  document.getElementById('adm-reviews').textContent=r.length;
-  document.getElementById('adm-rating').textContent=avg;
-  // load announcement
-  try{
-    const {data}=await supa.from('app_config').select('value').eq('key','announcement').maybeSingle();
-    document.getElementById('adm-announce').value=(data&&data.value&&data.value.text)||'';
-  }catch(e){}
-}
-async function saveAnnouncement(){
-  const text=document.getElementById('adm-announce').value.trim();
-  const msg=document.getElementById('adm-msg');
-  try{
-    const {error}=await supa.from('app_config').upsert({key:'announcement',value:{text},updated_at:new Date().toISOString()});
-    if(error) throw error;
-    msg.textContent='Saved — visible to all users.'; msg.className='auth-msg ok';
-    applyAnnouncement();
-  }catch(e){ msg.textContent=e.message; msg.className='auth-msg err'; }
-}
-async function applyAnnouncement(){
-  const bar=document.getElementById('announce-bar'); if(!bar||!authReady()) return;
-  try{
-    const {data}=await supa.from('app_config').select('value').eq('key','announcement').maybeSingle();
-    const text=data&&data.value&&data.value.text;
-    if(text){ bar.textContent='📢 '+text; bar.style.display='block'; }
-    else bar.style.display='none';
-  }catch(e){}
-}
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-function openAuth(){
-  document.getElementById('auth-overlay').classList.add('show');
-  renderAuth();
-}
-function closeAuth(){ document.getElementById('auth-overlay').classList.remove('show'); }
-function authTab(m){
-  authMode=m;
-  document.getElementById('atab-login').classList.toggle('on',m==='login');
-  document.getElementById('atab-signup').classList.toggle('on',m==='signup');
-  document.getElementById('auth-name-wrap').style.display = m==='signup'?'block':'none';
-  document.getElementById('auth-submit').textContent = m==='signup'?'Create account →':'Log in →';
-  document.getElementById('auth-submit').style.display='';
-  const fw=document.getElementById('auth-forgot-wrap');
-  if(fw) fw.style.display = m==='login'?'block':'none';
-  const rw=document.getElementById('auth-reset-wrap');
-  if(rw) rw.style.display='none';
-  const tabs=document.querySelector('#auth-signedout .auth-tabs');
-  if(tabs) tabs.style.display='';
-  authMsg('');
-}
-function authMsg(t,kind){
-  const el=document.getElementById('auth-msg');
-  el.textContent=t||''; el.className='auth-msg'+(t?(' '+(kind||'err')):'');
-}
-function renderAuth(){
-  const so=document.getElementById('auth-signedout'), si=document.getElementById('auth-signedin');
-  if(currentUser){
-    so.style.display='none'; si.style.display='block';
-    const meta=currentUser.user_metadata||{};
-    const name=meta.full_name||currentUser.email.split('@')[0];
-    document.getElementById('acct-name').textContent=name;
-    document.getElementById('acct-email').textContent=currentUser.email;
-    document.getElementById('acct-av').textContent=(name[0]||'?').toUpperCase();
-    const verified=!!currentUser.email_confirmed_at;
-    const v=document.getElementById('acct-verify');
-    v.innerHTML = verified
-      ? '<span style="color:var(--green)">✓ Email verified</span>'
-      : '<span style="color:var(--orange)">⚠ Email not verified — check your inbox</span>';
-    document.getElementById('acct-resend').style.display=verified?'none':'block';
-  } else {
-    so.style.display='block'; si.style.display='none';
-    authTab(authMode);
-    if(!authReady()){
-      authMsg('Accounts are being set up by the owner. You can keep using the app — sign-in opens soon.','ok');
-    }
-  }
-}
-async function authSubmit(){
-  await ensureSupa();
-  if(!authReady()){ authMsg('Could not connect to server — please check your internet and try again.'); return; }
-  const email=document.getElementById('auth-email').value.trim();
-  const pass=document.getElementById('auth-pass').value;
-  const name=document.getElementById('auth-name').value.trim();
-  if(!email||!pass){ authMsg('Enter your email and password.'); return; }
-  if(authMode==='signup'&&!name){ authMsg('Please enter your name.'); return; }
-  if(authMode==='signup'&&pass.length<6){ authMsg('Password must be at least 6 characters.'); return; }
-  const btn=document.getElementById('auth-submit'); const orig=btn.textContent;
-  btn.disabled=true; btn.textContent='Please wait…'; authMsg('');
-  try{
-    if(authMode==='signup'){
-      const {data,error}=await supa.auth.signUp({
-        email,password:pass,
-        options:{ data:{full_name:name}, emailRedirectTo: location.href.split('#')[0] }
-      });
-      if(error) throw error;
-      authMsg('✓ Account created! We sent a verification link to '+email+'. Open it to verify, then log in.','ok');
-      authMode='login'; authTab('login');
-    } else {
-      const {data,error}=await supa.auth.signInWithPassword({email,password:pass});
-      if(error) throw error;
-      currentUser=data.user; updateAuthUI(); renderAuth();
-      toast('Welcome back, '+((currentUser.user_metadata||{}).full_name||'').split(' ')[0]+'!');
-      setTimeout(closeAuth,800);
-    }
-  }catch(e){ authMsg(e.message||'Something went wrong.'); }
-  btn.disabled=false; btn.textContent=orig;
-}
-async function forgotPassword(){
-  await ensureSupa();
-  if(!authReady()){ authMsg('Could not connect to server. Try again.'); return; }
-  const email=document.getElementById('auth-email').value.trim();
-  if(!email){ authMsg('Enter your email address first.'); return; }
-  const btn=document.getElementById('auth-submit');
-  btn.disabled=true;
-  try{
-    const {error}=await supa.auth.resetPasswordForEmail(email,{
-      redirectTo: location.href.split('#')[0]+'#reset'
-    });
-    if(error) throw error;
-    authMsg('✓ Reset email sent to '+email+'. Check your inbox (and spam folder).','ok');
-  }catch(e){ authMsg(e.message||'Could not send reset email.'); }
-  btn.disabled=false;
-}
-async function setNewPassword(){
-  await ensureSupa();
-  if(!authReady()){ return; }
-  const pass=document.getElementById('auth-new-pass').value;
-  const msgEl=document.getElementById('auth-reset-msg');
-  if(pass.length<6){ msgEl.textContent='Password must be at least 6 characters.'; msgEl.className='auth-msg err'; return; }
-  try{
-    const {error}=await supa.auth.updateUser({password:pass});
-    if(error) throw error;
-    msgEl.textContent='✓ Password updated! You are now logged in.'; msgEl.className='auth-msg ok';
-    document.getElementById('auth-reset-wrap').style.display='none';
-    document.getElementById('auth-forgot-wrap').style.display='block';
-    await supa.auth.getSession().then(({data})=>{
-      currentUser=data.session?.user||null; updateAuthUI();
-    });
-    setTimeout(closeAuth,1500);
-  }catch(e){ msgEl.textContent=e.message||'Could not update password.'; msgEl.className='auth-msg err'; }
-}
-async function resendVerification(){
-  if(!authReady()||!currentUser) return;
-  try{
-    await supa.auth.resend({type:'signup',email:currentUser.email});
-    const m=document.getElementById('acct-msg'); m.textContent='Verification email re-sent.'; m.className='auth-msg ok';
-  }catch(e){ const m=document.getElementById('acct-msg'); m.textContent=e.message; m.className='auth-msg err'; }
-}
-async function signOutUser(){
-  if(authReady()) try{ await supa.auth.signOut(); }catch(e){}
-  currentUser=null; updateAuthUI(); renderAuth(); toast('Logged out');
-}
-function updateAuthUI(){
-  const btn=document.getElementById('tab-account');
-  if(!btn) return;
-  if(currentUser){
-    const meta=currentUser.user_metadata||{};
-    const init=((meta.full_name||currentUser.email||'?')[0]||'?').toUpperCase();
-    btn.textContent=init;
-    btn.classList.toggle('verified',!!currentUser.email_confirmed_at);
-    btn.title='Account: '+(meta.full_name||currentUser.email);
-  } else {
-    btn.textContent='👤'; btn.classList.remove('verified'); btn.title='Sign in';
-  }
-  const adm=document.getElementById('tab-admin'); if(adm) adm.style.display=isAdmin()?'inline-block':'none';
-}
-async function initAuth(){
-  await waitForSupa();
-  if(!authReady()){ updateAuthUI(); return; }
-  try{
-    const {data}=await supa.auth.getSession();
-    currentUser=data.session?.user||null;
-  }catch(e){}
-  supa.auth.onAuthStateChange((event,session)=>{
-    if(event==='PASSWORD_RECOVERY'){
-      // User clicked reset link in email — show the new password form
-      openAuth();
-      document.getElementById('auth-forgot-wrap').style.display='none';
-      document.getElementById('auth-reset-wrap').style.display='block';
-      document.getElementById('auth-submit').style.display='none';
-      document.getElementById('auth-signedout').querySelector('.auth-tabs').style.display='none';
-      document.getElementById('auth-name-wrap').style.display='none';
-      return;
-    }
-    currentUser=session?.user||null; updateAuthUI();
-    if(document.getElementById('auth-overlay').classList.contains('show')) renderAuth();
+function selectSetupProvider(p){
+  _setupProvider = p;
+  ['groq','cerebras','gemini','openrouter','ollama'].forEach(x=>{
+    document.getElementById('sp-'+x)?.classList.toggle('on', x===p);
+    const info = document.getElementById('setup-'+x+'-info');
+    if(info) info.style.display = x===p ? 'block' : 'none';
   });
-  updateAuthUI();
-  refreshMemberCount(); refreshReviewSummary(); applyAnnouncement();
 }
-// Also re-check auth state when the signup modal is opened (catches CDN-late-load)
-async function ensureSupa(){
-  if(!authReady()){ await waitForSupa(); }
+
+async function connectProvider(){
+  const btn = document.getElementById('setup-connect-btn');
+  const res = document.getElementById('setup-result');
+  const p = _setupProvider;
+  let key = '', host = '';
+
+  if(p==='groq') key = document.getElementById('setup-groq-key').value.trim();
+  else if(p==='cerebras') key = document.getElementById('setup-cerebras-key').value.trim();
+  else if(p==='gemini') key = document.getElementById('setup-gemini-key').value.trim();
+  else if(p==='openrouter') key = document.getElementById('setup-openrouter-key').value.trim();
+  else if(p==='ollama') host = document.getElementById('setup-ollama-host').value.trim() || 'http://localhost:11434';
+
+  if(p !== 'ollama' && !key){ res.style.color='var(--red)'; res.textContent='Please paste your API key.'; return; }
+
+  btn.textContent='Testing…'; btn.disabled=true; res.textContent='';
+
+  let ok = false;
+  try {
+    if(p==='groq'){ ok = await testGroq(key); if(ok){ cfg.groqKey=key; cfg.provider='groq'; } }
+    else if(p==='cerebras'){ ok = await testCerebras(key); if(ok){ cfg.cerebrasKey=key; cfg.provider='cerebras'; } }
+    else if(p==='gemini'){ ok = await testGemini(key); if(ok){ cfg.geminiKey=key; cfg.provider='gemini'; } }
+    else if(p==='openrouter'){ ok = await testOpenRouter(key); if(ok){ cfg.orKey=key; cfg.provider='openrouter'; } }
+    else if(p==='ollama'){ cfg.ollamaHost=host; ok = await testOllama(); if(ok) cfg.provider='ollama'; }
+  } catch(e){}
+
+  if(ok){
+    btn.textContent='✓ Connected!'; btn.style.background='var(--green)';
+    res.style.color='var(--green)'; res.textContent='Connected! Loading agents…';
+    setTimeout(()=>{ showScreen('agents'); updateHdr(); }, 700);
+  } else {
+    btn.textContent='✗ Failed — try again'; btn.style.background='var(--red)';
+    res.style.color='var(--red)'; res.textContent='Could not connect. Check your key and try again.';
+    setTimeout(()=>{ btn.textContent='Connect & Start →'; btn.disabled=false; btn.style.background=''; }, 2500);
+  }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -2328,17 +1972,30 @@ const GEMINI_MODELS=['gemini-2.0-flash','gemini-1.5-flash'];
 
 function buildEngineChain(startModel){
   const chain=[];
-  if(cfg.groqKey.startsWith('gsk_')){
-    const pool=[startModel, ...GROQ_MODELS.filter(m=>m!==startModel)];
+  const p=cfg.provider;
+  // Primary provider goes first
+  if(p==='groq'&&cfg.groqKey.startsWith('gsk_')){
+    const pool=[startModel,...GROQ_MODELS.filter(m=>m!==startModel)];
+    pool.forEach(m=>chain.push({prov:'groq',model:m,url:'https://api.groq.com/openai/v1/chat/completions',key:cfg.groqKey}));
+  } else if(p==='cerebras'&&cfg.cerebrasKey){
+    CEREBRAS_MODELS.forEach(m=>chain.push({prov:'cerebras',model:m,url:'https://api.cerebras.ai/v1/chat/completions',key:cfg.cerebrasKey}));
+  } else if(p==='gemini'&&cfg.geminiKey){
+    GEMINI_MODELS.forEach(m=>chain.push({prov:'gemini',model:m,url:'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',key:cfg.geminiKey}));
+  } else if(p==='openrouter'&&cfg.orKey){
+    OPENROUTER_MODELS.forEach(m=>chain.push({prov:'openrouter',model:m,url:'https://openrouter.ai/api/v1/chat/completions',key:cfg.orKey}));
+  }
+  // Failover: add all other configured providers
+  if(p!=='groq'&&cfg.groqKey.startsWith('gsk_')){
+    const pool=[...GROQ_MODELS];
     pool.forEach(m=>chain.push({prov:'groq',model:m,url:'https://api.groq.com/openai/v1/chat/completions',key:cfg.groqKey}));
   }
-  if(cfg.cerebrasKey){
+  if(p!=='cerebras'&&cfg.cerebrasKey){
     CEREBRAS_MODELS.forEach(m=>chain.push({prov:'cerebras',model:m,url:'https://api.cerebras.ai/v1/chat/completions',key:cfg.cerebrasKey}));
   }
-  if(cfg.geminiKey){
+  if(p!=='gemini'&&cfg.geminiKey){
     GEMINI_MODELS.forEach(m=>chain.push({prov:'gemini',model:m,url:'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',key:cfg.geminiKey}));
   }
-  if(cfg.orKey){
+  if(p!=='openrouter'&&cfg.orKey){
     OPENROUTER_MODELS.forEach(m=>chain.push({prov:'openrouter',model:m,url:'https://openrouter.ai/api/v1/chat/completions',key:cfg.orKey}));
   }
   return chain;
@@ -2543,26 +2200,23 @@ function loadSettingsUI(){
   });
   updateHdr();
   const dot=document.getElementById('set-dot'),txt=document.getElementById('set-txt');
-  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){dot.className='dot ok';txt.textContent='Connected · '+engineLabel(cfg.groqModel);}
-  else{dot.className='dot warn';txt.textContent=cfg.provider==='demo'?'Demo mode':'Not connected';}
+  const p=cfg.provider;
+  if((p==='groq'&&cfg.groqKey.startsWith('gsk_'))||(p==='cerebras'&&cfg.cerebrasKey)||(p==='gemini'&&cfg.geminiKey)||(p==='openrouter'&&cfg.orKey)||(p==='ollama')){
+    dot.className='dot ok';txt.textContent='Connected · '+p.charAt(0).toUpperCase()+p.slice(1);
+  } else {
+    dot.className='dot warn';txt.textContent=p==='demo'?'Demo mode':'Not connected — add a key below';
+  }
   // update search status
   const sd=document.getElementById('search-dot'),ss=document.getElementById('search-status');
   if(sd&&ss){
     if(cfg.braveKey){sd.className='dot ok';ss.textContent='Web search enabled';}
-    else{sd.className='dot warn';ss.textContent='Not configured — agents will use training data only';}
-  }
-  // update backup-engine status
-  const od=document.getElementById('or-dot'),os=document.getElementById('or-status');
-  if(od&&os){
-    const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
-    if(n){od.className='dot ok';os.textContent=`${n} backup engine${n>1?'s':''} active — auto fail-over on`;}
-    else{od.className='dot warn';os.textContent='Not configured — single provider only';}
+    else{sd.className='dot warn';ss.textContent='Not configured — agents use training data only';}
   }
   // update webhook/automation status
   const whk=document.getElementById('s-webhook-url'); if(whk) whk.value=cfg.webhookUrl;
   const whdot=document.getElementById('wh-dot'),whst=document.getElementById('wh-status');
   if(whdot&&whst){
-    if(cfg.webhookUrl){whdot.className='dot ok';whst.textContent='Automation connected — outputs will be POSTed as JSON';}
+    if(cfg.webhookUrl){whdot.className='dot ok';whst.textContent='Automation connected — outputs POSTed as JSON';}
     else{whdot.className='dot warn';whst.textContent='Not configured — outputs stay in browser';}
   }
 }
@@ -2572,14 +2226,7 @@ async function saveBraveKey(){
   loadSettingsUI();
   alert(cfg.braveKey ? '✓ Search key saved! Agents will now search the web.' : 'Key cleared.');
 }
-async function saveBackupKeys(){
-  cfg.orKey=document.getElementById('s-or-key').value.trim();
-  cfg.cerebrasKey=document.getElementById('s-cb-key').value.trim();
-  cfg.geminiKey=document.getElementById('s-gm-key').value.trim();
-  loadSettingsUI();
-  const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
-  alert(n ? `✓ Saved ${n} backup engine${n>1?'s':''}! Jobs will auto-fail-over instead of stalling.` : 'Backup engines cleared.');
-}
+
 function saveWebhookUrl(){
   cfg.webhookUrl=document.getElementById('s-webhook-url').value.trim();
   loadSettingsUI();
@@ -2622,27 +2269,37 @@ async function sendToWebhook(source){
   }catch(e){ alert('Webhook error: '+e.message); }
 }
 function setProvider(p,save=true){
-  cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
-  ['groq','ollama','demo'].forEach(x=>document.getElementById('prov-'+x)?.classList.toggle('on',x===p));
-  const sg=document.getElementById('s-groq'),so=document.getElementById('s-ollama');
-  if(sg)sg.style.display=p==='groq'?'block':'none';
-  if(so)so.style.display=p==='ollama'?'block':'none';
+  if(save) cfg.provider=p;
+  ['groq','cerebras','gemini','openrouter','ollama','demo'].forEach(x=>document.getElementById('prov-'+x)?.classList.toggle('on',x===p));
+  ['groq','cerebras','gemini','openrouter','ollama'].forEach(x=>{
+    const el=document.getElementById('s-'+x); if(el) el.style.display=x===p?'block':'none';
+  });
 }
 async function saveSettings(){
-  cfg.groqKey=document.getElementById('s-groq-key').value.trim();
-  cfg.ollamaHost=document.getElementById('s-ollama-host').value.trim().replace(/\/$/,'');
+  const p = cfg.provider;
+  cfg.groqKey = document.getElementById('s-groq-key').value.trim();
+  const cbEl=document.getElementById('s-cb-key'); if(cbEl) cfg.cerebrasKey=cbEl.value.trim();
+  const gmEl=document.getElementById('s-gm-key'); if(gmEl) cfg.geminiKey=gmEl.value.trim();
+  const orEl=document.getElementById('s-or-key'); if(orEl) cfg.orKey=orEl.value.trim();
+  cfg.ollamaHost=(document.getElementById('s-ollama-host')?.value||'').trim().replace(/\/$/,'')||'http://localhost:11434';
   const res=document.getElementById('save-result');
   res.textContent='Testing…';
   let ok=false;
-  if(cfg.provider==='groq') ok=await testGroq(cfg.groqKey);
-  else if(cfg.provider==='ollama') ok=await testOllama();
+  if(p==='groq') ok=await testGroq(cfg.groqKey);
+  else if(p==='cerebras') ok=await testCerebras(cfg.cerebrasKey);
+  else if(p==='gemini') ok=await testGemini(cfg.geminiKey);
+  else if(p==='openrouter') ok=await testOpenRouter(cfg.orKey);
+  else if(p==='ollama') ok=await testOllama();
   else ok=true;
   res.style.color=ok?'var(--green)':'var(--red)';
-  res.textContent=ok?'✓ Connected!':'✗ Failed — check details';
+  res.textContent=ok?'✓ Connected!':'✗ Failed — check your key';
   updateHdr(); loadSettingsUI();
 }
 async function testGroq(key){ if(!key?.startsWith('gsk_'))return false; try{const r=await fetch('https://api.groq.com/openai/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(5000)});return r.ok;}catch{return false;} }
 async function testOllama(){ try{const r=await fetch(cfg.ollamaHost+'/api/tags',{signal:AbortSignal.timeout(4000)});return r.ok;}catch{return false;} }
+async function testCerebras(key){ if(!key) return false; try{const r=await fetch('https://api.cerebras.ai/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
+async function testGemini(key){ if(!key) return false; try{const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+key,{signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
+async function testOpenRouter(key){ if(!key) return false; try{const r=await fetch('https://openrouter.ai/api/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
 
 // ══════════════════════════════════════════════════════════════════════════════
 // ── VOICE INPUT (Web Speech API) ─────────────────────────────────────────────
