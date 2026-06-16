@@ -4,7 +4,7 @@
 
 # AgentForge
 
-**183 AI specialists · Agent pipelines · Auto-built teams · Runs in your browser · Free**
+**219 AI specialists · Agent pipelines · Auto-built teams · Runs in your browser · Free**
 
 A mobile-first agentic AI platform that runs entirely in the browser — no server, no install, no build step, no cost. Powered by free [Groq](https://console.groq.com) cloud inference or a local [Ollama](https://ollama.com) model.
 
@@ -23,7 +23,7 @@ A mobile-first agentic AI platform that runs entirely in the browser — no serv
 
 | | AgentForge | Generic AI chat |
 |---|:---:|:---:|
-| 183 domain specialists, each a deep expert prompt | ✅ | ❌ |
+| 219 domain specialists, each a deep expert prompt | ✅ | ❌ |
 | Auto-builds the optimal **team** for your goal | ✅ | ❌ |
 | Multi-agent **pipelines** (chained reasoning) | ✅ | ❌ |
 | Agent-vs-agent **debate** to refine answers | ✅ | ❌ |
@@ -53,17 +53,17 @@ See [`docs/FEATURES.md`](docs/FEATURES.md) for the full breakdown.
 
 ---
 
-## The roster — 16 divisions, 183 specialists
+## The roster — 16 divisions, 219 specialists
 
 | Division | Count | Division | Count |
 |---|:---:|---|:---:|
-| ⭐ Specialized | 42 | 🤝 Sales | 9 |
-| 🏗️ Engineering | 27 | 🧪 Testing | 8 |
-| 📣 Marketing | 25 | 📈 Paid Media | 7 |
-| 🗺️ GIS & Spatial | 10 | 📋 Project Management | 7 |
-| 🔐 Security | 10 | 🛟 Support | 6 |
-| 🎨 Design | 9 | 🎓 Academic | 5 |
-| 💰 Finance | 5 | 📦 Product | 5 |
+| ⭐ Specialized | 45 | 🔐 Security | 12 |
+| 🏗️ Engineering | 36 | 🤝 Sales | 12 |
+| 📣 Marketing | 32 | 🧪 Testing | 10 |
+| 🗺️ GIS & Spatial | 10 | 🎨 Design | 11 |
+| 💰 Finance | 9 | 📈 Paid Media | 7 |
+| 🎓 Academic | 8 | 📋 Project Management | 7 |
+| 🛟 Support | 7 | 📦 Product | 5 |
 | 🎮 Game Development | 5 | 🥽 Spatial Computing | 3 |
 
 Every agent is a structured Markdown system prompt under [`agents/<division>/`](agents/). Browse the complete catalog in [`docs/AGENTS.md`](docs/AGENTS.md).
@@ -93,7 +93,7 @@ Every agent is a structured Markdown system prompt under [`agents/<division>/`](
 
 ## Architecture
 
-AgentForge has **zero runtime dependencies** and **no build step**. The whole client is one file, `index.html`, which carries lightweight metadata (name, division, emoji, color, one-line description) for all 183 agents. Each agent's full system prompt is fetched on demand from this repo:
+AgentForge has **zero runtime dependencies** and **no build step**. The whole client is one file, `index.html`, which carries lightweight metadata (name, division, emoji, color, one-line description) for all 219 agents. Each agent's full system prompt is fetched on demand from this repo:
 
 ```
 https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents/<division>/<id>.md
@@ -121,9 +121,9 @@ No npm, no framework, no toolchain. Deploy the folder to any static host (GitHub
 ```
 Agi-forge/
 ├── index.html              # the entire app — self-contained, no build
-├── agents/                 # 183 specialist system prompts, by division
-│   ├── engineering/        # …27 agents
-│   ├── specialized/        # …42 agents
+├── agents/                 # 219 specialist system prompts, by division
+│   ├── engineering/        # …36 agents
+│   ├── specialized/        # …45 agents
 │   └── … (16 divisions)
 ├── docs/                   # architecture, features, deployment, catalog
 │   ├── ARCHITECTURE.md

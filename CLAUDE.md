@@ -1,164 +1,176 @@
-# AgentForge — Project Context for Claude Code
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## What this project is
 
-AgentForge is a **mobile-first agentic AI platform** — a single `index.html` web app with 183 curated AI specialists. It runs 100% in the browser, free, no server needed. Hosted at: **https://mmuzammul.github.io/Agi-forge/**
+AgentForge is a mobile-first agentic AI platform — a single `index.html` web app with 183 curated AI specialists. Runs 100% in the browser, no build step, no server needed. Live at: **https://mmuzammul.github.io/Agi-forge/**
 
-This is a **completely independent, original-branded project** by mmuzammul. It is NOT linked to any other repository. All branding is "AgentForge" only.
-
----
-
-## Repository structure (target state)
-
-```
-Agi-forge/
-├── CLAUDE.md                    ← you are here
-├── index.html                   ← the entire app (~150KB)
-├── README.md                    ← project docs
-├── agents/                      ← 183 specialist .md system prompts
-│   ├── engineering/             (25 agents)
-│   ├── design/                  (9 agents)
-│   ├── security/                (10 agents)
-│   ├── marketing/               (24 agents)
-│   ├── specialized/             (45+ agents)
-│   ├── sales/                   (9 agents)
-│   ├── product/                 (5 agents)
-│   ├── finance/                 (5 agents)
-│   ├── testing/                 (8 agents)
-│   ├── support/                 (6 agents)
-│   ├── gis/                     (10 agents)
-│   ├── paid-media/              (7 agents)
-│   ├── game-development/        (nested: unity/, godot/, unreal-engine/, roblox-studio/)
-│   ├── spatial-computing/       (6 agents)
-│   ├── project-management/      (7 agents)
-│   ├── academic/                (5 agents)
-│   ├── strategy/                (playbooks + runbooks)
-│   └── finance/                 (5 agents)
-└── .github/workflows/
-    └── deploy-pages.yml         ← auto-deploy to GitHub Pages on push to main
-```
+This is a completely independent, original-branded project by mmuzammul. All branding is "AgentForge" only — no references to "AGI repo", "mobile.html", or any other repo.
 
 ---
 
-## What has been built (completed features in index.html)
+## Development Commands
 
-### Core app
-- **183 AI specialists** with metadata (id, name, division, emoji, color, description)
-- Agent content fetched on-demand from `https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents/`
-- Falls back to short description if fetch fails
+**No build tooling.** There is no npm, no bundler, no compiler. To develop locally:
 
-### AI providers
-- **Groq** (free cloud AI) — primary provider
-- **Ollama** (local) — for self-hosted use
-- **Demo mode** — no AI, UI preview only
-- Config stored in `localStorage`
-
-### Features implemented
-1. **Chat** — talk to any specialist, streaming responses
-2. **Agent Pipeline** — chain 2-6 agents, each builds on previous output
-3. **Auto-Build Team** — LLM orchestrator picks optimal agents from full roster
-4. **Agent Debate** — 2 agents argue in rounds (Proposer vs Critic)
-5. **Benchmarker** — same prompt across multiple agents, LLM-judged scoring
-6. **Code Runner** — ▶ button on every code block, runs via Piston API (70+ languages)
-7. **Web Search** — Brave Search API integration (optional, user provides key)
-8. **Voice Input** — Web Speech API (Chrome/Safari built-in)
-9. **File Attachment** — FileReader API, client-side
-10. **Memory** — save/view/delete outputs in localStorage
-11. **Export** — download any output as .md file
-
-### Rate limit fix (important)
-Groq free tier has 6000 TPM per model. Fix implemented:
-- `GROQ_MODELS` pool: `['llama-3.1-8b-instant', 'llama-3.3-70b-versatile', 'gemma2-9b-it', 'mixtral-8x7b-32768']`
-- `groqFetchWithRetry()` — on 429, parses retry time, waits, rotates to next model
-- 3-second cooldown between pipeline agents
-- All 3 Groq call paths use this: `streamGroqInto`, `autoBuildTeam`, `judgeBenchmark`
-
----
-
-## What still needs to be done (next tasks)
-
-### PRIORITY 1 — Push agents folder to this repo
-The agent .md files exist on the AGI repo branch:
-`https://github.com/MMUZAMMUL/AGI/tree/claude/epic-bell-8km84u/gui/agents-for-agi-forge`
-
-They need to be copied into this repo's `agents/` folder so the live app can fetch them.
-
-**How to do it in a new session:**
 ```bash
-# The files are already in /home/user/AgentForge/agents/ on the server
-# Just git add and push them all
-git add agents/
-git commit -m "Add 183 curated specialist agent system prompts"
-git push origin main
+# Serve locally (Python)
+python3 -m http.server 8080
+
+# Or with Node
+npx serve .
 ```
 
-### PRIORITY 2 — Push updated index.html
-The latest index.html (with all fixes) is at `/home/user/AgentForge/index.html` on the server (~150KB). Push it:
-```bash
-git add index.html
-git commit -m "AgentForge v3: lightweight app, fetches agents from repo"
-git push origin main
-```
+Open `http://localhost:8080` in a browser. No compilation step; changes to `index.html` are live on refresh.
 
-### PRIORITY 3 — Future features to add
-- **Agent favorites/pinning** — let user pin top agents to home screen
-- **Conversation history** — persist chat history between sessions (localStorage)
-- **Agent search/filter** — search by name or capability
-- **Custom agent creator** — let user define their own specialist
-- **Dark/light theme toggle**
-- **PWA manifest** — proper installable app with icon
+**There is no test suite and no linter.** Validation is manual — open in a browser and test the affected feature.
+
+**Deploy:** Push to `main`. GitHub Actions (`.github/workflows/deploy-pages.yml`) automatically uploads the repo root to GitHub Pages. No build step; files are served as-is.
 
 ---
 
-## Key technical details
+## Architecture
 
-### GITHUB_RAW constant
+### Single-file app
+
+The entire application lives in `index.html` (~2,500 lines). It contains all CSS, all JavaScript, and all HTML. `landing.html` is a separate marketing page that links to `index.html`.
+
+### Agent content is fetched on-demand
+
+Agent **metadata** (id, name, division, emoji, color, description, vibe) is defined inline in `index.html` in the `AGENTS` array (around lines 612–796). The full **system prompts** live in `agents/<division>/<id>.md` and are fetched at runtime from GitHub Raw:
+
 ```js
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
+// URL pattern: ${GITHUB_RAW}/${agent.division}/${agent.id}.md
 ```
-Agent fetch URL pattern: `${GITHUB_RAW}/${agent.division}/${agent.id}.md`
 
-### Agent .md file format
+This keeps the initial page load small while keeping system prompts version-controlled and editable independently.
+
+### 6 interaction modes
+
+All implemented in `index.html`:
+
+1. **Chat** — single agent, streaming responses per agent, conversation persisted in `localStorage`
+2. **Pipeline** — chain 2–6 agents sequentially; each receives the previous agent's output as context
+3. **Auto-Build Team** — LLM reads the user's goal + the full agent roster, then picks optimal agents and their order
+4. **Debate** — Proposer vs. Critic in configurable rounds (1–5) of adversarial refinement
+5. **Benchmarker** — same prompt runs across multiple agents; a separate LLM call scores each on relevance/depth/correctness
+6. **Code Runner** — every code block in any output gets a ▶ button; executes via Piston API (70+ languages)
+
+### Multi-provider failover
+
+`groqFetchWithRetry()` implements a full cascade:
+
+1. **Groq** — 3-model pool (`llama-3.1-8b-instant`, `llama-3.3-70b-versatile`, `gemma2-9b-it`); on 429, parses `retry-after` header, waits, rotates to next model
+2. **Cerebras** — `llama-3.3-70b`, `llama3.1-8b`
+3. **Gemini** — `gemini-2.0-flash`, `gemini-1.5-flash`
+4. **OpenRouter** — free model fallback
+5. **Ollama** — local, user-configured host
+
+All three LLM call paths — `streamGroqInto`, `autoBuildTeam`, `judgeBenchmark` — use this retry wrapper. Pipeline stages have a 3-second cooldown between agents to reduce rate-limit pressure.
+
+### State & persistence
+
+All state is `localStorage`. Keys used:
+
+| Key | Purpose |
+|---|---|
+| `agentforge_provider` | Selected provider |
+| `agentforge_groq_key` | Groq API key |
+| `agentforge_ollama_host` | Ollama host URL |
+| `agentforge_cerebras_key`, `agentforge_gemini_key`, `agentforge_openrouter_key` | Fallback provider keys |
+| `agentforge_brave_key` | Brave Search API key (optional) |
+| `agentforge_favs` | JSON array of pinned agent IDs |
+| `agentforge_memory_*` | Saved outputs |
+| `agentforge_chat_<agentId>` | Per-agent conversation history |
+
+Supabase (loaded via CDN) handles optional accounts, Pro plan tracking, and reviews. No other external libraries.
+
+### CSS architecture
+
+All CSS is in one `<style>` block. Uses CSS custom properties at `:root`:
+
+```css
+--bg: #0f1117          /* Dark background */
+--bg2: #161b27
+--bg3: #1e2535
+--accent: #f59e0b      /* Amber brand primary */
+--accent2: #fbbf24     /* Amber brand bright */
+--text: #e2e8f0
+--text2: #94a3b8
+--radius: 10px
+```
+
+Mobile-first responsive design using `clamp()` and media queries. All UI changes must work at 375px viewport width.
+
+---
+
+## Adding or Editing Agents
+
+### Agent file format
+
+File: `agents/<division>/<division>-<slug>.md`
+
 ```markdown
 ---
 name: Backend Architect
-description: Short one-line description
+description: One-line summary shown in the agent list
 division: engineering
 emoji: 🏗️
 color: "#3b82f6"
 ---
 
-Full system prompt content starts here...
+# Full system prompt content starts here...
 ```
 
-### Branding
-- Name: **AgentForge**
-- Logo: `Agent<span>Forge</span>` (span colored amber)
-- Accent colors: `--accent:#f59e0b` / `--accent2:#fbbf24` (amber)
-- Background: dark (`--bg:#0f1117`)
-- NO references to "AGI repo", "mobile.html", "claude/epic-bell-8km84u", or any other repo
+The YAML frontmatter is metadata; everything after `---` is the system prompt sent to the LLM when this agent is activated.
 
-### GitHub Pages deploy
-- Workflow: `.github/workflows/deploy-pages.yml`
-- Triggers on push to `main`
-- Copies root to `_site` and deploys
-- Live URL: `https://mmuzammul.github.io/Agi-forge/`
+### To register a new agent
+
+1. Create the `.md` file at `agents/<division>/<division>-<slug>.md`
+2. Add an entry to the `AGENTS` array in `index.html`:
+
+```js
+{
+  id: "engineering-new-agent",   // must match the filename (without .md)
+  name: "New Agent",
+  division: "engineering",
+  description: "One-line summary for the agent list",
+  color: "#3b82f6",
+  emoji: "🔧",
+  vibe: "Short personality tagline shown on the agent card"
+}
+```
+
+The `id` must match the filename exactly: `agents/engineering/engineering-new-agent.md`.
+
+### Divisions (16 total)
+
+`academic`, `design`, `engineering`, `finance`, `game-development`, `gis`, `marketing`, `paid-media`, `product`, `project-management`, `sales`, `security`, `spatial-computing`, `specialized`, `support`, `testing`
 
 ---
 
-## Previous session history (summary)
+## Key Conventions
 
-Built from scratch over multiple sessions:
-1. Started as `gui/mobile.html` in `mmuzammul/AGI` repo
-2. Added 217 agents, all AGI features (pipeline, debate, benchmark, code runner, voice, search)
-3. Rebranded as AgentForge, created `mmuzammul/Agi-forge` public repo
-4. Fixed Groq rate limits with model rotation
-5. Curated to 183 agents (removed 17 niche/duplicate agents)
-6. Made index.html lightweight (150KB) — agents fetched on-demand from repo
-7. All agent .md files ready in `/home/user/AgentForge/agents/` — need to be pushed to this repo
+- **No frameworks, no npm.** If a library is needed, load it from a trusted CDN in `<head>` with `crossorigin="anonymous"`.
+- **Agent IDs are kebab-case and must match file paths exactly.** The fetch URL is constructed directly from the `id` field.
+- **All user data stays client-side** unless the user explicitly logs in with Supabase.
+- **Mobile-first.** Test all UI changes in a 375px-wide viewport.
+- **Logo:** renders as `Agent<span>Forge</span>` with the `<span>` colored amber (`var(--accent)`).
 
 ---
 
-## Session limitation note
+## External Services
 
-Previous sessions were scoped to `mmuzammul/agi` repo and could NOT push directly to `mmuzammul/Agi-forge`. This new session IS scoped to `Agi-forge` — you have full push access here.
+| Service | Purpose | Key stored in |
+|---|---|---|
+| Groq | Primary LLM | `agentforge_groq_key` |
+| Cerebras | LLM failover | `agentforge_cerebras_key` |
+| Gemini | LLM failover | `agentforge_gemini_key` |
+| OpenRouter | LLM fallback | `agentforge_openrouter_key` |
+| Ollama | Local LLM | `agentforge_ollama_host` |
+| Brave Search | Web search (optional) | `agentforge_brave_key` |
+| Piston API | Code execution | No key needed |
+| GitHub Raw | Agent `.md` fetches | No key (public repo) |
+| Supabase | Auth, Pro plans, reviews | Hardcoded project URL in `index.html` |
