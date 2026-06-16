@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
-<title>AgentForge — 183 AI Specialists</title>
-<meta name="description" content="A mobile-first agentic AI platform with 183 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free."/>
+<title>AgentForge — 219 AI Specialists</title>
+<meta name="description" content="A mobile-first agentic AI platform with 219 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free."/>
 <meta name="keywords" content="AI agents, AI specialists, agentic AI, AI team, multi-agent, AI pipeline, AI chat, free AI app, mobile AI, AI assistant, prompt engineering, code runner"/>
 <meta name="author" content="AgentForge"/>
 <link rel="canonical" href="https://mmuzammul.github.io/Agi-forge/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="AgentForge"/>
-<meta property="og:title" content="AgentForge — 183 AI Specialists in Your Browser"/>
-<meta property="og:description" content="Chat with 183 domain specialists, chain them into pipelines, auto-build the perfect team, and run the code they write. Free, runs in your browser."/>
+<meta property="og:title" content="AgentForge — 219 AI Specialists in Your Browser"/>
+<meta property="og:description" content="Chat with 219 domain specialists, chain them into pipelines, auto-build the perfect team, and run the code they write. Free, runs in your browser."/>
 <meta property="og:image" content="https://mmuzammul.github.io/Agi-forge/assets/icon-512.png"/>
 <meta property="og:url" content="https://mmuzammul.github.io/Agi-forge/"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="AgentForge — 183 AI Specialists in Your Browser"/>
-<meta name="twitter:description" content="183 expert AI specialists, pipelines, auto-built teams, debate & a code runner. Free."/>
+<meta name="twitter:title" content="AgentForge — 219 AI Specialists in Your Browser"/>
+<meta name="twitter:description" content="219 expert AI specialists, pipelines, auto-built teams, debate & a code runner. Free."/>
 <meta name="twitter:image" content="https://mmuzammul.github.io/Agi-forge/assets/icon-512.png"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"AgentForge","url":"https://mmuzammul.github.io/Agi-forge/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","description":"A mobile-first agentic AI platform with 183 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"mmuzammul"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"AgentForge","url":"https://mmuzammul.github.io/Agi-forge/","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","description":"A mobile-first agentic AI platform with 219 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"mmuzammul"}}
 </script>
 <link rel="manifest" href="manifest.webmanifest"/>
 <meta name="theme-color" content="#0f1117"/>
@@ -167,6 +167,9 @@ a{color:var(--accent2)}
 .pipeline-hint{font-size:12px;color:var(--text2);text-align:center;padding:4px 0}
 .run-btn{width:100%;padding:14px;background:var(--purple);border:none;color:#fff;font-size:15px;font-weight:700;border-radius:var(--radius);cursor:pointer}
 .run-btn:disabled{opacity:.5}
+.share-btn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--purple)66;color:var(--purple);font-size:14px;font-weight:600;border-radius:var(--radius);cursor:pointer;margin-top:8px}
+.share-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;white-space:nowrap;box-shadow:0 4px 20px #0008}
+.share-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* Pipeline execution */
 .exec-screen{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
@@ -251,6 +254,22 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
 .bench-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:7px}
 .bench-bar-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .6s ease}
 .bench-winner{border-color:var(--green)!important;background:var(--green)08!important}
+
+/* ── CREATOR SCREEN ── */
+.creator-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px}
+.creator-field{display:flex;flex-direction:column;gap:4px}
+.creator-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.creator-input{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;font-family:inherit;width:100%}
+.creator-input:focus{border-color:var(--accent)}
+.creator-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;width:100%;cursor:pointer}
+.creator-ta{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius);font-size:14px;outline:none;resize:vertical;font-family:inherit;width:100%;min-height:90px;line-height:1.5}
+.creator-ta:focus,.creator-select:focus{border-color:var(--accent)}
+.creator-row{display:flex;gap:8px}
+.creator-row .creator-field{flex:1}
+.creator-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:12px;color:var(--text2);white-space:pre-wrap;font-family:monospace;max-height:200px;overflow-y:auto;display:none}
+.my-agent-item{display:flex;align-items:center;gap:11px;padding:11px;border-radius:var(--radius);cursor:pointer;margin-bottom:3px;background:var(--bg2);border:1px solid var(--border)88;position:relative}
+.my-agent-del{background:none;border:none;color:var(--red);font-size:16px;padding:4px 6px;cursor:pointer;opacity:.7;flex-shrink:0}
+.my-agent-del:hover{opacity:1}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 </head>
@@ -267,6 +286,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <button class="icon-btn" id="tab-memory" onclick="showScreen('memory')" title="Memory">🧠</button>
       <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
       <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
+      <button class="icon-btn" id="tab-creator" onclick="showScreen('creator')" title="Create Agent">✏️</button>
       <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
       <button class="icon-btn" id="tab-pro" onclick="openUpgrade()" title="Go Pro" style="border-color:var(--accent);color:var(--accent2)">⭐</button>
       <button class="icon-btn" id="tab-admin" onclick="openAdmin()" title="Admin" style="display:none;border-color:var(--accent2)">🛡️</button>
@@ -295,8 +315,19 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <input class="auth-input" id="auth-email" type="email" placeholder="you@email.com" autocomplete="email"/>
         <label>Password</label>
         <input class="auth-input" id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+        <div id="auth-forgot-wrap" style="text-align:right;margin-top:4px">
+          <button onclick="forgotPassword()" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;padding:0">Forgot password?</button>
+        </div>
         <div class="auth-msg" id="auth-msg"></div>
         <button class="primary-btn" id="auth-submit" onclick="authSubmit()">Log in →</button>
+        <!-- Password reset form (hidden by default) -->
+        <div id="auth-reset-wrap" style="display:none">
+          <div class="auth-msg ok" style="display:block;margin-bottom:10px">Check your email for a reset link. Click it, then set a new password below.</div>
+          <label>New password (6+ characters)</label>
+          <input class="auth-input" id="auth-new-pass" type="password" placeholder="New password" autocomplete="new-password"/>
+          <div class="auth-msg" id="auth-reset-msg"></div>
+          <button class="primary-btn" onclick="setNewPassword()">Set new password →</button>
+        </div>
         <button class="ghost-btn" onclick="closeAuth()">Maybe later — just browse</button>
       </div>
       <!-- Signed-IN view -->
@@ -370,7 +401,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
       <div class="welcome-hero">
         <div class="big">⚡</div>
         <h1>Agent<span style="color:var(--accent2)">Forge</span></h1>
-        <p>183 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
+        <p>219 AI specialists · auto-build teams · debate · benchmarker<br>100% free · mobile-first · no PC needed</p>
         <div id="review-summary" style="display:none;font-size:13px;margin-top:8px"></div>
       </div>
       <div class="card">
@@ -391,7 +422,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
   <!-- ═══════════ AGENTS ═══════════ -->
   <div id="screen-agents" class="screen">
     <div class="search-bar" style="display:flex;gap:8px">
-      <input class="search-input" id="search" placeholder="Search 183 specialists…" oninput="renderList()" style="flex:1"/>
+      <input class="search-input" id="search" placeholder="Search 219 specialists…" oninput="renderList()" style="flex:1"/>
       <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
     </div>
     <div id="pipeline-bar" style="display:none;padding:8px 12px;background:var(--purple)11;border-bottom:1px solid var(--purple)44;font-size:13px;color:var(--purple);display:flex;align-items:center;gap:8px">
@@ -447,6 +478,7 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
           </div>
         </div>
         <button class="run-btn" id="run-btn" onclick="runPipeline()" disabled>▶ Run Pipeline</button>
+        <button class="share-btn" id="share-btn" onclick="sharePipeline()" style="display:none">🔗 Share Pipeline</button>
       </div>
       <div class="card" style="opacity:.8">
         <div class="card-title">💡 Example Pipelines</div>
@@ -552,6 +584,118 @@ hr{border:none;border-top:1px solid var(--border);margin:10px 0}
         <input class="field-input" id="s-gm-key" type="password" placeholder="Gemini key…" style="margin:4px 0 4px"/>
         <button class="primary-btn" onclick="saveBackupKeys()" style="margin-top:10px;background:var(--purple);font-size:13px;padding:10px">Save Backup Engines</button>
       </div>
+
+      <!-- Vertical Editions -->
+      <div class="card">
+        <div class="card-title">🏢 Vertical Editions</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:10px;line-height:1.5">Focused versions of AgentForge for specific industries — filtered agents, custom branding.</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <a href="?edition=legal" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #1e40af55;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">⚖️</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#60a5fa">LegalForge</div><div style="font-size:11px;color:var(--text2)">Document review, compliance, client intake</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          <a href="?edition=finance" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #15803d55;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">💰</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#4ade80">FinanceForge</div><div style="font-size:11px;color:var(--text2)">Bookkeeping, investment, tax, crypto, risk</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          <a href="?edition=healthcare" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid #0e749055;border-radius:var(--radius);text-decoration:none">
+            <span style="font-size:20px">🏥</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#22d3ee">HealthForge</div><div style="font-size:11px;color:var(--text2)">Patient services, billing, compliance, HR</div></div>
+            <span style="font-size:12px;color:var(--text2)">→</span>
+          </a>
+          ${EDITION_KEY?`<a href="." style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none"><span style="font-size:12px;color:var(--text2)">← Back to full AgentForge (all 203 specialists)</span></a>`:''}
+        </div>
+      </div>
+
+      <!-- Automations / Webhook -->
+      <div class="card">
+        <div class="card-title">⚡ Automations (optional)</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div id="wh-dot" class="dot warn" style="width:8px;height:8px"></div>
+          <span id="wh-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+        </div>
+        <input class="field-input" id="s-webhook-url" placeholder="https://hooks.zapier.com/hooks/catch/…"/>
+        <div class="field-hint">Paste any Zapier, Make, or webhook URL. Pipeline/debate/benchmark output is POSTed as JSON so you can route it to Notion, Slack, email, or any app. <a href="https://zapier.com/apps/webhook/integrations" target="_blank" rel="noopener">Create a Zapier webhook ↗</a></div>
+        <button class="primary-btn" onclick="saveWebhookUrl()" style="margin-top:8px;background:var(--green);font-size:13px;padding:10px">Save Webhook URL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ CREATOR ═══════════ -->
+  <div id="screen-creator" class="screen">
+    <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <span style="font-weight:700;font-size:15px">✏️ Agent Creator</span>
+      <span style="font-size:12px;color:var(--text2)">Build your own specialist</span>
+    </div>
+    <div class="creator-body">
+      <div class="creator-row">
+        <div class="creator-field">
+          <div class="creator-label">Agent Name *</div>
+          <input class="creator-input" id="cr-name" placeholder="e.g. Crypto Analyst"/>
+        </div>
+        <div class="creator-field" style="max-width:80px">
+          <div class="creator-label">Emoji</div>
+          <input class="creator-input" id="cr-emoji" placeholder="🔍" maxlength="2"/>
+        </div>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Division *</div>
+        <select class="creator-select" id="cr-division">
+          <option value="">Select division…</option>
+          <option>academic</option><option>design</option><option>engineering</option>
+          <option>finance</option><option>game-development</option><option>gis</option>
+          <option>marketing</option><option>paid-media</option><option>product</option>
+          <option>project-management</option><option>sales</option><option>security</option>
+          <option>spatial-computing</option><option>specialized</option><option>support</option><option>testing</option>
+        </select>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">One-line description *</div>
+        <input class="creator-input" id="cr-desc" placeholder="e.g. Expert in DeFi, tokenomics, and on-chain analytics"/>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Personality vibe</div>
+        <input class="creator-input" id="cr-vibe" placeholder="e.g. Reads the blockchain so you don't have to"/>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Core expertise &amp; knowledge areas</div>
+        <textarea class="creator-ta" id="cr-expertise" placeholder="What does this agent deeply know?&#10;e.g. DeFi protocols, tokenomics, whale tracking, on-chain data analysis, smart contract auditing"></textarea>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Communication style</div>
+        <select class="creator-select" id="cr-style">
+          <option value="direct">Direct &amp; concise — gets to the point fast</option>
+          <option value="thorough">Thorough &amp; detailed — comprehensive breakdowns</option>
+          <option value="creative">Creative &amp; energetic — bold ideas and enthusiasm</option>
+          <option value="academic">Academic &amp; precise — citations, rigor, structure</option>
+          <option value="coaching">Coaching &amp; socratic — asks questions, guides thinking</option>
+        </select>
+      </div>
+      <div class="creator-field">
+        <div class="creator-label">Key deliverables (what outputs does this agent produce?)</div>
+        <textarea class="creator-ta" id="cr-deliverables" placeholder="e.g. Token analysis reports, smart contract risk assessments, market trend summaries, DeFi yield comparisons" style="min-height:70px"></textarea>
+      </div>
+      <button class="run-btn" id="cr-gen-btn" onclick="generateAgentWithAI()" style="background:linear-gradient(135deg,var(--accent),var(--purple));margin-top:2px">✨ Generate System Prompt with AI</button>
+      <div id="cr-gen-status" style="font-size:12px;color:var(--text2);text-align:center;min-height:14px"></div>
+      <div class="creator-field">
+        <div class="creator-label" style="display:flex;justify-content:space-between">
+          <span>System Prompt <span style="color:var(--text2);font-weight:400">(auto-generated or write your own)</span></span>
+          <span id="cr-char-count" style="color:var(--text2)"></span>
+        </div>
+        <textarea class="creator-ta" id="cr-prompt" placeholder="Your agent's full system prompt…&#10;&#10;Or click '✨ Generate' above to create one from your inputs." style="min-height:160px" oninput="updateCharCount()"></textarea>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="run-btn" onclick="saveCustomAgent()" style="flex:1">💾 Save &amp; Use Agent</button>
+        <button class="save-btn2" onclick="copyAgentMd()" style="flex:0 0 auto;width:auto;padding:0 16px;margin:0">📋 Copy .md</button>
+      </div>
+
+      <!-- Saved custom agents -->
+      <div id="my-agents-section" style="display:none">
+        <div class="list-section" style="margin-top:4px">🛠️ My Custom Agents<span class="ls-line"></span></div>
+        <div id="my-agents-list"></div>
+      </div>
     </div>
   </div>
 
@@ -615,6 +759,11 @@ const AGENTS = [
 {"id":"academic-historian","name":"Historian","division":"academic","description":"Expert in historical analysis, periodization, material culture, and historiography \u2014 validates histo","color":"#B45309","emoji":"\ud83d\udcda","vibe":"History doesn't repeat, but it rhymes \u2014 and I know all the verses"},
 {"id":"academic-narratologist","name":"Narratologist","division":"academic","description":"Expert in narrative theory, story structure, character arcs, and literary analysis \u2014 grounds advice ","color":"#8B5CF6","emoji":"\ud83d\udcdc","vibe":"Every story is an argument \u2014 I help you find what yours is really saying"},
 {"id":"academic-psychologist","name":"Psychologist","division":"academic","description":"Expert in human behavior, personality theory, motivation, and cognitive patterns \u2014 builds psychologi","color":"#EC4899","emoji":"\ud83e\udde0","vibe":"People don't do things for no reason \u2014 I find the reason"},
+{"id":"academic-philosopher","name":"Philosopher","division":"academic","description":"Logic, ethics, epistemology, argument analysis, thought experiments, and fallacy identification","color":"#8b5cf6","emoji":"\ud83e\udde0","vibe":"Steelmans your argument, then dismantles it \u2014 that's how you find the truth."},
+{"id":"academic-economist","name":"Economist","division":"academic","description":"Macro/micro economics, market dynamics, policy analysis, game theory, and behavioral economics","color":"#0ea5e9","emoji":"\ud83d\udcc8","vibe":"Every policy has a tradeoff \u2014 I find the one nobody's talking about."},
+{"id":"academic-linguist","name":"Linguist","division":"academic","description":"Language analysis, etymology, syntax, discourse clarity, translation quality, and writing precision","color":"#ec4899","emoji":"\ud83d\udde3\ufe0f","vibe":"Language shapes thought \u2014 improving one improves the other."},
+{"id":"academic-statistics-tutor","name":"Statistics Tutor","division":"academic","description":"Descriptive stats, hypothesis testing, regression analysis, ANOVA, effect sizes, and statistical software guidance","color":"#059669","emoji":"\ud83d\udcca","vibe":"The right test, the right interpretation, the right conclusion \u2014 every time."},
+{"id":"academic-literature-reviewer","name":"Literature Reviewer","division":"academic","description":"Systematic review methodology, database search strategies, PRISMA protocol, evidence synthesis, and gap analysis","color":"#7c3aed","emoji":"\ud83d\udd2c","vibe":"Evidence synthesis done right \u2014 rigorous, reproducible, and audit-ready."},
 {"id":"design-brand-guardian","name":"Brand Guardian","division":"design","description":"Expert brand strategist and guardian specializing in brand identity development, consistency mainten","color":"blue","emoji":"\ud83c\udfa8","vibe":"Your brand's fiercest protector and most passionate advocate."},
 {"id":"design-image-prompt-engineer","name":"Image Prompt Engineer","division":"design","description":"Expert photography prompt engineer specializing in crafting detailed, evocative prompts for AI image","color":"amber","emoji":"\ud83d\udcf7","vibe":"Translates visual concepts into precise prompts that produce stunning AI photogr"},
 {"id":"design-inclusive-visuals-specialist","name":"Inclusive Visuals Specialist","division":"design","description":"Representation expert who defeats systemic AI biases to generate culturally accurate, affirming, and","color":"#4DB6AC","emoji":"\ud83c\udf08","vibe":"Defeats systemic AI biases to generate culturally accurate, affirming imagery."},
@@ -624,6 +773,8 @@ const AGENTS = [
 {"id":"design-ux-researcher","name":"UX Researcher","division":"design","description":"Expert user experience researcher specializing in user behavior analysis, usability testing, and dat","color":"green","emoji":"\ud83d\udd2c","vibe":"Validates design decisions with real user data, not assumptions."},
 {"id":"design-visual-storyteller","name":"Visual Storyteller","division":"design","description":"Expert visual communication specialist focused on creating compelling visual narratives, multimedia ","color":"purple","emoji":"\ud83c\udfac","vibe":"Transforms complex information into visual narratives that move people."},
 {"id":"design-whimsy-injector","name":"Whimsy Injector","division":"design","description":"Expert creative specialist focused on adding personality, delight, and playful elements to brand exp","color":"pink","emoji":"\u2728","vibe":"Adds the unexpected moments of delight that make brands unforgettable."},
+{"id":"design-motion-designer","name":"Motion Designer","division":"design","description":"Animation principles, After Effects workflows, UI micro-interactions, Lottie, and easing curves","color":"#f43f5e","emoji":"\ud83c\udfac","vibe":"Motion tells the story your static design can't \u2014 every transition has a purpose."},
+{"id":"design-typography-specialist","name":"Typography Specialist","division":"design","description":"Type hierarchy, font pairing, readability, grid systems, variable fonts, and type as design","color":"#64748b","emoji":"\ud83d\udd24","vibe":"Typography is the voice of design \u2014 get the type right, everything else follows."},
 {"id":"engineering-ai-data-remediation-engineer","name":"AI Data Remediation Engineer","division":"engineering","description":"Specialist in self-healing data pipelines \u2014 uses air-gapped local SLMs and semantic clustering to au","color":"green","emoji":"\ud83e\uddec","vibe":"Fixes your broken data with surgical AI precision \u2014 no rows left behind."},
 {"id":"engineering-ai-engineer","name":"AI Engineer","division":"engineering","description":"Expert AI/ML engineer specializing in machine learning model development, deployment, and integratio","color":"blue","emoji":"\ud83e\udd16","vibe":"Turns ML models into production features that actually scale."},
 {"id":"engineering-autonomous-optimization-architect","name":"Autonomous Optimization Architect","division":"engineering","description":"Intelligent system governor that continuously shadow-tests APIs for performance while enforcing stri","color":"#673AB7","emoji":"\u26a1","vibe":"The system governor that makes things faster without bankrupting you."},
@@ -651,11 +802,17 @@ const AGENTS = [
 {"id":"engineering-sre","name":"SRE (Site Reliability Engineer)","division":"engineering","description":"Expert site reliability engineer specializing in SLOs, error budgets, observability, chaos engineeri","color":"#e63946","emoji":"\ud83d\udee1\ufe0f","vibe":"Reliability is a feature. Error budgets fund velocity \u2014 spend them wisely."},
 {"id":"engineering-technical-writer","name":"Technical Writer","division":"engineering","description":"Expert technical writer specializing in developer documentation, API references, README files, and t","color":"teal","emoji":"\ud83d\udcda","vibe":"Writes the docs that developers actually read and use."},
 {"id":"engineering-voice-ai-integration-engineer","name":"Voice AI Integration Engineer","division":"engineering","description":"Expert in building end-to-end speech transcription pipelines using Whisper-style models and cloud AS","color":"violet","emoji":"\ud83c\udf99\ufe0f","vibe":"Turns raw audio into structured, production-ready text that machines and humans "},
+{"id":"engineering-blockchain-developer","name":"Blockchain Developer","division":"engineering","description":"Solidity smart contracts, DeFi protocol dev, EVM internals, gas optimization, and Web3 integration","color":"#6366f1","emoji":"\u26d3\ufe0f","vibe":"Smart contracts are law \u2014 write them like every word costs money, because it does."},
+{"id":"engineering-platform-engineer","name":"Platform Engineer","division":"engineering","description":"Internal developer platforms, golden paths, self-service infrastructure, Backstage, and developer ex","color":"#0891b2","emoji":"\ud83c\udfd7\ufe0f","vibe":"Builds the paved road so product teams ship faster and ops teams sleep better."},
+{"id":"engineering-ml-engineer","name":"ML Engineer","division":"engineering","description":"MLOps, model training pipelines, feature engineering, model serving, drift detection, and experiment","color":"#7c3aed","emoji":"\ud83e\udd16","vibe":"A model that can't be retrained, monitored, and rolled back isn't ML \u2014 it's tech debt."},
 {"id":"finance-bookkeeper-controller","name":"Bookkeeper & Controller","division":"finance","description":"Expert bookkeeper and controller specializing in day-to-day accounting operations, financial reconci","color":"green","emoji":"\ud83d\udcd2","vibe":"Every penny accounted for, every close on time \u2014 the backbone of financial trust"},
 {"id":"finance-financial-analyst","name":"Financial Analyst","division":"finance","description":"Expert financial analyst specializing in financial modeling, forecasting, scenario analysis, and dat","color":"green","emoji":"\ud83d\udcca","vibe":"Turns spreadsheets into strategy \u2014 every number tells a story, every model drive"},
 {"id":"finance-fpa-analyst","name":"FP&A Analyst","division":"finance","description":"Expert Financial Planning & Analysis (FP&A) analyst specializing in budgeting, variance analysis, fi","color":"green","emoji":"\ud83d\udcc8","vibe":"The budget whisperer \u2014 turns plans into numbers and numbers into action."},
 {"id":"finance-investment-researcher","name":"Investment Researcher","division":"finance","description":"Expert investment researcher specializing in market research, due diligence, portfolio analysis, and","color":"green","emoji":"\ud83d\udd0d","vibe":"Digs deeper than the consensus \u2014 finds alpha in the footnotes and risks in the n"},
 {"id":"finance-tax-strategist","name":"Tax Strategist","division":"finance","description":"Expert tax strategist specializing in tax optimization, multi-jurisdictional compliance, transfer pr","color":"green","emoji":"\ud83c\udfdb\ufe0f","vibe":"Finds every legal dollar of savings in the tax code \u2014 compliance is the floor, o"},
+{"id":"finance-cryptocurrency-analyst","name":"Cryptocurrency Analyst","division":"finance","description":"On-chain intelligence, DeFi protocol analysis, tokenomics audits, whale tracking, and portfolio all","color":"#f7931a","emoji":"\u20bf","vibe":"Reads the blockchain so you don't have to \u2014 every wallet tells a story."},
+{"id":"finance-personal-finance-coach","name":"Personal Finance Coach","division":"finance","description":"Budgeting, debt payoff, emergency funds, FIRE movement, and net worth building for everyday people","color":"#22c55e","emoji":"\ud83d\udcb0","vibe":"Turns confusion into clarity \u2014 your money should work harder than you do."},
+{"id":"finance-risk-manager","name":"Risk Manager","division":"finance","description":"Portfolio risk quantification, VaR modeling, hedging strategies, derivatives, and scenario analysis","color":"#ef4444","emoji":"\ud83d\udee1\ufe0f","vibe":"Finds the risk nobody's pricing \u2014 before the market does it for you."},
 {"id":"game-audio-engineer","name":"Game Audio Engineer","division":"game-development","description":"Interactive audio specialist - Masters FMOD/Wwise integration, adaptive music systems, spatial audio","color":"indigo","emoji":"\ud83c\udfb5","vibe":"Makes every gunshot, footstep, and musical cue feel alive in the game world."},
 {"id":"game-designer","name":"Game Designer","division":"game-development","description":"Systems and mechanics architect - Masters GDD authorship, player psychology, economy balancing, and ","color":"yellow","emoji":"\ud83c\udfae","vibe":"Thinks in loops, levers, and player motivations to architect compelling gameplay"},
 {"id":"level-designer","name":"Level Designer","division":"game-development","description":"Spatial storytelling and flow specialist - Masters layout theory, pacing architecture, encounter des","color":"teal","emoji":"\ud83d\uddfa\ufe0f","vibe":"Treats every level as an authored experience where space tells the story."},
@@ -675,6 +832,9 @@ const AGENTS = [
 {"id":"marketing-agentic-search-optimizer","name":"Agentic Search Optimizer","division":"marketing","description":"Expert in WebMCP readiness and agentic task completion \u2014 audits whether AI agents can actually accom","color":"#0891B2","emoji":"\ud83e\udd16","vibe":"While everyone else is optimizing to get cited by AI, this agent makes sure AI c"},
 {"id":"marketing-ai-citation-strategist","name":"AI Citation Strategist","division":"marketing","description":"Expert in AI recommendation engine optimization (AEO/GEO) \u2014 audits brand visibility across ChatGPT, ","color":"#6D28D9","emoji":"\ud83d\udd2e","vibe":"Figures out why the AI recommends your competitor and rewires the signals so it "},
 {"id":"marketing-app-store-optimizer","name":"App Store Optimizer","division":"marketing","description":"Expert app store marketing specialist focused on App Store Optimization (ASO), conversion rate optim","color":"blue","emoji":"\ud83d\udcf1","vibe":"Gets your app found, downloaded, and loved in the store."},
+{"id":"marketing-community-manager","name":"Community Manager","division":"marketing","description":"Discord/Slack communities, engagement loops, moderation playbooks, community metrics, and ambassador","color":"#06b6d4","emoji":"\ud83c\udfd8\ufe0f","vibe":"Builds the community that makes users stay long after the product hooks them."},
+{"id":"marketing-pr-specialist","name":"PR Specialist","division":"marketing","description":"Press releases, media relations, journalist pitching, crisis communications, and brand narrative","color":"#64748b","emoji":"\ud83d\udcf0","vibe":"Gets the story told by someone the audience actually trusts."},
+{"id":"marketing-video-marketing-specialist","name":"Video Marketing Specialist","division":"marketing","description":"YouTube strategy, Reels/Shorts, video SEO, retention hooks, CTR thumbnails, and repurposing workflow","color":"#ef4444","emoji":"\ud83c\udfa5","vibe":"Makes videos that people actually watch to the end \u2014 then share."},
 {"id":"marketing-baidu-seo-specialist","name":"Baidu SEO Specialist","division":"marketing","description":"Expert Baidu search optimization specialist focused on Chinese search engine ranking, Baidu ecosyste","color":"blue","emoji":"\ud83c\udde8\ud83c\uddf3","vibe":"Masters Baidu's algorithm so your brand ranks in China's search ecosystem."},
 {"id":"marketing-book-co-author","name":"Book Co-Author","division":"marketing","description":"Strategic thought-leadership book collaborator for founders, experts, and operators turning voice no","color":"#8B5E3C","emoji":"\ud83d\udcd8","vibe":"Turns rough expertise into a recognizable book people can quote, remember, and b"},
 {"id":"marketing-china-ecommerce-operator","name":"China E-Commerce Operator","division":"marketing","description":"Expert China e-commerce operations specialist covering Taobao, Tmall, Pinduoduo, and JD ecosystems w","color":"red","emoji":"\ud83d\uded2","vibe":"Runs your Taobao, Tmall, Pinduoduo, and JD storefronts like a native operator."},
@@ -777,6 +937,9 @@ const AGENTS = [
 {"id":"specialized-pricing-analyst","name":"Pricing Analyst","division":"specialized","description":"Specialized pricing analyst who develops optimal pricing models through market research, competitor ","color":"gold","emoji":"\ud83d\udcb0","vibe":"Finds the price point where value captured meets value delivered \u2014 then proves i"},
 {"id":"specialized-salesforce-architect","name":"Salesforce Architect","division":"specialized","description":"Solution architecture for Salesforce platform \u2014 multi-cloud design, integration patterns, governor l","color":"#00A1E0","emoji":"\u2601\ufe0f","vibe":"The calm hand that turns a tangled Salesforce org into an architecture that scal"},
 {"id":"specialized-workflow-architect","name":"Workflow Architect","division":"specialized","description":"Workflow design specialist who maps complete workflow trees for every system, user journey, and agen","color":"orange","emoji":"\ud83d\uddfa\ufe0f","vibe":"Every path the system can take \u2014 mapped, named, and specified before a single li"},
+{"id":"specialized-negotiation-expert","name":"Negotiation Expert","division":"specialized","description":"Win-win negotiation, BATNA analysis, salary negotiation, contract terms, anchoring, and principled","color":"#f59e0b","emoji":"\ud83e\udd1d","vibe":"The best deal leaves both parties thinking they won \u2014 that's the point."},
+{"id":"specialized-speechwriter","name":"Speechwriter","division":"specialized","description":"Keynote speeches, TEDx structures, storytelling arcs, rhetorical devices, toasts, and executive comms","color":"#8b5cf6","emoji":"\ud83c\udfa4","vibe":"Words that sound like you, land with them, and outlast the moment."},
+{"id":"specialized-event-planner","name":"Event Planner","division":"specialized","description":"Corporate events, product launches, conferences, vendor management, run-of-show, and contingency","color":"#ec4899","emoji":"\ud83c\udfaa","vibe":"Lives in the details so you can live in the moment."},
 {"id":"study-abroad-advisor","name":"Study Abroad Advisor","division":"specialized","description":"Full-spectrum study abroad planning expert covering the US, UK, Canada, Australia, Europe, Hong Kong","color":"#1B4D3E","emoji":"\ud83c\udf93","vibe":"Guides Chinese students through the entire study abroad journey \u2014 from school se"},
 {"id":"supply-chain-strategist","name":"Supply Chain Strategist","division":"specialized","description":"Expert supply chain management and procurement strategy specialist \u2014 skilled in supplier development","color":"blue","emoji":"\ud83d\udd17","vibe":"Builds your procurement engine and supply chain resilience across China's manufa"},
 {"id":"support-analytics-reporter","name":"Analytics Reporter","division":"support","description":"Expert data analyst transforming raw data into actionable business insights. Creates dashboards, per","color":"teal","emoji":"\ud83d\udcca","vibe":"Transforms raw data into the insights that drive your next decision."},
@@ -785,6 +948,7 @@ const AGENTS = [
 {"id":"support-infrastructure-maintainer","name":"Infrastructure Maintainer","division":"support","description":"Expert infrastructure specialist focused on system reliability, performance optimization, and techni","color":"orange","emoji":"\ud83c\udfe2","vibe":"Keeps the lights on, the servers humming, and the alerts quiet."},
 {"id":"support-legal-compliance-checker","name":"Legal Compliance Checker","division":"support","description":"Expert legal and compliance specialist ensuring business operations, data handling, and content crea","color":"red","emoji":"\u2696\ufe0f","vibe":"Ensures your operations comply with the law across every jurisdiction that matte"},
 {"id":"support-support-responder","name":"Support Responder","division":"support","description":"Expert customer support specialist delivering exceptional customer service, issue resolution, and us","color":"blue","emoji":"\ud83d\udcac","vibe":"Turns frustrated users into loyal advocates, one interaction at a time."},
+{"id":"support-technical-writer","name":"Technical Writer","division":"support","description":"API documentation, user guides, changelogs, README files, docs-as-code, and the Di\u00e1taxis framework","color":"#0ea5e9","emoji":"\ud83d\udcdd","vibe":"Bad docs are a product bug \u2014 writes the docs that make users actually succeed."},
 {"id":"testing-accessibility-auditor","name":"Accessibility Auditor","division":"testing","description":"Expert accessibility specialist who audits interfaces against WCAG standards, tests with assistive t","color":"#0077B6","emoji":"\u267f","vibe":"If it's not tested with a screen reader, it's not accessible."},
 {"id":"testing-api-tester","name":"API Tester","division":"testing","description":"Expert API testing specialist focused on comprehensive API validation, performance testing, and qual","color":"purple","emoji":"\ud83d\udd0c","vibe":"Breaks your API before your users do."},
 {"id":"testing-evidence-collector","name":"Evidence Collector","division":"testing","description":"Screenshot-obsessed, fantasy-allergic QA specialist - Default to finding 3-5 issues, requires visual","color":"orange","emoji":"\ud83d\udcf8","vibe":"Screenshot-obsessed QA who won't approve anything without visual proof."},
@@ -792,11 +956,101 @@ const AGENTS = [
 {"id":"testing-reality-checker","name":"Reality Checker","division":"testing","description":"Stops fantasy approvals, evidence-based certification - Default to \"NEEDS WORK\", requires overwhelmi","color":"red","emoji":"\ud83e\uddd0","vibe":"Defaults to \"NEEDS WORK\" \u2014 requires overwhelming proof for production readiness."},
 {"id":"testing-test-results-analyzer","name":"Test Results Analyzer","division":"testing","description":"Expert test analysis specialist focused on comprehensive test result evaluation, quality metrics ana","color":"indigo","emoji":"\ud83d\udccb","vibe":"Reads test results like a detective reads evidence \u2014 nothing gets past."},
 {"id":"testing-tool-evaluator","name":"Tool Evaluator","division":"testing","description":"Expert technology assessment specialist focused on evaluating, testing, and recommending tools, soft","color":"teal","emoji":"\ud83d\udd27","vibe":"Tests and recommends the right tools so your team doesn't waste time on the wron"},
-{"id":"testing-workflow-optimizer","name":"Workflow Optimizer","division":"testing","description":"Expert process improvement specialist focused on analyzing, optimizing, and automating workflows acr","color":"green","emoji":"\u26a1","vibe":"Finds the bottleneck, fixes the process, automates the rest."}
+{"id":"testing-workflow-optimizer","name":"Workflow Optimizer","division":"testing","description":"Expert process improvement specialist focused on analyzing, optimizing, and automating workflows acr","color":"green","emoji":"\u26a1","vibe":"Finds the bottleneck, fixes the process, automates the rest."},
+{"id":"testing-mobile-qa-engineer","name":"Mobile QA Engineer","division":"testing","description":"iOS/Android testing, Appium, device farms, gesture testing, offline scenarios, and OS version matrix","color":"#22c55e","emoji":"\ud83d\udcf1","vibe":"Tests the app the way real users break it \u2014 in the pocket, on the commute, mid-call."},
+{"id":"testing-load-testing-specialist","name":"Load Testing Specialist","division":"testing","description":"k6, Locust, JMeter, load profiles, SLO validation, bottleneck identification, and capacity planning","color":"#f59e0b","emoji":"\u26a1","vibe":"Finds out where your system breaks before your users do."},
+{"id":"engineering-ios-developer","name":"iOS Developer","division":"engineering","description":"Swift/SwiftUI, UIKit, Xcode, CoreData, push notifications, App Store submission, and iOS performance optimization","color":"#3b82f6","emoji":"\ud83d\udcf1","vibe":"Ships polished, performant iOS apps that feel native and fly through App Review."},
+{"id":"engineering-android-developer","name":"Android Developer","division":"engineering","description":"Kotlin, Jetpack Compose, ViewModel/Flow, Room, Hilt, WorkManager, and Google Play publishing","color":"#3b82f6","emoji":"\ud83e\udd16","vibe":"Builds modern Android apps with clean architecture that scale from MVP to millions."},
+{"id":"engineering-rust-developer","name":"Rust Developer","division":"engineering","description":"Ownership/lifetimes, async Rust with Tokio, zero-cost abstractions, crates ecosystem, and WASM targets","color":"#b7410e","emoji":"\ud83e\udd80","vibe":"Writes code the borrow checker loves \u2014 safe, fast, and explicit about every cost."},
+{"id":"engineering-go-developer","name":"Go Developer","division":"engineering","description":"Goroutines, channels, interfaces, gRPC, Go microservices, standard library mastery, and idiomatic Go","color":"#00acd7","emoji":"\ud83d\udc39","vibe":"Simple, concurrent, boring in the best way \u2014 Go that a junior can read and a senior can trust."},
+{"id":"engineering-cloud-architect","name":"Cloud Architect","division":"engineering","description":"AWS/GCP/Azure Well-Architected, Terraform/CDK, multi-region design, cost optimization, and FinOps","color":"#0078d4","emoji":"\u2601\ufe0f","vibe":"Designs the cloud infrastructure that stays up, stays fast, and doesn't bankrupt the company."},
+{"id":"security-devsecops-engineer","name":"DevSecOps Engineer","division":"security","description":"Security pipelines, SAST/DAST, container scanning, SBOM, secrets detection, and supply chain security","color":"#16a34a","emoji":"\ud83d\udd10","vibe":"Makes secure behavior the path of least resistance \u2014 security baked in, never bolted on."},
+{"id":"security-soc-analyst","name":"SOC Analyst","division":"security","description":"Alert triage, SIEM queries, incident response playbooks, threat hunting, and security operations center workflows","color":"#1e40af","emoji":"\ud83d\udcdf","vibe":"Every alert is either noise or the tip of an active intrusion \u2014 triages with evidence, not intuition."},
+{"id":"finance-venture-capital-analyst","name":"Venture Capital Analyst","division":"finance","description":"Startup evaluation, investment thesis, cap table analysis, term sheet components, and VC due diligence","color":"#7c3aed","emoji":"\ud83d\udc8e","vibe":"Looking for fund-returners \u2014 evaluates founders, markets, and unit economics with cold precision."},
+{"id":"marketing-brand-strategist","name":"Brand Strategist","division":"marketing","description":"Brand positioning, messaging hierarchy, competitive differentiation, brand architecture, and voice and tone","color":"#7c3aed","emoji":"\ud83c\udfaf","vibe":"Brand is what people think before you speak \u2014 builds the associations that make you the obvious choice."},
+{"id":"marketing-newsletter-specialist","name":"Newsletter Specialist","division":"marketing","description":"Newsletter positioning, subscriber growth, open rate optimization, sponsorship monetization, and editorial systems","color":"#0891b2","emoji":"\ud83d\udcf0","vibe":"Earns the inbox every single issue \u2014 the most durable marketing channel when done right."},
+{"id":"marketing-influencer-marketing-manager","name":"Influencer Marketing Manager","division":"marketing","description":"Creator partnerships, UGC campaigns, influencer tiers, FTC compliance, and influencer ROI measurement","color":"#8b5cf6","emoji":"\ud83e\udd33","vibe":"Finds the right creators and turns their authenticity into your competitive advantage."},
+{"id":"sales-account-executive","name":"Account Executive","division":"sales","description":"Discovery, MEDDIC qualification, demo execution, objection handling, multi-threading, and deal closing","color":"#d97706","emoji":"\ud83d\udcbc","vibe":"Never checks in without a reason \u2014 every touchpoint advances the deal or reveals the truth."},
+{"id":"sales-business-development-rep","name":"Business Development Rep","division":"sales","description":"Cold outreach, prospect sequences, ICP targeting, cold calling scripts, and pipeline creation","color":"#d97706","emoji":"\ud83d\udcde","vibe":"Fills the top of funnel with precision \u2014 systems over spray-and-pray."},
+{"id":"engineering-api-designer","name":"API Designer","division":"engineering","description":"REST API design, OpenAPI/Swagger 3.0, versioning strategies, error standards, rate limiting, and GraphQL","color":"#0891b2","emoji":"\ud83d\udd0c","vibe":"An API is a promise to every developer who integrates it \u2014 design it like you can never change it."},
+{"id":"marketing-conversion-rate-optimizer","name":"CRO Specialist","division":"marketing","description":"A/B testing, landing page optimization, statistical rigor, funnel analysis, and hypothesis-driven CRO programs","color":"#059669","emoji":"\ud83d\udcc8","vibe":"Every test is a learning opportunity \u2014 builds experiments with evidence, not opinions."},
+{"id":"sales-sales-trainer","name":"Sales Trainer","division":"sales","description":"Rep ramp programs, pitch certification, roleplay facilitation, Gong/Chorus call review, and coaching cadences","color":"#d97706","emoji":"\ud83c\udfcb\ufe0f","vibe":"Great salespeople are made, not born \u2014 but only with deliberate practice and real feedback."}
 ];
-const DIVISIONS = [{"name":"academic","count":5},{"name":"design","count":9},{"name":"engineering","count":27},{"name":"finance","count":5},{"name":"game-development","count":5},{"name":"gis","count":10},{"name":"marketing","count":25},{"name":"paid-media","count":7},{"name":"product","count":5},{"name":"project-management","count":7},{"name":"sales","count":9},{"name":"security","count":10},{"name":"spatial-computing","count":3},{"name":"specialized","count":42},{"name":"support","count":6},{"name":"testing","count":8}];
+const DIVISIONS = [{"name":"academic","count":8},{"name":"design","count":11},{"name":"engineering","count":36},{"name":"finance","count":9},{"name":"game-development","count":5},{"name":"gis","count":10},{"name":"marketing","count":32},{"name":"paid-media","count":7},{"name":"product","count":5},{"name":"project-management","count":7},{"name":"sales","count":12},{"name":"security","count":12},{"name":"spatial-computing","count":3},{"name":"specialized","count":45},{"name":"support","count":7},{"name":"testing","count":10}];
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
+
+// ── Vertical editions (white-label) ──────────────────────────────────────────
+const EDITION_KEY = new URLSearchParams(location.search).get('edition') || '';
+const EDITIONS = {
+  legal: {
+    brand: 'Legal<span>Forge</span>',
+    label: 'LegalForge',
+    tagline: 'AI Legal Specialists',
+    accent: '#1e40af', accent2: '#60a5fa',
+    placeholder: 'Search legal specialists…',
+    title: 'LegalForge — AI Legal Specialists',
+    ids: new Set(['legal-document-review','legal-billing-time-tracking','legal-client-intake',
+      'support-legal-compliance-checker','data-privacy-officer','specialized-negotiation-expert',
+      'ma-integration-manager','specialized-chief-of-staff','finance-tax-strategist',
+      'organizational-psychologist','specialized-change-management-consultant',
+      'recruitment-specialist','grant-writer'])
+  },
+  finance: {
+    brand: 'Finance<span>Forge</span>',
+    label: 'FinanceForge',
+    tagline: 'AI Finance Specialists',
+    accent: '#15803d', accent2: '#4ade80',
+    placeholder: 'Search finance specialists…',
+    title: 'FinanceForge — AI Finance Specialists',
+    ids: new Set(['finance-bookkeeper-controller','finance-financial-analyst','finance-fpa-analyst',
+      'finance-investment-researcher','finance-tax-strategist','finance-cryptocurrency-analyst',
+      'finance-personal-finance-coach','finance-risk-manager',
+      'chief-financial-officer','specialized-pricing-analyst',
+      'loan-officer-assistant','accounts-payable-agent','esg-sustainability-officer',
+      'specialized-negotiation-expert'])
+  },
+  healthcare: {
+    brand: 'Health<span>Forge</span>',
+    label: 'HealthForge',
+    tagline: 'AI Healthcare Specialists',
+    accent: '#0e7490', accent2: '#22d3ee',
+    placeholder: 'Search healthcare specialists…',
+    title: 'HealthForge — AI Healthcare Specialists',
+    ids: new Set(['healthcare-customer-service','healthcare-marketing-compliance',
+      'medical-billing-coding-specialist','data-privacy-officer',
+      'support-legal-compliance-checker','academic-psychologist',
+      'organizational-psychologist','recruitment-specialist',
+      'hr-onboarding','support-support-responder'])
+  }
+};
+
+function getEditionAgents(){
+  if(!EDITION_KEY || !EDITIONS[EDITION_KEY]) return AGENTS;
+  const {ids}=EDITIONS[EDITION_KEY];
+  return AGENTS.filter(a=>ids.has(a.id));
+}
+
+function applyEdition(){
+  const ed=EDITIONS[EDITION_KEY]; if(!ed) return;
+  document.querySelector('.logo').innerHTML=ed.brand;
+  document.title=ed.title;
+  document.documentElement.style.setProperty('--accent',ed.accent);
+  document.documentElement.style.setProperty('--accent2',ed.accent2);
+  const s=document.getElementById('search'); if(s) s.placeholder=ed.placeholder;
+  // Edition pill in header
+  const pill=document.createElement('span');
+  pill.style.cssText=`font-size:10px;background:${ed.accent}33;border:1px solid ${ed.accent}66;color:${ed.accent2};padding:2px 9px;border-radius:99px;font-weight:700;flex-shrink:0`;
+  pill.textContent=ed.tagline;
+  const hdrDot=document.getElementById('hdr-dot');
+  hdrDot.parentNode.insertBefore(pill,hdrDot.nextSibling);
+  // Back link
+  const back=document.createElement('button');
+  back.className='icon-btn'; back.style.cssText='font-size:11px;padding:4px 8px';
+  back.textContent='← All'; back.title='Back to AgentForge';
+  back.onclick=()=>{const u=new URL(location.href);u.searchParams.delete('edition');location.href=u.toString();};
+  document.querySelector('.hdr-right').prepend(back);
+}
 
 // ── Engine tiers (branded display names for the underlying inference engines) ────
 const ENGINE_LABELS = {
@@ -818,6 +1072,8 @@ const cfg = {
   set ollamaHost(v){ localStorage.setItem('ag_ollama_host',v); },
   get braveKey(){ return localStorage.getItem('ag_brave_key')||''; },
   set braveKey(v){ localStorage.setItem('ag_brave_key',v); },
+  get webhookUrl(){ return localStorage.getItem('ag_webhook_url')||''; },
+  set webhookUrl(v){ localStorage.setItem('ag_webhook_url',v); },
   get orKey(){ return localStorage.getItem('ag_or_key')||''; },
   set orKey(v){ localStorage.setItem('ag_or_key',v); },
   get cerebrasKey(){ return localStorage.getItem('ag_cb_key')||''; },
@@ -858,8 +1114,10 @@ async function waitForSupa(ms=5000){
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 (()=>{
-  renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
-  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
+  applyEdition(); renderDivTabs(); renderList(); loadSettingsUI(); renderMemory(); initAuth();
+  const fromURL=loadPipelineFromURL();
+  if(fromURL){ showScreen('pipeline'); updateHdr(); }
+  else if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')){
     showScreen('agents'); updateHdr();
   }
 })();
@@ -868,13 +1126,14 @@ async function waitForSupa(ms=5000){
 function showScreen(n){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+n).classList.add('active');
-  ['agents','pipeline','memory','debate','benchmark','settings'].forEach(t=>{
+  ['agents','pipeline','memory','debate','benchmark','creator','settings'].forEach(t=>{
     const el=document.getElementById('tab-'+t);
     if(el) el.classList.toggle('active-tab',t===n);
   });
   if(n==='memory') renderMemory();
   if(n==='debate') initDebateSelects();
   if(n==='benchmark') initBenchmarkAgents();
+  if(n==='creator') renderMyAgents();
 }
 
 function updateHdr(){
@@ -1066,6 +1325,13 @@ function authTab(m){
   document.getElementById('atab-signup').classList.toggle('on',m==='signup');
   document.getElementById('auth-name-wrap').style.display = m==='signup'?'block':'none';
   document.getElementById('auth-submit').textContent = m==='signup'?'Create account →':'Log in →';
+  document.getElementById('auth-submit').style.display='';
+  const fw=document.getElementById('auth-forgot-wrap');
+  if(fw) fw.style.display = m==='login'?'block':'none';
+  const rw=document.getElementById('auth-reset-wrap');
+  if(rw) rw.style.display='none';
+  const tabs=document.querySelector('#auth-signedout .auth-tabs');
+  if(tabs) tabs.style.display='';
   authMsg('');
 }
 function authMsg(t,kind){
@@ -1125,6 +1391,40 @@ async function authSubmit(){
   }catch(e){ authMsg(e.message||'Something went wrong.'); }
   btn.disabled=false; btn.textContent=orig;
 }
+async function forgotPassword(){
+  await ensureSupa();
+  if(!authReady()){ authMsg('Could not connect to server. Try again.'); return; }
+  const email=document.getElementById('auth-email').value.trim();
+  if(!email){ authMsg('Enter your email address first.'); return; }
+  const btn=document.getElementById('auth-submit');
+  btn.disabled=true;
+  try{
+    const {error}=await supa.auth.resetPasswordForEmail(email,{
+      redirectTo: location.href.split('#')[0]+'#reset'
+    });
+    if(error) throw error;
+    authMsg('✓ Reset email sent to '+email+'. Check your inbox (and spam folder).','ok');
+  }catch(e){ authMsg(e.message||'Could not send reset email.'); }
+  btn.disabled=false;
+}
+async function setNewPassword(){
+  await ensureSupa();
+  if(!authReady()){ return; }
+  const pass=document.getElementById('auth-new-pass').value;
+  const msgEl=document.getElementById('auth-reset-msg');
+  if(pass.length<6){ msgEl.textContent='Password must be at least 6 characters.'; msgEl.className='auth-msg err'; return; }
+  try{
+    const {error}=await supa.auth.updateUser({password:pass});
+    if(error) throw error;
+    msgEl.textContent='✓ Password updated! You are now logged in.'; msgEl.className='auth-msg ok';
+    document.getElementById('auth-reset-wrap').style.display='none';
+    document.getElementById('auth-forgot-wrap').style.display='block';
+    await supa.auth.getSession().then(({data})=>{
+      currentUser=data.session?.user||null; updateAuthUI();
+    });
+    setTimeout(closeAuth,1500);
+  }catch(e){ msgEl.textContent=e.message||'Could not update password.'; msgEl.className='auth-msg err'; }
+}
 async function resendVerification(){
   if(!authReady()||!currentUser) return;
   try{
@@ -1157,7 +1457,17 @@ async function initAuth(){
     const {data}=await supa.auth.getSession();
     currentUser=data.session?.user||null;
   }catch(e){}
-  supa.auth.onAuthStateChange((_e,session)=>{
+  supa.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){
+      // User clicked reset link in email — show the new password form
+      openAuth();
+      document.getElementById('auth-forgot-wrap').style.display='none';
+      document.getElementById('auth-reset-wrap').style.display='block';
+      document.getElementById('auth-submit').style.display='none';
+      document.getElementById('auth-signedout').querySelector('.auth-tabs').style.display='none';
+      document.getElementById('auth-name-wrap').style.display='none';
+      return;
+    }
     currentUser=session?.user||null; updateAuthUI();
     if(document.getElementById('auth-overlay').classList.contains('show')) renderAuth();
   });
@@ -1198,6 +1508,8 @@ function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrol
 
 // ── Fetch full agent content ───────────────────────────────────────────────────
 async function fetchAgentContent(a){
+  // Custom agents have their system prompt stored directly
+  if(a._custom && a.systemPrompt) return a.systemPrompt;
   // Try GitHub raw — agents live in this repo alongside index.html
   try{
     const url=`${GITHUB_RAW}/${a.division}/${a.id}.md`;
@@ -1215,9 +1527,13 @@ async function fetchAgentContent(a){
 
 // ── Agent list ────────────────────────────────────────────────────────────────
 function renderDivTabs(){
+  const agents=getEditionAgents();
+  const divCounts={};
+  agents.forEach(a=>{divCounts[a.division]=(divCounts[a.division]||0)+1;});
+  const tabs=Object.entries(divCounts).sort((a,b)=>a[0].localeCompare(b[0]));
   document.getElementById('div-tabs').innerHTML=
     `<button class="div-tab on" onclick="setDiv('')">All</button>`+
-    DIVISIONS.map(d=>`<button class="div-tab" onclick="setDiv('${d.name}')">${d.name} <span style="opacity:.6">${d.count}</span></button>`).join('');
+    tabs.map(([name,count])=>`<button class="div-tab" onclick="setDiv('${name}')">${name} <span style="opacity:.6">${count}</span></button>`).join('');
 }
 function setDiv(d){
   selectedDiv=d;
@@ -1256,24 +1572,132 @@ function section(label){ return `<div class="list-section">${label}<span class="
 function renderList(){
   const q=document.getElementById('search').value.toLowerCase();
   const el=document.getElementById('agent-list');
+  const customs=getCustomAgents();
+  const base=getEditionAgents();
+  const allAgents=[...base,...customs];
+  const edLabel=EDITIONS[EDITION_KEY];
   // Home view (no search, no division filter, not in pipeline mode): show shelves
   if(!q && !selectedDiv && !pipelineMode){
-    const favs=getFavs().map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
-    const popular=POPULAR_IDS.map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+    const favs=getFavs().map(id=>allAgents.find(a=>a.id===id)).filter(Boolean);
+    const popular=POPULAR_IDS.map(id=>base.find(a=>a.id===id)).filter(Boolean);
     let html='';
+    if(customs.length) html+=section(`🛠️ My Agents · ${customs.length}`)+customs.map(agentCard).join('');
     if(favs.length) html+=section('⭐ Your Favorites')+favs.map(agentCard).join('');
-    html+=section('🔥 Popular')+popular.map(agentCard).join('');
-    html+=section(`📁 All Specialists · ${AGENTS.length}`)+AGENTS.map(agentCard).join('');
+    if(!edLabel && popular.length) html+=section('🔥 Popular')+popular.map(agentCard).join('');
+    html+=section(`📁 ${edLabel?edLabel.label+' Specialists':' All Specialists'} · ${base.length}`)+base.map(agentCard).join('');
     el.innerHTML=html;
     return;
   }
-  const f=AGENTS.filter(a=>(!q||a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q)||a.division.includes(q))&&(!selectedDiv||a.division===selectedDiv));
+  const f=allAgents.filter(a=>(!q||a.name.toLowerCase().includes(q)||a.description.toLowerCase().includes(q)||a.division.includes(q))&&(!selectedDiv||a.division===selectedDiv));
   if(!f.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--text2)">No agents found</div>';return;}
   el.innerHTML=f.map(agentCard).join('');
 }
 function agentTap(id){
   if(pipelineMode){ togglePipelineAgent(id); }
   else { openAgent(id); }
+}
+
+// ── Agent Creator Studio ──────────────────────────────────────────────────────
+function getCustomAgents(){ try{ return JSON.parse(localStorage.getItem('ag_custom_agents')||'[]'); }catch(e){ return []; } }
+function saveCustomAgents(list){ localStorage.setItem('ag_custom_agents',JSON.stringify(list)); }
+
+function updateCharCount(){
+  const v=document.getElementById('cr-prompt').value;
+  document.getElementById('cr-char-count').textContent=v.length?`${v.length} chars`:'';
+}
+
+async function generateAgentWithAI(){
+  const name=document.getElementById('cr-name').value.trim();
+  const division=document.getElementById('cr-division').value;
+  const expertise=document.getElementById('cr-expertise').value.trim();
+  const style=document.getElementById('cr-style').value;
+  const deliverables=document.getElementById('cr-deliverables').value.trim();
+  const status=document.getElementById('cr-gen-status');
+  if(!name||!division){ status.textContent='↑ Name and division are required'; return; }
+  if(cfg.provider==='demo'||!cfg.groqKey.startsWith('gsk_')){
+    status.innerHTML='<span style="color:var(--orange)">Connect AI first — tap ⚙️ Settings</span>'; return;
+  }
+  const btn=document.getElementById('cr-gen-btn');
+  btn.disabled=true; btn.textContent='✨ Generating…'; status.textContent='Writing system prompt…';
+  const styleDesc={direct:'direct and concise — answers fast, no fluff',thorough:'thorough and detailed — comprehensive breakdowns with examples',creative:'creative and energetic — bold ideas, enthusiasm, lateral thinking',academic:'academic and precise — cites reasoning, rigorous structure, nuanced',coaching:'coaching and Socratic — asks clarifying questions, guides the user to think'}[style]||style;
+  const sys='You are an expert AI system prompt engineer. You write high-quality, professional agent system prompts.';
+  const prompt=`Create a professional AI agent system prompt for a specialist named "${name}" in the ${division} division.
+
+Details:
+- Core expertise: ${expertise||'General '+division+' knowledge'}
+- Communication style: ${styleDesc}
+- Key deliverables: ${deliverables||'Expert analysis and actionable recommendations'}
+
+Write a system prompt of 350–500 words with these sections:
+## 🧠 Identity & Memory
+## 🎯 Core Mission (3-4 bullet points)
+## 🔒 Critical Rules (3-5 non-negotiables)
+## 📋 Deliverable Templates (2 concrete output formats with headers)
+## 💬 Communication Style
+
+Output ONLY the system prompt text, no extra explanation.`;
+  try{
+    const res=await groqFetchWithRetry({model:cfg.groqModel,max_tokens:1024,temperature:0.7,messages:[{role:'system',content:sys},{role:'user',content:prompt}]},s=>status.textContent=s);
+    const text=res.choices?.[0]?.message?.content||'';
+    if(text){ document.getElementById('cr-prompt').value=text; updateCharCount(); status.textContent='✓ System prompt generated! Review and save.'; }
+    else status.textContent='No output — try again';
+  }catch(e){ status.textContent='Error: '+e.message; }
+  btn.disabled=false; btn.textContent='✨ Generate System Prompt with AI';
+}
+
+function saveCustomAgent(){
+  const name=document.getElementById('cr-name').value.trim();
+  const division=document.getElementById('cr-division').value;
+  const desc=document.getElementById('cr-desc').value.trim();
+  const prompt=document.getElementById('cr-prompt').value.trim();
+  const emoji=document.getElementById('cr-emoji').value.trim()||'🤖';
+  const vibe=document.getElementById('cr-vibe').value.trim();
+  if(!name||!division||!desc){ alert('Name, division, and description are required.'); return; }
+  if(!prompt){ alert('System prompt is required. Use ✨ Generate or write your own.'); return; }
+  const id='custom-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  const agent={id,name,division,description:desc,color:'var(--accent)',emoji,vibe,systemPrompt:prompt,_custom:true};
+  const list=getCustomAgents().filter(a=>a.id!==id);
+  list.unshift(agent);
+  saveCustomAgents(list);
+  renderList(); renderMyAgents();
+  showShareToast('✅ Agent saved! Find it in 🏠 Agents → My Agents');
+}
+
+function deleteCustomAgent(id){
+  const list=getCustomAgents().filter(a=>a.id!==id);
+  saveCustomAgents(list);
+  renderMyAgents(); renderList();
+}
+
+function renderMyAgents(){
+  const list=getCustomAgents();
+  const sec=document.getElementById('my-agents-section');
+  const el=document.getElementById('my-agents-list');
+  if(!sec||!el) return;
+  sec.style.display=list.length?'block':'none';
+  el.innerHTML=list.map(a=>`
+    <div class="my-agent-item" onclick="openAgent('${a.id}')">
+      <div class="agi-emoji" style="background:var(--accent)22;color:var(--accent);border:1px solid var(--accent)44;width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${a.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${a.name}</div>
+        <div style="font-size:11px;color:var(--text2)">${a.division}</div>
+        <div style="font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.description}</div>
+      </div>
+      <button class="my-agent-del" onclick="event.stopPropagation();deleteCustomAgent('${a.id}')" title="Delete">✕</button>
+    </div>`).join('');
+}
+
+function copyAgentMd(){
+  const name=document.getElementById('cr-name').value.trim()||'My Agent';
+  const division=document.getElementById('cr-division').value||'specialized';
+  const desc=document.getElementById('cr-desc').value.trim()||'A custom specialist';
+  const emoji=document.getElementById('cr-emoji').value.trim()||'🤖';
+  const prompt=document.getElementById('cr-prompt').value.trim();
+  if(!prompt){ alert('Generate or write a system prompt first.'); return; }
+  const md=`---\nname: ${name}\ndescription: ${desc}\ndivision: ${division}\nemoji: ${emoji}\ncolor: "#f59e0b"\n---\n\n${prompt}`;
+  const done=()=>showShareToast('📋 .md copied! Paste into agents/'+division+'/');
+  if(navigator.clipboard){ navigator.clipboard.writeText(md).then(done).catch(()=>fallbackCopy(md,done)); }
+  else fallbackCopy(md,done);
 }
 
 // ── Pipeline mode toggle ──────────────────────────────────────────────────────
@@ -1315,8 +1739,53 @@ function updatePipelineQueue(){
     </div>`;
   }).join('');
   runBtn.disabled=pipeline.length<1||!document.getElementById('pl-goal').value.trim();
+  const shareBtn=document.getElementById('share-btn');
+  if(shareBtn) shareBtn.style.display=pipeline.length?'block':'none';
 }
 function removePipelineAgent(i){ pipeline.splice(i,1); updatePipelineQueue(); renderList(); }
+
+// ── Shareable pipeline URLs ───────────────────────────────────────────────────
+function getShareURL(){
+  const goal=document.getElementById('pl-goal').value.trim();
+  const url=new URL(location.href);
+  url.search='';
+  url.searchParams.set('pipeline',pipeline.map(a=>a.id).join(','));
+  if(goal) url.searchParams.set('goal',goal);
+  return url.toString();
+}
+function sharePipeline(){
+  if(!pipeline.length) return;
+  const url=getShareURL();
+  const done=()=>showShareToast('🔗 Link copied!');
+  if(navigator.clipboard){ navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done)); }
+  else fallbackCopy(url,done);
+}
+function fallbackCopy(text,cb){
+  const el=document.createElement('textarea');
+  el.value=text; el.style.cssText='position:fixed;opacity:0';
+  document.body.appendChild(el); el.select();
+  try{ document.execCommand('copy'); cb(); }catch(e){ alert(text); }
+  el.remove();
+}
+function showShareToast(msg){
+  const t=document.getElementById('share-toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+function loadPipelineFromURL(){
+  const p=new URLSearchParams(location.search);
+  const param=p.get('pipeline');
+  if(!param) return false;
+  const resolved=param.split(',').map(s=>s.trim()).filter(Boolean)
+    .map(id=>AGENTS.find(a=>a.id===id)).filter(Boolean);
+  if(!resolved.length) return false;
+  pipeline=resolved;
+  const goal=p.get('goal');
+  if(goal) document.getElementById('pl-goal').value=goal;
+  updatePipelineQueue();
+  return true;
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   const g=document.getElementById('pl-goal');
   if(g) g.addEventListener('input',()=>{
@@ -1357,7 +1826,7 @@ async function autoBuildTeam(){
     status.innerHTML='<span style="color:var(--orange)">Connect AI first — tap ⚙️</span>'; return;
   }
   btn.disabled=true; btn.textContent='✨ Assembling team…';
-  status.textContent='Analyzing goal & selecting specialists from 183 agents…';
+  status.textContent='Analyzing goal & selecting specialists from 219 agents…';
 
   // Compact roster: id|name|one-line desc, grouped — fits in context
   const roster=AGENTS.map(a=>`${a.id} | ${a.name} (${a.division}): ${a.description.slice(0,90)}`).join('\n');
@@ -1503,6 +1972,8 @@ ${outputs[i]}`).join('\n\n---\n\n');
         <button class="save-btn2" onclick="continueFromPipeline()">💬 Continue in Chat</button>
         <button class="save-btn2" onclick="downloadPipeline()">⬇️ Download .md</button>
         <button class="save-btn2" onclick="savePipelineToMemory('${esc(document.getElementById('pl-goal').value)}')">💾 Save to Memory</button>
+        <button class="save-btn2" onclick="gistOutput('pipeline')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+        <button class="save-btn2" onclick="sendToWebhook('pipeline')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
       </div>`;
     window._lastPipelineOutput=combined;
     window._lastPipelineGoal=document.getElementById('pl-goal').value;
@@ -1566,7 +2037,7 @@ function downloadChat(){
 
 // ── Chat ──────────────────────────────────────────────────────────────────────
 async function openAgent(id){
-  const a=AGENTS.find(x=>x.id===id); if(!a) return;
+  const a=AGENTS.find(x=>x.id===id)||getCustomAgents().find(x=>x.id===id); if(!a) return;
   curAgent={...a,content:null}; chatMsgs=loadHistory(a.id); attachedFile=null; renderAttachChip();
   const h=colorHex(a.color);
   document.getElementById('ch-name').textContent=a.name;
@@ -1777,6 +2248,7 @@ function renderChat(){
     const acts=(!m.streaming&&m.content)?`<div class="msg-actions">
         <button class="msg-act" onclick="copyMsg(${idx})">📋 Copy</button>
         <button class="msg-act" onclick="quoteMsg(${idx})">❝ Quote</button>
+        ${!u?`<button class="msg-act" onclick="gistMsg(${idx})">🔗 Gist</button>`:''}
         ${hasCode?`<button class="msg-act" onclick="saveAllFiles(${idx})">📂 Save all files</button>`:''}
       </div>`:'';
     return `<div class="msg ${u?'user':'assistant'}">
@@ -2086,6 +2558,13 @@ function loadSettingsUI(){
     if(n){od.className='dot ok';os.textContent=`${n} backup engine${n>1?'s':''} active — auto fail-over on`;}
     else{od.className='dot warn';os.textContent='Not configured — single provider only';}
   }
+  // update webhook/automation status
+  const whk=document.getElementById('s-webhook-url'); if(whk) whk.value=cfg.webhookUrl;
+  const whdot=document.getElementById('wh-dot'),whst=document.getElementById('wh-status');
+  if(whdot&&whst){
+    if(cfg.webhookUrl){whdot.className='dot ok';whst.textContent='Automation connected — outputs will be POSTed as JSON';}
+    else{whdot.className='dot warn';whst.textContent='Not configured — outputs stay in browser';}
+  }
 }
 
 async function saveBraveKey(){
@@ -2100,6 +2579,47 @@ async function saveBackupKeys(){
   loadSettingsUI();
   const n=[cfg.orKey,cfg.cerebrasKey,cfg.geminiKey].filter(Boolean).length;
   alert(n ? `✓ Saved ${n} backup engine${n>1?'s':''}! Jobs will auto-fail-over instead of stalling.` : 'Backup engines cleared.');
+}
+function saveWebhookUrl(){
+  cfg.webhookUrl=document.getElementById('s-webhook-url').value.trim();
+  loadSettingsUI();
+  showShareToast(cfg.webhookUrl ? '⚡ Webhook saved!' : 'Webhook cleared');
+}
+
+// ── Output → Action bridges ──────────────────────────────────────────────────
+function gistOutput(source){
+  let content='';
+  if(source==='pipeline') content=window._lastPipelineOutput||'';
+  else if(source==='debate') content=window._lastDebateEl?.innerText||'';
+  else if(source==='benchmark') content=window._lastBenchReport||'';
+  if(!content){ alert('Nothing to export yet'); return; }
+  const done=()=>{ window.open('https://gist.github.com/','_blank','noopener'); showShareToast('Copied! Paste into Gist editor ↗'); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(content).then(done).catch(()=>fallbackCopy(content,done)); }
+  else fallbackCopy(content,done);
+}
+function gistMsg(idx){
+  const m=chatMsgs[idx]; if(!m||!m.content) return;
+  const header=`# ${curAgent?.name||'AgentForge'} — ${new Date().toLocaleDateString()}\n\n`;
+  const done=()=>{ window.open('https://gist.github.com/','_blank','noopener'); showShareToast('Copied! Paste into Gist editor ↗'); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(header+m.content).then(done).catch(()=>fallbackCopy(header+m.content,done)); }
+  else fallbackCopy(header+m.content,done);
+}
+async function sendToWebhook(source){
+  if(!cfg.webhookUrl){ showShareToast('⚙️ No webhook — check Settings'); return; }
+  let output='',goal='',agents=[];
+  if(source==='pipeline'){
+    output=window._lastPipelineOutput||''; goal=window._lastPipelineGoal||''; agents=pipeline.map(a=>a.name);
+  } else if(source==='debate'){
+    output=window._lastDebateEl?.innerText||''; goal=document.getElementById('debate-topic')?.value||'';
+  } else if(source==='benchmark'){
+    output=window._lastBenchReport||''; goal=document.getElementById('bench-prompt')?.value||'';
+  }
+  if(!output){ alert('Nothing to send yet'); return; }
+  try{
+    await fetch(cfg.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',
+      body:JSON.stringify({source:'agentforge',mode:source,timestamp:new Date().toISOString(),goal,agents,output})});
+    showShareToast('⚡ Sent to automation!');
+  }catch(e){ alert('Webhook error: '+e.message); }
 }
 function setProvider(p,save=true){
   cfg.provider=p;if(save)localStorage.setItem('ag_provider',p);
@@ -2288,6 +2808,8 @@ async function runDebate(){
         </p>
         <button class="copy-btn" style="background:var(--purple)22;border-color:var(--purple)44;color:var(--purple);margin-top:10px" onclick="copyDebateOutput()">📋 Copy Debate</button>
         <button class="save-btn2" onclick="downloadDebate()">⬇️ Download .md</button>
+        <button class="save-btn2" onclick="gistOutput('debate')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+        <button class="save-btn2" onclick="sendToWebhook('debate')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
       </div>`;
     window._lastDebateEl=screen;
     window._lastDebateTopic=topic;
@@ -2439,6 +2961,8 @@ async function runBenchmark(){
         </div>`).join('')}
       <p style="font-size:12px;color:var(--text2);margin-top:8px">${judged?'⚖️ Scored by an impartial AI judge on relevance, depth & correctness.':'Heuristic score = depth(50) + code(20) + structure(15) + speed(15). Connect AI for AI-judged scoring.'}</p>
       <button class="save-btn2" onclick="downloadBenchmark()">⬇️ Download Full Report .md</button>
+      <button class="save-btn2" onclick="gistOutput('benchmark')" style="background:var(--bg3);border-color:var(--border)">🔗 Open as Gist</button>
+      <button class="save-btn2" onclick="sendToWebhook('benchmark')" style="background:var(--green)22;border-color:var(--green)44;color:var(--green)">⚡ Send to Automation</button>
     </div>`;
 
   // Build exportable markdown report (rankings + full answers)
@@ -2485,5 +3009,6 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+<div id="share-toast" class="share-toast"></div>
 </body>
 </html>
