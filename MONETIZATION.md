@@ -35,7 +35,7 @@ Generous free tier · "Made with AgentForge" share links · referral program ·
 247 SEO landing pages (one per agent) · marketplace creators · Product Hunt/Reddit launch.
 
 ## Rollout
-1. **Foundation** — accounts (done) → Supabase setup → cloud sync + `plan` flag.
+1. **Foundation** — accounts (planned; a prior auth build was removed, `supabase/schema.sql` scaffold remains) → Supabase setup → cloud sync + `plan` flag.
 2. **First revenue** — paywall + Lifetime $39 + Pro $7/mo gating software-only features ($0 cost).
 3. **Scale** — prepaid credits + managed premium models + API.
 4. **Network effects** — marketplace + teams + white-label.

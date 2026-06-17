@@ -1,4 +1,10 @@
 -- AgentForge — Supabase schema
+--
+-- STATUS: NOT WIRED UP. This is a scaffold for a *planned* account system.
+-- The app currently ships with no auth/Supabase code (it was removed — see git
+-- history) and nothing in index.html / assets/js references Supabase. Kept here
+-- for a possible future accounts + Pro-plan feature; delete if that's dropped.
+--
 -- Run this once in Supabase → SQL Editor → New query → Run.
 -- Safe to re-run (uses IF NOT EXISTS / OR REPLACE).
 

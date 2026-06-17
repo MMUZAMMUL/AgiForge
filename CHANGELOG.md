@@ -47,6 +47,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
   the actual roster.
 - Removed a stale `supabase.co` entry from the service worker's host list (left
   over from the removed auth system).
+- **Docs no longer claim Supabase auth / Pro plans / reviews are live.** They
+  were removed from the app; `CLAUDE.md` and `MONETIZATION.md` now label them as
+  planned-not-implemented, and `supabase/schema.sql` is marked as an unwired
+  scaffold.
 
 ### Added (earlier in this cycle)
 - **Multi-provider auto fail-over** — optional free backup engines (OpenRouter).
