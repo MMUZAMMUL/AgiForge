@@ -34,7 +34,8 @@ let _setupProvider = 'groq';
 function selectSetupProvider(p){
   _setupProvider = p;
   ['groq','cerebras','gemini','openrouter','ollama'].forEach(x=>{
-    document.getElementById('sp-'+x)?.classList.toggle('on', x===p);
+    const btn=document.getElementById('sp-'+x);
+    if(btn){ btn.classList.toggle('on', x===p); btn.setAttribute('aria-pressed', x===p?'true':'false'); }
     const info = document.getElementById('setup-'+x+'-info');
     if(info) info.style.display = x===p ? 'block' : 'none';
   });
@@ -152,12 +153,16 @@ function renderDivTabs(){
   agents.forEach(a=>{divCounts[a.division]=(divCounts[a.division]||0)+1;});
   const tabs=Object.entries(divCounts).sort((a,b)=>a[0].localeCompare(b[0]));
   document.getElementById('div-tabs').innerHTML=
-    `<button class="div-tab on" onclick="setDiv('')">All</button>`+
-    tabs.map(([name,count])=>`<button class="div-tab" onclick="setDiv('${name}')">${name} <span style="opacity:.6">${count}</span></button>`).join('');
+    `<button class="div-tab on" onclick="setDiv('')" aria-pressed="true">All</button>`+
+    tabs.map(([name,count])=>`<button class="div-tab" onclick="setDiv('${name}')" aria-pressed="false">${name} <span style="opacity:.6">${count}</span></button>`).join('');
 }
 function setDiv(d){
   selectedDiv=d;
-  document.querySelectorAll('.div-tab').forEach(b=>b.classList.toggle('on',(!d&&b.textContent.trim().startsWith('All'))||(d&&b.textContent.trim().startsWith(d))));
+  document.querySelectorAll('.div-tab').forEach(b=>{
+    const on=(!d&&b.textContent.trim().startsWith('All'))||(d&&b.textContent.trim().startsWith(d));
+    b.classList.toggle('on',on);
+    b.setAttribute('aria-pressed',on?'true':'false');
+  });
   renderList();
 }
 // ── Favorites ─────────────────────────────────────────────────────────────────
@@ -178,14 +183,18 @@ function agentCard(a){
   const badge=plIdx>=0?`<div class="pipeline-badge">${plIdx+1}</div>`:'';
   const cls=plIdx>=0?'agent-item in-pipeline':'agent-item';
   const fav=isFav(a.id);
-  return `<div class="${cls}" onclick="agentTap('${a.id}')">
-      <div class="agi-emoji" style="background:${h}22;color:${h};border:1px solid ${h}44">${a.emoji}</div>
+  return `<div class="${cls}" onclick="agentTap('${a.id}')" onkeydown="agentKey(event,'${a.id}')" role="button" tabindex="0" aria-label="${esc(a.name)}, ${esc(a.division)} specialist">
+      <div class="agi-emoji" style="background:${h}22;color:${h};border:1px solid ${h}44" aria-hidden="true">${a.emoji}</div>
       <div class="agi-info">
         <div class="agi-name">${a.name}</div>
         <div class="agi-div">${a.division}</div>
         <div class="agi-desc">${a.description}</div>
       </div>
-      <button class="fav-btn ${fav?'on':''}" onclick="event.stopPropagation();toggleFav('${a.id}')" title="${fav?'Remove favorite':'Add favorite'}">${fav?'★':'☆'}</button>${badge}</div>`;
+      <button class="fav-btn ${fav?'on':''}" onclick="event.stopPropagation();toggleFav('${a.id}')" aria-pressed="${fav?'true':'false'}" aria-label="${fav?'Remove from favorites':'Add to favorites'}" title="${fav?'Remove favorite':'Add favorite'}">${fav?'★':'☆'}</button>${badge}</div>`;
+}
+// Keyboard activation for the role=button agent cards (Enter / Space)
+function agentKey(e,id){
+  if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){ e.preventDefault(); agentTap(id); }
 }
 function section(label){ return `<div class="list-section">${label}<span class="ls-line"></span></div>`; }
 
