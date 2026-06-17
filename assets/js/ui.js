@@ -118,6 +118,20 @@ function md(s){
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 
+// Coalesce rapid streaming re-renders to one paint per animation frame so md()
+// isn't re-parsed on every token (perf, audit §6). The render closure reads the
+// latest accumulated text at paint time; a direct final render after each stream
+// guarantees the terminal output even if a frame was skipped. Only one stream
+// runs at a time, so a single shared rAF handle is sufficient.
+let _streamRaf=0;
+function onStreamFrame(render){
+  if(_streamRaf) return;
+  _streamRaf=requestAnimationFrame(()=>{ _streamRaf=0; render(); });
+}
+// Cancel a pending streaming frame before a direct final render, so a trailing
+// rAF can't repaint a completed output with the streaming cursor again.
+function cancelStreamFrame(){ if(_streamRaf){ cancelAnimationFrame(_streamRaf); _streamRaf=0; } }
+
 // ── Fetch full agent content ───────────────────────────────────────────────────
 const _agentContentCache = {}; // id -> system prompt (avoids re-fetching on every open/run)
 async function fetchAgentContent(a){

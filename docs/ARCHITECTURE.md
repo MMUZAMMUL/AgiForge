@@ -1,34 +1,43 @@
 # Architecture
 
-AgentForge is deliberately simple: **one HTML file, zero dependencies, no build
-step.** This document explains how the pieces fit together.
+AgentForge is deliberately simple: **static files, zero runtime dependencies, no
+build step.** This document explains how the pieces fit together.
 
 ## Overview
 
 ```
-┌─────────────────────────────────────────────┐
-│  index.html  (the whole client)             │
-│                                             │
-│  • AGENTS[]  — metadata for all 247 agents  │
-│      id, name, division, emoji, color,      │
-│      one-line description                    │
-│  • UI: chat, pipeline, team, debate,        │
-│        benchmark, code runner               │
-│  • Provider layer: Groq / Ollama / Demo     │
-└───────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│  index.html  — markup only (~490 lines)              │
+│  assets/css/styles.css  — all styles                 │
+│  assets/js/*.js  — classic scripts, one shared scope │
+│                                                      │
+│  • data.js   — AGENTS[] metadata for all 247 agents  │
+│      (id, name, division, emoji, color, description) │
+│      DIVISIONS, editions, cfg, model pools, state    │
+│  • ui / chat / pipeline / modes — screens & features │
+│      (chat, pipeline, auto-build, debate, benchmark, │
+│       code runner)                                   │
+│  • providers.js — failover chain + streaming         │
+│      Groq → Cerebras → Gemini → OpenRouter → Ollama  │
+└───────────────┬──────────────────────────────────────┘
                 │ fetch on demand
                 ▼
    agents/<division>/<id>.md   (full system prompts, in this repo)
                 │
                 ▼
-   AI provider (Groq cloud  or  local Ollama)
+   AI provider (cloud failover chain  or  local Ollama)
 ```
+
+The JS files are plain classic scripts (no ES modules/bundler) loaded in order
+at the end of `<body>`; they share one global scope so functions stay reachable
+from the inline `onclick=` handlers. `main.js` must load last. See `CLAUDE.md`
+for the full file-by-file breakdown.
 
 ## Agent loading
 
 The app ships only **lightweight metadata** for each agent inside the `AGENTS`
-array in `index.html`. The full system prompt is fetched the first time an agent
-is used:
+array in `assets/js/data.js`. The full system prompt is fetched the first time an
+agent is used:
 
 ```js
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
@@ -38,7 +47,7 @@ const url = `${GITHUB_RAW}/${agent.division}/${agent.id}.md`;
 If the fetch fails, the app falls back to the agent's one-line description so it
 still works offline or when raw GitHub is unreachable.
 
-**Why fetch instead of embed?** It keeps `index.html` small (~150 KB) and fast to
+**Why fetch instead of embed?** It keeps the initial payload small and fast to
 load on mobile, and lets prompts be edited as plain Markdown and version-controlled
 independently of the app.
 
@@ -68,22 +77,26 @@ and the folder must equal its `division`.
 | Provider | Where it runs | Notes |
 |---|---|---|
 | Groq | Cloud | Primary. Free tier with per-model token buckets. |
+| Cerebras | Cloud | Failover (user-supplied key). |
+| Gemini | Cloud | Failover (user-supplied key). |
+| OpenRouter | Cloud | Failover via free models. |
 | Ollama | Local network | Self-hosted models, no cloud. |
 | Demo | In-browser | No AI; previews the UI only. |
 
-Configuration (provider, key, model) is stored in `localStorage` — nothing is sent
-to any backend owned by this project, because there is no backend.
+Configuration (provider, keys, model) is stored in `localStorage` — nothing is
+sent to any backend owned by this project, because there is no backend.
 
-### Rate-limit handling (Groq)
+### Failover & rate-limit handling
 
-Groq's free tier meters tokens per model per minute. To keep multi-agent
-pipelines running unattended:
+Cloud free tiers meter tokens per model per minute. To keep multi-agent pipelines
+running unattended, `groqFetchWithRetry()` implements a full cascade:
 
-- `GROQ_MODELS` is a pool of 4 models, each with its own token bucket.
-- `groqFetchWithRetry()` catches `429`, parses the suggested wait time, sleeps,
-  then rotates to the next model in the pool.
+- `GROQ_MODELS` is a pool of 3 models, each with its own token bucket; on `429`
+  it parses the suggested wait time, sleeps, then rotates to the next model.
+- If Groq is exhausted/unconfigured it falls through to **Cerebras → Gemini →
+  OpenRouter → Ollama** in turn.
 - A short cooldown runs between pipeline stages.
-- All Groq call sites route through this path: `streamGroqInto`, `autoBuildTeam`,
+- All LLM call sites route through this path: `streamGroqInto`, `autoBuildTeam`,
   and `judgeBenchmark`.
 
 ## External services
@@ -91,7 +104,7 @@ pipelines running unattended:
 Only these network calls leave the browser, and all are optional except your
 chosen AI provider:
 
-- **Groq / Ollama** — AI inference.
+- **Groq / Cerebras / Gemini / OpenRouter / Ollama** — AI inference (failover chain).
 - **Brave Search API** — optional web search (user-supplied key).
 - **Piston API** — optional code execution for the Code Runner.
 - **raw.githubusercontent.com** — fetching agent prompt files.

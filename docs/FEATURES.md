@@ -1,7 +1,7 @@
 # Features
 
-A detailed tour of what AgentForge can do. Everything runs client-side in a single
-`index.html`.
+A detailed tour of what AgentForge can do. Everything runs client-side from
+static files (`index.html` + `assets/`), with no build step or backend.
 
 ## 💬 Chat
 Talk to any of the 247 specialists. Responses stream token-by-token. Each agent

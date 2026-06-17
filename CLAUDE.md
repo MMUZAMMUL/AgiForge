@@ -109,7 +109,11 @@ All state is `localStorage`. Keys used:
 | `agentforge_memory_*` | Saved outputs |
 | `agentforge_chat_<agentId>` | Per-agent conversation history |
 
-Supabase (loaded via CDN) handles optional accounts, Pro plan tracking, and reviews. No other external libraries.
+> **Note:** Accounts, Pro-plan tracking, and reviews are **not implemented in the
+> current build** — the auth/Supabase/Pro code was removed (see git history). A
+> `supabase/schema.sql` scaffold is kept for a possible future account system, but
+> nothing in `index.html` or `assets/js/` references Supabase today. The app loads
+> no third-party libraries at runtime.
 
 ### CSS architecture
 
@@ -179,7 +183,7 @@ The `id` must match the filename exactly: `agents/engineering/engineering-new-ag
 
 - **No frameworks, no npm.** If a library is needed, load it from a trusted CDN in `<head>` with `crossorigin="anonymous"`.
 - **Agent IDs are kebab-case and must match file paths exactly.** The fetch URL is constructed directly from the `id` field.
-- **All user data stays client-side** unless the user explicitly logs in with Supabase.
+- **All user data stays client-side.** The current build has no account system, so nothing leaves the browser except the LLM/provider API calls the user configures.
 - **Mobile-first.** Test all UI changes in a 375px-wide viewport.
 - **Logo:** renders as `Agent<span>Forge</span>` with the `<span>` colored amber (`var(--accent)`).
 
@@ -197,4 +201,4 @@ The `id` must match the filename exactly: `agents/engineering/engineering-new-ag
 | Brave Search | Web search (optional) | `agentforge_brave_key` |
 | Piston API | Code execution | No key needed |
 | GitHub Raw | Agent `.md` fetches | No key (public repo) |
-| Supabase | Auth, Pro plans, reviews | Hardcoded project URL in `index.html` |
+| Supabase | **Planned, not wired up** — auth/Pro/reviews scaffold in `supabase/schema.sql`; no app code references it | — |

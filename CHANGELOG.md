@@ -15,6 +15,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
   `base-uri`, `frame-ancestors`, restricts script/style/connect sources) as
   defense-in-depth behind the escaping fix.
 
+### Performance
+- **Streaming responses no longer re-parse markdown on every token.** Chat,
+  pipeline, and debate now coalesce streaming re-renders to one paint per
+  animation frame, with a direct final render on completion — removes the
+  O(n²) re-parse on long outputs (audit §6).
+
+### Changed
+- **Collapsed the five provider connectivity tests** into one `testEndpoint()`
+  helper (audit §4); behavior unchanged, and the Gemini key is now URL-encoded
+  in its query string.
+
 ### Accessibility
 - **First accessibility pass.** Added ARIA labels to all icon-only buttons
   (header nav, chat toolbar, attach/voice/send), `aria-label`s to every form
@@ -33,9 +44,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Fixed
 - **Agent count corrected to 247 everywhere** (app UI, landing page, manifest,
   docs) — previously a mix of 183/219/221. Division tab counts recomputed from
-  the actual roster.
+  the actual roster, and `docs/AGENTS.md` regenerated to list all 247 agents.
 - Removed a stale `supabase.co` entry from the service worker's host list (left
   over from the removed auth system).
+- **Docs no longer claim Supabase auth / Pro plans / reviews are live.** They
+  were removed from the app; `CLAUDE.md` and `MONETIZATION.md` now label them as
+  planned-not-implemented, and `supabase/schema.sql` is marked as an unwired
+  scaffold.
 
 ### Added (earlier in this cycle)
 - **Multi-provider auto fail-over** — optional free backup engines (OpenRouter).
