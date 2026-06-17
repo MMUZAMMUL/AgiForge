@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin/>
+<link rel="preconnect" href="https://api.groq.com"/>
+<link rel="dns-prefetch" href="https://emkc.org"/>
 <title>AgentForge — 219 AI Specialists</title>
 <meta name="description" content="A mobile-first agentic AI platform with 219 expert specialists, agent pipelines, auto-built teams, debate, and a code runner. Runs in your browser, free."/>
 <meta name="keywords" content="AI agents, AI specialists, agentic AI, AI team, multi-agent, AI pipeline, AI chat, free AI app, mobile AI, AI assistant, prompt engineering, code runner"/>
@@ -152,7 +155,7 @@
   <!-- ═══════════ AGENTS ═══════════ -->
   <div id="screen-agents" class="screen">
     <div class="search-bar" style="display:flex;gap:8px">
-      <input class="search-input" id="search" placeholder="Search 219 specialists…" oninput="renderList()" style="flex:1"/>
+      <input class="search-input" id="search" placeholder="Search 219 specialists…" oninput="onSearchInput()" style="flex:1"/>
       <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
     </div>
     <div id="pipeline-bar" style="display:none;padding:8px 12px;background:var(--purple)11;border-bottom:1px solid var(--purple)44;font-size:13px;color:var(--purple);display:flex;align-items:center;gap:8px">

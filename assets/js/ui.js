@@ -104,9 +104,12 @@ function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMs
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 
 // ── Fetch full agent content ───────────────────────────────────────────────────
+const _agentContentCache = {}; // id -> system prompt (avoids re-fetching on every open/run)
 async function fetchAgentContent(a){
   // Custom agents have their system prompt stored directly
   if(a._custom && a.systemPrompt) return a.systemPrompt;
+  // Serve from in-memory cache when we already fetched this agent this session
+  if(_agentContentCache[a.id]) return _agentContentCache[a.id];
   // Try GitHub raw — agents live in this repo alongside index.html
   try{
     const url=`${GITHUB_RAW}/${a.division}/${a.id}.md`;
@@ -115,12 +118,18 @@ async function fetchAgentContent(a){
       const text=await r.text();
       // Strip YAML frontmatter (content after second ---)
       const parts=text.split(/^---\s*$/m);
-      return parts.length>=3 ? parts.slice(2).join('---').trim() : text.trim();
+      const out=parts.length>=3 ? parts.slice(2).join('---').trim() : text.trim();
+      _agentContentCache[a.id]=out; // cache only successful fetches (let failures retry)
+      return out;
     }
   }catch{}
   // Fallback to description
   return a.description||`You are ${a.name}, a specialist in ${a.division}.`;
 }
+
+// Debounce search typing so we don't rebuild the full ~221-card list on every keystroke
+let _searchT=null;
+function onSearchInput(){ clearTimeout(_searchT); _searchT=setTimeout(renderList,120); }
 
 // ── Agent list ────────────────────────────────────────────────────────────────
 function renderDivTabs(){
