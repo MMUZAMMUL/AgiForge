@@ -143,13 +143,16 @@ async function runDebate(){
     try{
       await streamInto(content, prompt, (chunk)=>{
         output+=chunk;
-        const el=document.getElementById(outId);
-        if(el){el.innerHTML=md(output)+'<span class="cursor">▋</span>';el.scrollTop=el.scrollHeight;}
-        screen.scrollTop=screen.scrollHeight;
+        onStreamFrame(()=>{
+          const el=document.getElementById(outId);
+          if(el){el.innerHTML=md(output)+'<span class="cursor">▋</span>';el.scrollTop=el.scrollHeight;}
+          screen.scrollTop=screen.scrollHeight;
+        });
       });
     }catch(e){output='**Error:** '+e.message;}
 
     lastOutput=output;
+    cancelStreamFrame();
     const outEl=document.getElementById(outId);
     const stEl=document.getElementById(statusId);
     if(outEl)outEl.innerHTML=md(output);

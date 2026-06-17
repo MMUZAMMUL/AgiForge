@@ -111,8 +111,13 @@ async function saveSettings(){
   res.textContent=ok?'✓ Connected!':'✗ Failed — check your key';
   updateHdr(); loadSettingsUI();
 }
-async function testGroq(key){ if(!key?.startsWith('gsk_'))return false; try{const r=await fetch('https://api.groq.com/openai/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(5000)});return r.ok;}catch{return false;} }
-async function testOllama(){ try{const r=await fetch(cfg.ollamaHost+'/api/tags',{signal:AbortSignal.timeout(4000)});return r.ok;}catch{return false;} }
-async function testCerebras(key){ if(!key) return false; try{const r=await fetch('https://api.cerebras.ai/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
-async function testGemini(key){ if(!key) return false; try{const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+key,{signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
-async function testOpenRouter(key){ if(!key) return false; try{const r=await fetch('https://openrouter.ai/api/v1/models',{headers:{'Authorization':'Bearer '+key},signal:AbortSignal.timeout(6000)});return r.ok;}catch{return false;} }
+// Single GET-and-check helper behind every provider connectivity test — each
+// test just supplies its endpoint, headers, and timeout (audit §4 dedup).
+async function testEndpoint(url, headers, timeout){
+  try{ const r=await fetch(url,{headers,signal:AbortSignal.timeout(timeout)}); return r.ok; }catch{ return false; }
+}
+async function testGroq(key){ return key?.startsWith('gsk_') ? testEndpoint('https://api.groq.com/openai/v1/models',{'Authorization':'Bearer '+key},5000) : false; }
+async function testOllama(){ return testEndpoint(cfg.ollamaHost+'/api/tags',{},4000); }
+async function testCerebras(key){ return key ? testEndpoint('https://api.cerebras.ai/v1/models',{'Authorization':'Bearer '+key},6000) : false; }
+async function testGemini(key){ return key ? testEndpoint('https://generativelanguage.googleapis.com/v1beta/models?key='+encodeURIComponent(key),{},6000) : false; }
+async function testOpenRouter(key){ return key ? testEndpoint('https://openrouter.ai/api/v1/models',{'Authorization':'Bearer '+key},6000) : false; }

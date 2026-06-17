@@ -15,6 +15,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
   `base-uri`, `frame-ancestors`, restricts script/style/connect sources) as
   defense-in-depth behind the escaping fix.
 
+### Performance
+- **Streaming responses no longer re-parse markdown on every token.** Chat,
+  pipeline, and debate now coalesce streaming re-renders to one paint per
+  animation frame, with a direct final render on completion — removes the
+  O(n²) re-parse on long outputs (audit §6).
+
+### Changed
+- **Collapsed the five provider connectivity tests** into one `testEndpoint()`
+  helper (audit §4); behavior unchanged, and the Gemini key is now URL-encoded
+  in its query string.
+
 ### Accessibility
 - **First accessibility pass.** Added ARIA labels to all icon-only buttons
   (header nav, chat toolbar, attach/voice/send), `aria-label`s to every form

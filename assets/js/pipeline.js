@@ -242,15 +242,18 @@ As ${agent.name}, now deliver YOUR specific contribution to this project. Be con
     try{
       await streamInto(content, prompt, (chunk)=>{
         agentOutput+=chunk;
-        const outEl=document.getElementById(outputId);
-        if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
-        screen.scrollTop=screen.scrollHeight;
+        onStreamFrame(()=>{
+          const outEl=document.getElementById(outputId);
+          if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
+          screen.scrollTop=screen.scrollHeight;
+        });
       });
     } catch(e){
       agentOutput=`Error: ${e.message}`;
     }
 
     outputs.push(agentOutput);
+    cancelStreamFrame();
     const outEl=document.getElementById(outputId);
     const statusEl=document.getElementById(statusId);
     if(outEl){ outEl.innerHTML=md(agentOutput); }

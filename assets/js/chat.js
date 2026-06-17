@@ -250,7 +250,7 @@ async function sendMsg(){
     if(cfg.provider==='demo'){
       await streamDemo(ai,curAgent);
     } else {
-      await streamInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
+      await streamInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;onStreamFrame(renderChat);}, toLLMHistory());
     }
     ai.meta={t:((Date.now()-t0)/1000).toFixed(1)};
   }catch(e){ai.content='**Error:** '+e.message;}
