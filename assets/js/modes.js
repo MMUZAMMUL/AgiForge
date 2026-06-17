@@ -141,7 +141,7 @@ async function runDebate(){
 
     let output='';
     try{
-      await streamGroqInto(content, prompt, (chunk)=>{
+      await streamInto(content, prompt, (chunk)=>{
         output+=chunk;
         const el=document.getElementById(outId);
         if(el){el.innerHTML=md(output)+'<span class="cursor">▋</span>';el.scrollTop=el.scrollHeight;}
@@ -253,7 +253,7 @@ async function runBenchmark(){
     const content=await fetchAgentContent(agent);
     let output='';const t0=Date.now();
     try{
-      await streamGroqInto(content, prompt, (chunk)=>{
+      await streamInto(content, prompt, (chunk)=>{
         output+=chunk;
         const outEl=document.getElementById(outId);
         if(outEl){const preview=output.replace(/[#*`]/g,'').slice(0,150);outEl.textContent=preview+'…';}
@@ -276,7 +276,7 @@ async function runBenchmark(){
 
   // ── LLM judge phase: impartial model scores the actual answers ──────────────
   let judged=false;
-  if(cfg.provider==='groq'&&cfg.groqKey.startsWith('gsk_')&&results.length){
+  if(results.length&&cfg.provider!=='demo'&&cfg.provider!=='ollama'){
     document.getElementById('bench-progress').textContent='⚖️ Judging answers…';
     try{
       const verdicts=await judgeBenchmark(prompt,results);

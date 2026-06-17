@@ -178,6 +178,16 @@ async function streamOllamaInto(systemPrompt, singleUserMsg, onChunk, msgHistory
   }
 }
 
+// ── Unified streaming dispatcher ──────────────────────────────────────────────
+// All cloud providers (groq/cerebras/gemini/openrouter) are OpenAI-compatible and
+// flow through streamGroqInto → groqFetchWithRetry (which builds the failover
+// chain for whichever provider is active). Only Ollama uses the local endpoint.
+// Demo mode is handled by callers (it needs the agent object, not a prompt).
+async function streamInto(systemPrompt, singleUserMsg, onChunk, msgHistory){
+  if(cfg.provider==='ollama') return streamOllamaInto(systemPrompt, singleUserMsg, onChunk, msgHistory);
+  return streamGroqInto(systemPrompt, singleUserMsg, onChunk, msgHistory);
+}
+
 async function streamDemo(ai,agent){
   const t=`Hi! I'm **${agent.name}** ${agent.emoji}
 

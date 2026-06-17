@@ -13,7 +13,9 @@ async function openAgent(id){
   showScreen('chat'); renderChat();
   const content=await fetchAgentContent(a);
   curAgent.content=content;
-  document.getElementById('ch-sub').textContent=a.division+(cfg.provider==='groq'?' · '+engineLabel(cfg.groqModel):'');
+  const _eng=cfg.provider==='groq'?engineLabel(cfg.groqModel)
+    :cfg.provider==='demo'?'':cfg.provider.charAt(0).toUpperCase()+cfg.provider.slice(1);
+  document.getElementById('ch-sub').textContent=a.division+(_eng?' · '+_eng:'');
   renderChat();
   setTimeout(()=>document.getElementById('msg-input').focus(),150);
 }
@@ -245,12 +247,10 @@ async function sendMsg(){
   chatMsgs.push(ai); renderChat(); chatBusy=true;
   const t0=Date.now();
   try{
-    if(cfg.provider==='groq'){
-      await streamGroqInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
-    } else if(cfg.provider==='ollama'){
-      await streamOllamaInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
-    } else {
+    if(cfg.provider==='demo'){
       await streamDemo(ai,curAgent);
+    } else {
+      await streamInto(curAgent.content, null, (chunk)=>{ai.content+=chunk;renderChat();}, toLLMHistory());
     }
     ai.meta={t:((Date.now()-t0)/1000).toFixed(1)};
   }catch(e){ai.content='**Error:** '+e.message;}

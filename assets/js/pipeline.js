@@ -238,20 +238,12 @@ As ${agent.name}, now deliver YOUR specific contribution to this project. Be con
     let agentOutput='';
 
     try{
-      if(cfg.provider==='groq'){
-        await streamGroqInto(content, prompt, (chunk)=>{
-          agentOutput+=chunk;
-          const outEl=document.getElementById(outputId);
-          if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
-          screen.scrollTop=screen.scrollHeight;
-        });
-      } else {
-        await streamOllamaInto(content, prompt, (chunk)=>{
-          agentOutput+=chunk;
-          const outEl=document.getElementById(outputId);
-          if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
-        });
-      }
+      await streamInto(content, prompt, (chunk)=>{
+        agentOutput+=chunk;
+        const outEl=document.getElementById(outputId);
+        if(outEl){ outEl.innerHTML=md(agentOutput)+'<span class="cursor">▋</span>'; outEl.scrollTop=outEl.scrollHeight; }
+        screen.scrollTop=screen.scrollHeight;
+      });
     } catch(e){
       agentOutput=`Error: ${e.message}`;
     }
