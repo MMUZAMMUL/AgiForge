@@ -48,15 +48,15 @@
     <div class="logo">Agent<span>Forge</span></div>
     <div id="hdr-dot" class="dot warn"></div>
     <span id="hdr-txt" style="font-size:11px;color:var(--text2)">setup</span>
-    <div class="hdr-right">
-      <button class="icon-btn" id="tab-agents" onclick="showScreen('agents')" title="Agents">🏠</button>
-      <button class="icon-btn" id="tab-pipeline" onclick="showScreen('pipeline')" title="Pipeline">⛓️</button>
-      <button class="icon-btn" id="tab-memory" onclick="showScreen('memory')" title="Memory">🧠</button>
-      <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate">⚔️</button>
-      <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark">📊</button>
-      <button class="icon-btn" id="tab-creator" onclick="showScreen('creator')" title="Create Agent">✏️</button>
-      <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings">⚙️</button>
-    </div>
+    <nav class="hdr-right" aria-label="Main navigation">
+      <button class="icon-btn" id="tab-agents" onclick="showScreen('agents')" title="Agents" aria-label="Agents">🏠</button>
+      <button class="icon-btn" id="tab-pipeline" onclick="showScreen('pipeline')" title="Pipeline" aria-label="Pipeline">⛓️</button>
+      <button class="icon-btn" id="tab-memory" onclick="showScreen('memory')" title="Memory" aria-label="Memory">🧠</button>
+      <button class="icon-btn" id="tab-debate" onclick="showScreen('debate')" title="Debate" aria-label="Debate">⚔️</button>
+      <button class="icon-btn" id="tab-benchmark" onclick="showScreen('benchmark')" title="Benchmark" aria-label="Benchmark">📊</button>
+      <button class="icon-btn" id="tab-creator" onclick="showScreen('creator')" title="Create Agent" aria-label="Create agent">✏️</button>
+      <button class="icon-btn" id="tab-settings" onclick="showScreen('settings')" title="Settings" aria-label="Settings">⚙️</button>
+    </nav>
   </div>
 
   <!-- ═══════════ SETUP ═══════════ -->
@@ -73,27 +73,27 @@
         <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">All options below are free. Pick one, get your API key, paste it, and you're live in under 2 minutes.</p>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
-          <button class="setup-prov-btn on" id="sp-groq" onclick="selectSetupProvider('groq')">
-            <span style="font-size:18px">⚡</span>
+          <button class="setup-prov-btn on" id="sp-groq" onclick="selectSetupProvider('groq')" aria-label="Groq — free, fastest" aria-pressed="true">
+            <span style="font-size:18px" aria-hidden="true">⚡</span>
             <span style="font-weight:700;font-size:13px">Groq</span>
             <span style="font-size:11px;color:var(--green)">Free · Fastest</span>
           </button>
-          <button class="setup-prov-btn" id="sp-cerebras" onclick="selectSetupProvider('cerebras')">
-            <span style="font-size:18px">🧠</span>
+          <button class="setup-prov-btn" id="sp-cerebras" onclick="selectSetupProvider('cerebras')" aria-label="Cerebras — free, ultra-fast" aria-pressed="false">
+            <span style="font-size:18px" aria-hidden="true">🧠</span>
             <span style="font-weight:700;font-size:13px">Cerebras</span>
             <span style="font-size:11px;color:var(--green)">Free · Ultra-fast</span>
           </button>
-          <button class="setup-prov-btn" id="sp-gemini" onclick="selectSetupProvider('gemini')">
-            <span style="font-size:18px">🌟</span>
+          <button class="setup-prov-btn" id="sp-gemini" onclick="selectSetupProvider('gemini')" aria-label="Gemini — free, Google AI" aria-pressed="false">
+            <span style="font-size:18px" aria-hidden="true">🌟</span>
             <span style="font-weight:700;font-size:13px">Gemini</span>
             <span style="font-size:11px;color:var(--green)">Free · Google AI</span>
           </button>
-          <button class="setup-prov-btn" id="sp-openrouter" onclick="selectSetupProvider('openrouter')">
-            <span style="font-size:18px">🔀</span>
+          <button class="setup-prov-btn" id="sp-openrouter" onclick="selectSetupProvider('openrouter')" aria-label="OpenRouter — free models" aria-pressed="false">
+            <span style="font-size:18px" aria-hidden="true">🔀</span>
             <span style="font-weight:700;font-size:13px">OpenRouter</span>
             <span style="font-size:11px;color:var(--green)">Free models</span>
           </button>
-          <button class="setup-prov-btn" id="sp-ollama" onclick="selectSetupProvider('ollama')" style="grid-column:span 2">
+          <button class="setup-prov-btn" id="sp-ollama" onclick="selectSetupProvider('ollama')" style="grid-column:span 2" aria-label="Ollama — local, runs on your PC" aria-pressed="false">
             <span style="font-size:18px">🖥️</span>
             <span style="font-weight:700;font-size:13px">Ollama (Local)</span>
             <span style="font-size:11px;color:var(--text2)">Runs on your PC · 100% private</span>
@@ -107,7 +107,7 @@
             <div class="step"><div class="snum">2</div><div class="step-body"><b>Create key</b> and copy it.</div></div>
             <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
           </div>
-          <input class="field-input" id="setup-groq-key" type="password" placeholder="gsk_…" autocomplete="off"/>
+          <input class="field-input" id="setup-groq-key" type="password" placeholder="gsk_…" autocomplete="off" aria-label="Groq API key"/>
         </div>
 
         <!-- Cerebras -->
@@ -117,7 +117,7 @@
             <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API key</b> and copy it.</div></div>
             <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
           </div>
-          <input class="field-input" id="setup-cerebras-key" type="password" placeholder="csk_…" autocomplete="off"/>
+          <input class="field-input" id="setup-cerebras-key" type="password" placeholder="csk_…" autocomplete="off" aria-label="Cerebras API key"/>
         </div>
 
         <!-- Gemini -->
@@ -127,7 +127,7 @@
             <div class="step"><div class="snum">2</div><div class="step-body"><b>Create API key</b> and copy it.</div></div>
             <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
           </div>
-          <input class="field-input" id="setup-gemini-key" type="password" placeholder="AIza…" autocomplete="off"/>
+          <input class="field-input" id="setup-gemini-key" type="password" placeholder="AIza…" autocomplete="off" aria-label="Gemini API key"/>
         </div>
 
         <!-- OpenRouter -->
@@ -137,7 +137,7 @@
             <div class="step"><div class="snum">2</div><div class="step-body"><b>Create key</b> and copy it.</div></div>
             <div class="step"><div class="snum">3</div><div class="step-body"><b>Paste below and connect</b></div></div>
           </div>
-          <input class="field-input" id="setup-openrouter-key" type="password" placeholder="sk-or-…" autocomplete="off"/>
+          <input class="field-input" id="setup-openrouter-key" type="password" placeholder="sk-or-…" autocomplete="off" aria-label="OpenRouter API key"/>
         </div>
 
         <!-- Ollama -->
@@ -147,11 +147,11 @@
             <div class="step"><div class="snum">2</div><div class="step-body"><b>Pull a model:</b><span class="cmd">ollama run llama3.2</span></div></div>
             <div class="step"><div class="snum">3</div><div class="step-body"><b>Enter your host below</b></div></div>
           </div>
-          <input class="field-input" id="setup-ollama-host" placeholder="http://localhost:11434" autocomplete="off"/>
+          <input class="field-input" id="setup-ollama-host" placeholder="http://localhost:11434" autocomplete="off" aria-label="Ollama host URL"/>
         </div>
 
         <button class="primary-btn" id="setup-connect-btn" onclick="connectProvider()">Connect & Start →</button>
-        <div id="setup-result" style="text-align:center;font-size:13px;min-height:18px;margin-top:8px"></div>
+        <div id="setup-result" role="status" aria-live="polite" style="text-align:center;font-size:13px;min-height:18px;margin-top:8px"></div>
       </div>
 
       <div class="skip-link">Already set up? <span onclick="showScreen('agents')">Go to agents →</span></div>
@@ -161,43 +161,43 @@
   <!-- ═══════════ AGENTS ═══════════ -->
   <div id="screen-agents" class="screen">
     <div class="search-bar" style="display:flex;gap:8px">
-      <input class="search-input" id="search" placeholder="Search 247 specialists…" oninput="onSearchInput()" style="flex:1"/>
-      <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
+      <input class="search-input" id="search" placeholder="Search 247 specialists…" oninput="onSearchInput()" style="flex:1" type="search" aria-label="Search specialists"/>
+      <button class="icon-btn" id="pipeline-mode-btn" onclick="togglePipelineMode()" title="Pipeline mode" aria-label="Toggle pipeline mode" aria-pressed="false" style="flex-shrink:0;white-space:nowrap">⛓️ Add</button>
     </div>
     <div id="pipeline-bar" style="display:none;padding:8px 12px;background:var(--purple)11;border-bottom:1px solid var(--purple)44;font-size:13px;color:var(--purple);display:flex;align-items:center;gap:8px">
       <span>Pipeline mode: tap agents to add</span>
       <span id="pl-count" style="background:var(--purple);color:#fff;padding:1px 8px;border-radius:99px;font-size:11px;font-weight:700">0</span>
       <button onclick="goToPipeline()" style="margin-left:auto;background:var(--purple);border:none;color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer">Build →</button>
     </div>
-    <div class="div-scroll" id="div-tabs"></div>
-    <div class="agent-list" id="agent-list"></div>
+    <div class="div-scroll" id="div-tabs" role="group" aria-label="Filter by division"></div>
+    <div class="agent-list" id="agent-list" aria-label="Specialists"></div>
   </div>
 
   <!-- ═══════════ CHAT ═══════════ -->
   <div id="screen-chat" class="screen">
     <div class="chat-header">
-      <button class="back-btn" onclick="showScreen('agents')">‹</button>
-      <div id="ch-emoji" class="ch-emoji"></div>
+      <button class="back-btn" onclick="showScreen('agents')" aria-label="Back to agents">‹</button>
+      <div id="ch-emoji" class="ch-emoji" aria-hidden="true"></div>
       <div style="min-width:0;flex:1">
         <div id="ch-name" class="ch-name"></div>
         <div id="ch-sub" class="ch-sub"></div>
       </div>
-      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="saveToMemory()">💾</button>
-      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="downloadChat()" title="Export chat">⬇️</button>
-      <button class="icon-btn" style="padding:5px 9px" onclick="clearChat()">✕</button>
+      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="saveToMemory()" aria-label="Save to memory" title="Save to memory">💾</button>
+      <button class="icon-btn" style="padding:5px 9px;font-size:12px" onclick="downloadChat()" title="Export chat" aria-label="Export chat">⬇️</button>
+      <button class="icon-btn" style="padding:5px 9px" onclick="clearChat()" aria-label="Clear chat" title="Clear chat">✕</button>
     </div>
-    <div class="messages" id="messages"></div>
+    <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation"></div>
     <div id="attach-chip-wrap"></div>
     <input type="file" id="file-input" style="display:none" onchange="onFilePicked(event)"
       accept=".txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.yaml,.yml,.java,.go,.rs,.rb,.php,.c,.cpp,.h,.sql,.sh,.log,text/*"/>
     <input type="file" id="dir-input" webkitdirectory directory multiple style="display:none" onchange="onDirPicked(event)"/>
     <div class="input-row">
-      <button class="mic-btn" id="attach-btn" onclick="document.getElementById('file-input').click()" title="Attach file">📎</button>
-      <button class="mic-btn" id="dir-btn" onclick="document.getElementById('dir-input').click()" title="Attach folder / repo">📁</button>
-      <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice input">🎤</button>
-      <textarea class="msg-input" id="msg-input" placeholder="Message…" rows="1"
+      <button class="mic-btn" id="attach-btn" onclick="document.getElementById('file-input').click()" title="Attach file" aria-label="Attach file">📎</button>
+      <button class="mic-btn" id="dir-btn" onclick="document.getElementById('dir-input').click()" title="Attach folder / repo" aria-label="Attach folder or repo">📁</button>
+      <button class="mic-btn" id="mic-btn" onclick="toggleVoice()" title="Voice input" aria-label="Voice input">🎤</button>
+      <textarea class="msg-input" id="msg-input" placeholder="Message…" rows="1" aria-label="Message"
         onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMsg()">↑</button>
+      <button class="send-btn" id="send-btn" onclick="sendMsg()" aria-label="Send message">↑</button>
     </div>
   </div>
 
@@ -206,9 +206,9 @@
     <div id="pipeline-build" class="pipeline-body">
       <div class="pipeline-top">
         <div class="card-title">🎯 Project Goal</div>
-        <textarea class="pipeline-goal" id="pl-goal" placeholder="Describe what you want to build or solve…&#10;e.g. Build a SaaS landing page for a project management tool" rows="3"></textarea>
+        <textarea class="pipeline-goal" id="pl-goal" placeholder="Describe what you want to build or solve…&#10;e.g. Build a SaaS landing page for a project management tool" rows="3" aria-label="Project goal"></textarea>
         <button class="run-btn" id="auto-build-btn" onclick="autoBuildTeam()" style="background:linear-gradient(135deg,var(--accent),var(--purple));margin-top:10px">✨ Auto-Build Team</button>
-        <div id="auto-build-status" style="font-size:12px;color:var(--text2);text-align:center;min-height:16px;margin-top:5px"></div>
+        <div id="auto-build-status" role="status" aria-live="polite" style="font-size:12px;color:var(--text2);text-align:center;min-height:16px;margin-top:5px"></div>
         <div style="margin-top:12px">
           <div class="card-title" style="margin-bottom:8px">⛓️ Agent Pipeline <span style="color:var(--text2);font-size:11px">(in order)</span></div>
           <div id="pipeline-queue" class="pipeline-queue">
@@ -241,7 +241,7 @@
       <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
         <button class="back-btn" onclick="stopPipeline()">‹</button>
         <div style="font-weight:700;font-size:14px">Pipeline Running</div>
-        <div id="exec-progress" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
+        <div id="exec-progress" role="status" aria-live="polite" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
       </div>
       <div class="exec-screen" id="exec-screen"></div>
     </div>
@@ -261,7 +261,7 @@
     <div class="settings-body">
       <div class="card" style="padding:11px 14px;display:flex;align-items:center;gap:10px">
         <div id="set-dot" class="dot warn"></div>
-        <span id="set-txt" style="font-size:13px;flex:1">Not connected</span>
+        <span id="set-txt" role="status" aria-live="polite" style="font-size:13px;flex:1">Not connected</span>
       </div>
       <div class="card">
         <div class="card-title">🔌 AI Provider</div>
@@ -275,7 +275,7 @@
         </div>
         <div id="s-groq">
           <label style="font-size:12px;color:var(--text2)">Groq API Key — <a href="https://console.groq.com/keys" target="_blank" rel="noopener">get free key ↗</a></label>
-          <input class="field-input" id="s-groq-key" type="password" placeholder="gsk_…" style="margin:4px 0 10px"/>
+          <input class="field-input" id="s-groq-key" type="password" placeholder="gsk_…" style="margin:4px 0 10px" aria-label="Groq API key"/>
           <div class="card-title">Engine</div>
           <div class="model-chips" id="groq-models">
             <span class="mchip on" data-m="llama-3.1-8b-instant">⚡ Flash</span>
@@ -285,22 +285,22 @@
         </div>
         <div id="s-cerebras" style="display:none">
           <label style="font-size:12px;color:var(--text2)">Cerebras API Key — <a href="https://cloud.cerebras.ai" target="_blank" rel="noopener">get free key ↗</a></label>
-          <input class="field-input" id="s-cb-key" type="password" placeholder="csk_…" style="margin:4px 0"/>
+          <input class="field-input" id="s-cb-key" type="password" placeholder="csk_…" style="margin:4px 0" aria-label="Cerebras API key"/>
         </div>
         <div id="s-gemini" style="display:none">
           <label style="font-size:12px;color:var(--text2)">Gemini API Key — <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">get free key ↗</a></label>
-          <input class="field-input" id="s-gm-key" type="password" placeholder="AIza…" style="margin:4px 0"/>
+          <input class="field-input" id="s-gm-key" type="password" placeholder="AIza…" style="margin:4px 0" aria-label="Gemini API key"/>
         </div>
         <div id="s-openrouter" style="display:none">
           <label style="font-size:12px;color:var(--text2)">OpenRouter API Key — <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">get free key ↗</a></label>
-          <input class="field-input" id="s-or-key" type="password" placeholder="sk-or-…" style="margin:4px 0"/>
+          <input class="field-input" id="s-or-key" type="password" placeholder="sk-or-…" style="margin:4px 0" aria-label="OpenRouter API key"/>
         </div>
         <div id="s-ollama" style="display:none">
           <label style="font-size:12px;color:var(--text2)">Ollama Host</label>
-          <input class="field-input" id="s-ollama-host" placeholder="http://localhost:11434" style="margin:4px 0"/>
+          <input class="field-input" id="s-ollama-host" placeholder="http://localhost:11434" style="margin:4px 0" aria-label="Ollama host URL"/>
         </div>
         <button class="primary-btn" onclick="saveSettings()" style="margin-top:12px">Save & Test →</button>
-        <div id="save-result" style="margin-top:7px;text-align:center;font-size:13px;min-height:18px"></div>
+        <div id="save-result" role="status" aria-live="polite" style="margin-top:7px;text-align:center;font-size:13px;min-height:18px"></div>
       </div>
 
       <!-- Web Search -->
@@ -308,9 +308,9 @@
         <div class="card-title">🌐 Web Search (optional)</div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           <div id="search-dot" class="dot warn" style="width:8px;height:8px"></div>
-          <span id="search-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+          <span id="search-status" role="status" aria-live="polite" style="font-size:12px;color:var(--text2)">Not configured</span>
         </div>
-        <input class="field-input" id="s-brave-key" type="password" placeholder="Brave Search key…"/>
+        <input class="field-input" id="s-brave-key" type="password" placeholder="Brave Search key…" aria-label="Brave Search API key"/>
         <div class="field-hint">
           Free 2000 searches/month at <a href="https://api.search.brave.com" target="_blank">api.search.brave.com ↗</a><br>
           When set, agents automatically search the web for real-time info.
@@ -338,7 +338,7 @@
             <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#22d3ee">HealthForge</div><div style="font-size:11px;color:var(--text2)">Patient services, billing, compliance, HR</div></div>
             <span style="font-size:12px;color:var(--text2)">→</span>
           </a>
-          ${EDITION_KEY?`<a href="." style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none"><span style="font-size:12px;color:var(--text2)">← Back to full AgentForge (all 203 specialists)</span></a>`:''}
+          ${EDITION_KEY?`<a href="." style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none"><span style="font-size:12px;color:var(--text2)">← Back to full AgentForge (all 247 specialists)</span></a>`:''}
         </div>
       </div>
 
@@ -347,9 +347,9 @@
         <div class="card-title">⚡ Automations (optional)</div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           <div id="wh-dot" class="dot warn" style="width:8px;height:8px"></div>
-          <span id="wh-status" style="font-size:12px;color:var(--text2)">Not configured</span>
+          <span id="wh-status" role="status" aria-live="polite" style="font-size:12px;color:var(--text2)">Not configured</span>
         </div>
-        <input class="field-input" id="s-webhook-url" placeholder="https://hooks.zapier.com/hooks/catch/…"/>
+        <input class="field-input" id="s-webhook-url" placeholder="https://hooks.zapier.com/hooks/catch/…" aria-label="Webhook URL"/>
         <div class="field-hint">Paste any Zapier, Make, or webhook URL. Pipeline/debate/benchmark output is POSTed as JSON so you can route it to Notion, Slack, email, or any app. <a href="https://zapier.com/apps/webhook/integrations" target="_blank" rel="noopener">Create a Zapier webhook ↗</a></div>
         <button class="primary-btn" onclick="saveWebhookUrl()" style="margin-top:8px;background:var(--green);font-size:13px;padding:10px">Save Webhook URL</button>
       </div>
@@ -366,16 +366,16 @@
       <div class="creator-row">
         <div class="creator-field">
           <div class="creator-label">Agent Name *</div>
-          <input class="creator-input" id="cr-name" placeholder="e.g. Crypto Analyst"/>
+          <input class="creator-input" id="cr-name" placeholder="e.g. Crypto Analyst" aria-label="Agent name"/>
         </div>
         <div class="creator-field" style="max-width:80px">
           <div class="creator-label">Emoji</div>
-          <input class="creator-input" id="cr-emoji" placeholder="🔍" maxlength="2"/>
+          <input class="creator-input" id="cr-emoji" placeholder="🔍" maxlength="2" aria-label="Agent emoji"/>
         </div>
       </div>
       <div class="creator-field">
         <div class="creator-label">Division *</div>
-        <select class="creator-select" id="cr-division">
+        <select class="creator-select" id="cr-division" aria-label="Division">
           <option value="">Select division…</option>
           <option>academic</option><option>design</option><option>engineering</option>
           <option>finance</option><option>game-development</option><option>gis</option>
@@ -386,19 +386,19 @@
       </div>
       <div class="creator-field">
         <div class="creator-label">One-line description *</div>
-        <input class="creator-input" id="cr-desc" placeholder="e.g. Expert in DeFi, tokenomics, and on-chain analytics"/>
+        <input class="creator-input" id="cr-desc" placeholder="e.g. Expert in DeFi, tokenomics, and on-chain analytics" aria-label="One-line description"/>
       </div>
       <div class="creator-field">
         <div class="creator-label">Personality vibe</div>
-        <input class="creator-input" id="cr-vibe" placeholder="e.g. Reads the blockchain so you don't have to"/>
+        <input class="creator-input" id="cr-vibe" placeholder="e.g. Reads the blockchain so you don't have to" aria-label="Personality vibe"/>
       </div>
       <div class="creator-field">
         <div class="creator-label">Core expertise &amp; knowledge areas</div>
-        <textarea class="creator-ta" id="cr-expertise" placeholder="What does this agent deeply know?&#10;e.g. DeFi protocols, tokenomics, whale tracking, on-chain data analysis, smart contract auditing"></textarea>
+        <textarea class="creator-ta" id="cr-expertise" placeholder="What does this agent deeply know?&#10;e.g. DeFi protocols, tokenomics, whale tracking, on-chain data analysis, smart contract auditing" aria-label="Core expertise and knowledge areas"></textarea>
       </div>
       <div class="creator-field">
         <div class="creator-label">Communication style</div>
-        <select class="creator-select" id="cr-style">
+        <select class="creator-select" id="cr-style" aria-label="Communication style">
           <option value="direct">Direct &amp; concise — gets to the point fast</option>
           <option value="thorough">Thorough &amp; detailed — comprehensive breakdowns</option>
           <option value="creative">Creative &amp; energetic — bold ideas and enthusiasm</option>
@@ -408,16 +408,16 @@
       </div>
       <div class="creator-field">
         <div class="creator-label">Key deliverables (what outputs does this agent produce?)</div>
-        <textarea class="creator-ta" id="cr-deliverables" placeholder="e.g. Token analysis reports, smart contract risk assessments, market trend summaries, DeFi yield comparisons" style="min-height:70px"></textarea>
+        <textarea class="creator-ta" id="cr-deliverables" placeholder="e.g. Token analysis reports, smart contract risk assessments, market trend summaries, DeFi yield comparisons" style="min-height:70px" aria-label="Key deliverables"></textarea>
       </div>
       <button class="run-btn" id="cr-gen-btn" onclick="generateAgentWithAI()" style="background:linear-gradient(135deg,var(--accent),var(--purple));margin-top:2px">✨ Generate System Prompt with AI</button>
-      <div id="cr-gen-status" style="font-size:12px;color:var(--text2);text-align:center;min-height:14px"></div>
+      <div id="cr-gen-status" role="status" aria-live="polite" style="font-size:12px;color:var(--text2);text-align:center;min-height:14px"></div>
       <div class="creator-field">
         <div class="creator-label" style="display:flex;justify-content:space-between">
           <span>System Prompt <span style="color:var(--text2);font-weight:400">(auto-generated or write your own)</span></span>
           <span id="cr-char-count" style="color:var(--text2)"></span>
         </div>
-        <textarea class="creator-ta" id="cr-prompt" placeholder="Your agent's full system prompt…&#10;&#10;Or click '✨ Generate' above to create one from your inputs." style="min-height:160px" oninput="updateCharCount()"></textarea>
+        <textarea class="creator-ta" id="cr-prompt" placeholder="Your agent's full system prompt…&#10;&#10;Or click '✨ Generate' above to create one from your inputs." style="min-height:160px" oninput="updateCharCount()" aria-label="System prompt"></textarea>
       </div>
       <div style="display:flex;gap:8px">
         <button class="run-btn" onclick="saveCustomAgent()" style="flex:1">💾 Save &amp; Use Agent</button>
@@ -439,11 +439,11 @@
         <div class="card-title">⚔️ Agent vs Agent Debate</div>
         <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Two specialists argue and refine until a production-ready answer emerges.</p>
         <div class="card-title" style="margin-bottom:5px">Agent A — Proposer</div>
-        <select class="debate-select" id="debate-a" style="margin-bottom:10px"><option value="">Select agent…</option></select>
+        <select class="debate-select" id="debate-a" style="margin-bottom:10px" aria-label="Agent A — proposer"><option value="">Select agent…</option></select>
         <div class="card-title" style="margin-bottom:5px">Agent B — Critic</div>
-        <select class="debate-select" id="debate-b" style="margin-bottom:10px"><option value="">Select agent…</option></select>
+        <select class="debate-select" id="debate-b" style="margin-bottom:10px" aria-label="Agent B — critic"><option value="">Select agent…</option></select>
         <div class="card-title" style="margin-bottom:5px">Topic / Question</div>
-        <textarea class="pipeline-goal" id="debate-topic" placeholder="What should they debate?&#10;e.g. Best architecture for a scalable real-time chat app" rows="3"></textarea>
+        <textarea class="pipeline-goal" id="debate-topic" placeholder="What should they debate?&#10;e.g. Best architecture for a scalable real-time chat app" rows="3" aria-label="Debate topic"></textarea>
         <div style="display:flex;align-items:center;gap:10px;margin:10px 0">
           <div class="card-title" style="margin:0">Rounds</div>
           <div style="display:flex;gap:5px">
@@ -459,7 +459,7 @@
       <div style="padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0">
         <button class="back-btn" onclick="stopDebate()">‹</button>
         <div style="font-weight:700;font-size:14px">⚔️ Debate in Progress</div>
-        <div id="debate-progress" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
+        <div id="debate-progress" role="status" aria-live="polite" style="margin-left:auto;font-size:12px;color:var(--text2)"></div>
       </div>
       <div class="exec-screen" id="debate-screen"></div>
     </div>
@@ -471,9 +471,9 @@
       <div class="card">
         <div class="card-title">📊 Agent Benchmarker</div>
         <p style="font-size:13px;color:var(--text2);margin-bottom:10px">Run the same prompt across agents and rank by quality, depth &amp; speed.</p>
-        <textarea class="pipeline-goal" id="bench-prompt" placeholder="Prompt to test all agents with…&#10;e.g. Design a REST API for user authentication with JWT" rows="3"></textarea>
+        <textarea class="pipeline-goal" id="bench-prompt" placeholder="Prompt to test all agents with…&#10;e.g. Design a REST API for user authentication with JWT" rows="3" aria-label="Benchmark prompt"></textarea>
         <div class="card-title" style="margin:10px 0 6px">Agents to Compare <span style="color:var(--text2);font-size:11px">(select 2+)</span></div>
-        <div id="bench-agents-select" style="display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto;margin-bottom:8px;padding:2px"></div>
+        <div id="bench-agents-select" role="group" aria-label="Agents to compare" style="display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto;margin-bottom:8px;padding:2px"></div>
         <button class="run-btn" style="background:var(--accent)" onclick="runBenchmark()">📊 Run Benchmark</button>
       </div>
     </div>

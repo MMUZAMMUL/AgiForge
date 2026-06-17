@@ -4,7 +4,9 @@
 
 function togglePipelineMode(){
   pipelineMode=!pipelineMode;
-  document.getElementById('pipeline-mode-btn').classList.toggle('active-tab',pipelineMode);
+  const modeBtn=document.getElementById('pipeline-mode-btn');
+  modeBtn.classList.toggle('active-tab',pipelineMode);
+  modeBtn.setAttribute('aria-pressed',pipelineMode?'true':'false');
   const bar=document.getElementById('pipeline-bar');
   bar.style.display=pipelineMode?'flex':'none';
   renderList();

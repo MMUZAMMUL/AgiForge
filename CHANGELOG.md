@@ -15,6 +15,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
   `base-uri`, `frame-ancestors`, restricts script/style/connect sources) as
   defense-in-depth behind the escaping fix.
 
+### Accessibility
+- **First accessibility pass.** Added ARIA labels to all icon-only buttons
+  (header nav, chat toolbar, attach/voice/send), `aria-label`s to every form
+  control in Setup, Settings, and the Agent Creator (previously placeholder-only),
+  and `aria-pressed` state to the provider, division-filter, and pipeline-mode
+  toggles. Agent cards are now keyboard-operable (`role="button"`, `tabindex`,
+  Enter/Space activation) with a visible `:focus-visible` ring. Streaming and
+  status regions (chat log, pipeline/debate progress, connection results) are
+  now `aria-live` so screen readers announce updates.
+
 ### Added
 - **26 previously-unreachable specialists are now wired into the app.** Valid
   agent files existed on disk but were missing from the `AGENTS` array; the app
