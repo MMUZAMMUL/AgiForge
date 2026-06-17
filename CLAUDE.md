@@ -32,13 +32,37 @@ Open `http://localhost:8080` in a browser. No compilation step; changes to `inde
 
 ## Architecture
 
-### Single-file app
+### File layout
 
-The entire application lives in `index.html` (~2,500 lines). It contains all CSS, all JavaScript, and all HTML. `landing.html` is a separate marketing page that links to `index.html`.
+`index.html` holds only the HTML markup (~490 lines). Styles and scripts are
+external files under `assets/`:
+
+```
+index.html              # markup + <link>/<script src> references
+assets/css/styles.css   # all styles (CSS custom properties at :root)
+assets/js/
+  data.js        # AGENTS array, DIVISIONS, editions, cfg (config), model pools, global state
+  ui.js          # screens, header, esc/md helpers, division tabs, favorites, agent list & cards
+  agents.js      # custom ("My") agents — create / AI-generate / save / delete
+  pipeline.js    # pipeline builder, sharing, examples, auto-build team, run/stop, exports
+  chat.js        # single-agent chat, history, attachments, workspace files, message actions
+  providers.js   # multi-provider failover, retry, web search, streaming (Groq/Ollama/demo)
+  memory.js      # saved outputs (localStorage memory)
+  settings.js    # settings UI, provider selection/keys, connection tests, webhooks, gists
+  modes.js       # voice input, code runner, debate mode, benchmarker
+  main.js        # boot/init (runs last) + service worker registration
+```
+
+The JS files are **classic scripts** (no ES modules / bundler) loaded in the
+order above at the end of `<body>`. They share one global scope, so functions
+stay globally available to the inline `onclick=` handlers in the HTML. **Load
+order matters** and `main.js` must stay last — its boot IIFE calls functions
+defined across all the other files. `landing.html` is a separate marketing
+page that links to `index.html`.
 
 ### Agent content is fetched on-demand
 
-Agent **metadata** (id, name, division, emoji, color, description, vibe) is defined inline in `index.html` in the `AGENTS` array (around lines 612–796). The full **system prompts** live in `agents/<division>/<id>.md` and are fetched at runtime from GitHub Raw:
+Agent **metadata** (id, name, division, emoji, color, description, vibe) is defined in the `AGENTS` array in `assets/js/data.js`. The full **system prompts** live in `agents/<division>/<id>.md` and are fetched at runtime from GitHub Raw:
 
 ```js
 const GITHUB_RAW = 'https://raw.githubusercontent.com/mmuzammul/Agi-forge/main/agents';
@@ -89,7 +113,7 @@ Supabase (loaded via CDN) handles optional accounts, Pro plan tracking, and revi
 
 ### CSS architecture
 
-All CSS is in one `<style>` block. Uses CSS custom properties at `:root`:
+All CSS lives in `assets/css/styles.css`. Uses CSS custom properties at `:root`:
 
 ```css
 --bg: #0f1117          /* Dark background */
