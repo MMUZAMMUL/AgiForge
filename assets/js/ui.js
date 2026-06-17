@@ -85,16 +85,21 @@ function colorHex(c){
   return m[c?.toLowerCase()]||(c?.startsWith('#')?c:'#6366f1');
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}
+// Escape for a double-quoted HTML attribute (also escapes " — unlike esc(), and
+// without the \n→<br> substitution that would be wrong inside an attribute).
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function md(s){
   // Extract code blocks / inline code into placeholders BEFORE escaping, so the
   // limited markdown transform never runs over raw HTML from LLM output. This
   // closes the XSS gap: any literal <tag> in ordinary paragraph text is escaped
   // below, while md()'s own generated tags (added after escaping) stay intact.
-  // Sentinels are plain ASCII (no &<>* chars) so they survive the escape pass
-  // and aren't touched by the markdown regexes; the @@ wrappers make a
-  // collision with real model output effectively impossible.
+  // The sentinel is a per-call random token wrapped in NUL bytes — NUL never
+  // appears in model/user text, so a placeholder can't collide with the input
+  // (and survives the escape pass + markdown regexes untouched).
   const blocks=[];
-  const hold=html=>'@@CB'+(blocks.push(html)-1)+'@@';
+  const NUL=String.fromCharCode(0);                                 // never occurs in model/user text
+  const Z=NUL+Math.random().toString(36).slice(2)+NUL;             // per-call, collision-proof sentinel
+  const hold=html=>{ blocks.push(html); return Z+(blocks.length-1)+Z; };
   let out=String(s)
     .replace(/```(\w*)\n?([\s\S]*?)```/g,(_,lang,c)=>{
       const raw=c.trim();
@@ -113,7 +118,7 @@ function md(s){
     .replace(/(<li>[\s\S]+?<\/li>)/g,'<ul>$1</ul>')
     .replace(/\n\n+/g,'</p><p>').replace(/^(?!<[hupoli])(.+)$/gm,s=>s?`<p>${s}</p>`:'');
   // Restore extracted code blocks
-  return out.replace(/@@CB(\d+)@@/g,(_,i)=>blocks[+i]);
+  return out.replace(new RegExp(Z+'(\\d+)'+Z,'g'),(_,i)=>blocks[+i]);
 }
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
@@ -197,7 +202,7 @@ function agentCard(a){
   const badge=plIdx>=0?`<div class="pipeline-badge">${plIdx+1}</div>`:'';
   const cls=plIdx>=0?'agent-item in-pipeline':'agent-item';
   const fav=isFav(a.id);
-  return `<div class="${cls}" onclick="agentTap('${a.id}')" onkeydown="agentKey(event,'${a.id}')" role="button" tabindex="0" aria-label="${esc(a.name)}, ${esc(a.division)} specialist">
+  return `<div class="${cls}" onclick="agentTap('${a.id}')" onkeydown="agentKey(event,'${a.id}')" role="button" tabindex="0" aria-label="${escAttr(a.name)}, ${escAttr(a.division)} specialist">
       <div class="agi-emoji" style="background:${h}22;color:${h};border:1px solid ${h}44" aria-hidden="true">${a.emoji}</div>
       <div class="agi-info">
         <div class="agi-name">${a.name}</div>
