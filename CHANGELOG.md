@@ -14,6 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - **Added a Content-Security-Policy** meta tag (locks down `object-src`,
   `base-uri`, `frame-ancestors`, restricts script/style/connect sources) as
   defense-in-depth behind the escaping fix.
+- **Hardened `md()` against placeholder collision.** Its code-block extraction
+  now uses a per-call NUL-delimited sentinel instead of a fixed `@@CB<n>@@`
+  token, so model/user text containing the literal token can no longer inject
+  another block's HTML or render `undefined`. Agent-card `aria-label`s now
+  quote-escape, so a custom agent name containing `"` can't break the attribute.
 
 ### Performance
 - **Streaming responses no longer re-parse markdown on every token.** Chat,
