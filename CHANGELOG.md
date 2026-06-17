@@ -44,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Fixed
 - **Agent count corrected to 247 everywhere** (app UI, landing page, manifest,
   docs) — previously a mix of 183/219/221. Division tab counts recomputed from
-  the actual roster.
+  the actual roster, and `docs/AGENTS.md` regenerated to list all 247 agents.
 - Removed a stale `supabase.co` entry from the service worker's host list (left
   over from the removed auth system).
 - **Docs no longer claim Supabase auth / Pro plans / reviews are live.** They
