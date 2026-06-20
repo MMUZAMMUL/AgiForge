@@ -67,6 +67,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .nav-links a{color:var(--text2);font-size:15px}
 .nav-links a:hover{color:var(--text)}
 .nav-cta{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#1a1205;padding:9px 16px;border-radius:10px;font-weight:700}
+.lang-switch{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:13px;cursor:pointer;max-width:120px}
+.lang-switch:focus{outline:2px solid var(--accent)}
 @media(max-width:720px){.nav-links a:not(.nav-cta){display:none}}
 
 /* Hero */
@@ -147,146 +149,159 @@ footer a{color:var(--text2)}footer a:hover{color:var(--text)}
 <nav><div class="wrap">
   <a class="brand" href="#top"><img src="assets/logo.svg" alt="AgentForge logo"/>Agent<span>Forge</span></a>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#roster">Specialists</a>
-    <a href="#pricing">Pricing</a>
-    <a class="nav-cta" href="index.html">Open App</a>
+    <a href="#features" data-i18n="nav_features">Features</a>
+    <a href="#roster" data-i18n="nav_specialists">Specialists</a>
+    <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+    <select id="lang-switch" class="lang-switch" aria-label="Select language">
+      <option value="en">🇺🇸 English</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="de">🇩🇪 Deutsch</option>
+    </select>
+    <a class="nav-cta" href="index.html" data-i18n="nav_openapp">Open App</a>
   </div>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
-  <div class="pill">⚡ 247 specialists · runs in your browser · free to start</div>
-  <h1>A whole <em>team of AI experts</em><br/>in your pocket</h1>
-  <p class="sub">Chat with 247 domain specialists, chain them into pipelines, let AI auto-build the perfect team for your goal, and run the code it writes — all from one browser tab. No install. No server.</p>
+  <div class="pill" data-i18n="hero_pill">⚡ 247 specialists · runs in your browser · free to start</div>
+  <h1 data-i18n="hero_h1">A whole <em>team of AI experts</em><br/>in your pocket</h1>
+  <p class="sub" data-i18n="hero_sub">Chat with 247 domain specialists, chain them into pipelines, let AI auto-build the perfect team for your goal, and run the code it writes — all from one browser tab. No install. No server.</p>
   <div class="cta-row">
-    <a class="btn btn-primary" href="index.html">Launch AgentForge →</a>
-    <a class="btn btn-ghost" href="#pricing">See pricing</a>
+    <a class="btn btn-primary" href="index.html" data-i18n="hero_cta1">Launch AgentForge →</a>
+    <a class="btn btn-ghost" href="#pricing" data-i18n="hero_cta2">See pricing</a>
   </div>
-  <div class="trust">Free forever core · Bring a free Groq key · Works on any phone</div>
+  <div class="trust" data-i18n="hero_trust">Free forever core · Bring a free Groq key · Works on any phone</div>
 
   <div class="stats">
-    <div class="stat"><div class="n">247</div><div class="l">Expert specialists</div></div>
-    <div class="stat"><div class="n">16</div><div class="l">Divisions</div></div>
-    <div class="stat"><div class="n">70+</div><div class="l">Code languages</div></div>
-    <div class="stat"><div class="n">$0</div><div class="l">To get started</div></div>
+    <div class="stat"><div class="n">247</div><div class="l" data-i18n="stat_specialists">Expert specialists</div></div>
+    <div class="stat"><div class="n">16</div><div class="l" data-i18n="stat_divisions">Divisions</div></div>
+    <div class="stat"><div class="n">70+</div><div class="l" data-i18n="stat_languages">Code languages</div></div>
+    <div class="stat"><div class="n">$0</div><div class="l" data-i18n="stat_start">To get started</div></div>
   </div>
 </div></header>
 
 <section id="features"><div class="wrap">
   <div class="sec-head">
-    <h2>Not a chatbot. A workforce.</h2>
-    <p>Generic AI gives you one assistant. AgentForge gives you specialists that collaborate.</p>
+    <h2 data-i18n="features_h2">Not a chatbot. A workforce.</h2>
+    <p data-i18n="features_p">Generic AI gives you one assistant. AgentForge gives you specialists that collaborate.</p>
   </div>
   <div class="grid">
-    <div class="card"><div class="ico">✨</div><h3>Auto-Build Team</h3><p>Describe a goal. An orchestrator reads the whole roster and assembles the right specialists in the right order.</p></div>
-    <div class="card"><div class="ico">⛓️</div><h3>Agent Pipelines</h3><p>Chain 2–6 experts. Each builds on the last — Product Manager → Developer → Brand → Growth in one tap.</p></div>
-    <div class="card"><div class="ico">⚔️</div><h3>Agent Debate</h3><p>Two specialists argue in rounds — proposer vs critic — until a battle-tested answer emerges.</p></div>
-    <div class="card"><div class="ico">📊</div><h3>Benchmarker</h3><p>Run one prompt across many agents; an impartial judge model scores each on real quality, not length.</p></div>
-    <div class="card"><div class="ico">▶️</div><h3>Code Runner</h3><p>Every code block has a Run button — executes in 70+ languages, no setup.</p></div>
-    <div class="card"><div class="ico">🎤</div><h3>Voice, Files & Memory</h3><p>Speak your prompt, attach docs as context, and save outputs — all client-side, all private.</p></div>
+    <div class="card"><div class="ico">✨</div><h3 data-i18n="card1_title">Auto-Build Team</h3><p data-i18n="card1_desc">Describe a goal. An orchestrator reads the whole roster and assembles the right specialists in the right order.</p></div>
+    <div class="card"><div class="ico">⛓️</div><h3 data-i18n="card2_title">Agent Pipelines</h3><p data-i18n="card2_desc">Chain 2–6 experts. Each builds on the last — Product Manager → Developer → Brand → Growth in one tap.</p></div>
+    <div class="card"><div class="ico">⚔️</div><h3 data-i18n="card3_title">Agent Debate</h3><p data-i18n="card3_desc">Two specialists argue in rounds — proposer vs critic — until a battle-tested answer emerges.</p></div>
+    <div class="card"><div class="ico">📊</div><h3 data-i18n="card4_title">Benchmarker</h3><p data-i18n="card4_desc">Run one prompt across many agents; an impartial judge model scores each on real quality, not length.</p></div>
+    <div class="card"><div class="ico">▶️</div><h3 data-i18n="card5_title">Code Runner</h3><p data-i18n="card5_desc">Every code block has a Run button — executes in 70+ languages, no setup.</p></div>
+    <div class="card"><div class="ico">🎤</div><h3 data-i18n="card6_title">Voice, Files & Memory</h3><p data-i18n="card6_desc">Speak your prompt, attach docs as context, and save outputs — all client-side, all private.</p></div>
   </div>
 </div></section>
 
 <section id="roster" style="background:var(--bg2);border-block:1px solid var(--border)"><div class="wrap">
   <div class="sec-head">
-    <h2>16 divisions. 247 specialists.</h2>
-    <p>Deep, role-specific expert prompts — not a generic persona with a new name.</p>
+    <h2 data-i18n="roster_h2">16 divisions. 247 specialists.</h2>
+    <p data-i18n="roster_p">Deep, role-specific expert prompts — not a generic persona with a new name.</p>
   </div>
   <div class="divs">
-    <div class="chip">⭐ Specialized <b>42</b></div>
-    <div class="chip">🏗️ Engineering <b>27</b></div>
-    <div class="chip">📣 Marketing <b>25</b></div>
-    <div class="chip">🗺️ GIS & Spatial <b>10</b></div>
-    <div class="chip">🔐 Security <b>10</b></div>
-    <div class="chip">🎨 Design <b>9</b></div>
-    <div class="chip">🤝 Sales <b>9</b></div>
-    <div class="chip">🧪 Testing <b>8</b></div>
-    <div class="chip">📈 Paid Media <b>7</b></div>
-    <div class="chip">📋 Project Mgmt <b>7</b></div>
-    <div class="chip">🛟 Support <b>6</b></div>
-    <div class="chip">🎓 Academic <b>5</b></div>
-    <div class="chip">💰 Finance <b>5</b></div>
-    <div class="chip">📦 Product <b>5</b></div>
-    <div class="chip">🎮 Game Dev <b>5</b></div>
-    <div class="chip">🥽 Spatial Computing <b>3</b></div>
+    <div class="chip">⭐ <span data-i18n="div_specialized">Specialized</span> <b>42</b></div>
+    <div class="chip">🏗️ <span data-i18n="div_engineering">Engineering</span> <b>27</b></div>
+    <div class="chip">📣 <span data-i18n="div_marketing">Marketing</span> <b>25</b></div>
+    <div class="chip">🗺️ <span data-i18n="div_gis">GIS & Spatial</span> <b>10</b></div>
+    <div class="chip">🔐 <span data-i18n="div_security">Security</span> <b>10</b></div>
+    <div class="chip">🎨 <span data-i18n="div_design">Design</span> <b>9</b></div>
+    <div class="chip">🤝 <span data-i18n="div_sales">Sales</span> <b>9</b></div>
+    <div class="chip">🧪 <span data-i18n="div_testing">Testing</span> <b>8</b></div>
+    <div class="chip">📈 <span data-i18n="div_paidmedia">Paid Media</span> <b>7</b></div>
+    <div class="chip">📋 <span data-i18n="div_pm">Project Mgmt</span> <b>7</b></div>
+    <div class="chip">🛟 <span data-i18n="div_support">Support</span> <b>6</b></div>
+    <div class="chip">🎓 <span data-i18n="div_academic">Academic</span> <b>5</b></div>
+    <div class="chip">💰 <span data-i18n="div_finance">Finance</span> <b>5</b></div>
+    <div class="chip">📦 <span data-i18n="div_product">Product</span> <b>5</b></div>
+    <div class="chip">🎮 <span data-i18n="div_gamedev">Game Dev</span> <b>5</b></div>
+    <div class="chip">🥽 <span data-i18n="div_spatial">Spatial Computing</span> <b>3</b></div>
   </div>
 </div></section>
 
 <section id="pricing"><div class="wrap">
   <div class="sec-head">
-    <h2>Start free. Unlock the pros.</h2>
-    <p>The core platform is free forever. Pay once to unlock premium specialist packs — no subscription.</p>
+    <h2 data-i18n="pricing_h2">Start free. Unlock the pros.</h2>
+    <p data-i18n="pricing_p">The core platform is free forever. Pay once to unlock premium specialist packs — no subscription.</p>
   </div>
   <div class="prices">
     <div class="price">
-      <h3>Free</h3>
+      <h3 data-i18n="free_title">Free</h3>
       <div class="amt">$0</div>
-      <div class="desc">Everything you need to start building with AI specialists.</div>
+      <div class="desc" data-i18n="free_desc">Everything you need to start building with AI specialists.</div>
       <ul>
-        <li>50+ core specialists</li>
-        <li>Chat, pipelines & auto-build team</li>
-        <li>Debate, benchmarker & code runner</li>
-        <li>Voice, file attachment & export</li>
-        <li>Bring your own free Groq key</li>
+        <li data-i18n="free_li1">50+ core specialists</li>
+        <li data-i18n="free_li2">Chat, pipelines & auto-build team</li>
+        <li data-i18n="free_li3">Debate, benchmarker & code runner</li>
+        <li data-i18n="free_li4">Voice, file attachment & export</li>
+        <li data-i18n="free_li5">Bring your own free Groq key</li>
       </ul>
-      <a class="btn btn-ghost" href="index.html">Open the app</a>
+      <a class="btn btn-ghost" href="index.html" data-i18n="free_cta">Open the app</a>
     </div>
     <div class="price feat">
-      <div class="tag">BEST VALUE</div>
-      <h3>All-Access</h3>
-      <div class="amt">$39<small> one-time</small></div>
-      <div class="desc">Unlock every specialist in all 16 divisions, forever.</div>
+      <div class="tag" data-i18n="aa_tag">BEST VALUE</div>
+      <h3 data-i18n="aa_title">All-Access</h3>
+      <div class="amt">$39<small data-i18n="aa_unit"> one-time</small></div>
+      <div class="desc" data-i18n="aa_desc">Unlock every specialist in all 16 divisions, forever.</div>
       <ul>
-        <li>All 247 specialists</li>
-        <li>Every premium division pack</li>
-        <li>Priority new-agent drops</li>
-        <li>Custom agent creator</li>
-        <li>Lifetime updates · no subscription</li>
+        <li data-i18n="aa_li1">All 247 specialists</li>
+        <li data-i18n="aa_li2">Every premium division pack</li>
+        <li data-i18n="aa_li3">Priority new-agent drops</li>
+        <li data-i18n="aa_li4">Custom agent creator</li>
+        <li data-i18n="aa_li5">Lifetime updates · no subscription</li>
       </ul>
-      <a class="btn btn-primary" href="#" data-buy="all-access">Get All-Access</a>
+      <a class="btn btn-primary" href="#" data-buy="all-access" data-i18n="aa_cta">Get All-Access</a>
     </div>
     <div class="price">
-      <h3>Pro Packs</h3>
-      <div class="amt">$9<small> each</small></div>
-      <div class="desc">Just need one field? Unlock a single division pack.</div>
+      <h3 data-i18n="pp_title">Pro Packs</h3>
+      <div class="amt">$9<small data-i18n="pp_unit"> each</small></div>
+      <div class="desc" data-i18n="pp_desc">Just need one field? Unlock a single division pack.</div>
       <ul>
-        <li>Engineering Pro (27 agents)</li>
-        <li>Marketing Pro (25 agents)</li>
-        <li>Security · GIS · Sales packs</li>
-        <li>One-time unlock per pack</li>
-        <li class="off">Other divisions sold separately</li>
+        <li data-i18n="pp_li1">Engineering Pro (27 agents)</li>
+        <li data-i18n="pp_li2">Marketing Pro (25 agents)</li>
+        <li data-i18n="pp_li3">Security · GIS · Sales packs</li>
+        <li data-i18n="pp_li4">One-time unlock per pack</li>
+        <li class="off" data-i18n="pp_li5">Other divisions sold separately</li>
       </ul>
-      <a class="btn btn-ghost" href="#" data-buy="packs">Browse packs</a>
+      <a class="btn btn-ghost" href="#" data-buy="packs" data-i18n="pp_cta">Browse packs</a>
     </div>
   </div>
 </div></section>
 
 <section><div class="wrap faq">
-  <div class="sec-head"><h2>Questions</h2></div>
-  <details><summary>Is it really free?</summary><p>Yes. The core app and 50+ specialists are free forever. You connect your own free Groq API key (no credit card) and you're running. Premium specialist packs are an optional one-time purchase.</p></details>
-  <details><summary>Do I need to install anything?</summary><p>No. AgentForge runs entirely in your browser. On mobile you can tap "Add to Home Screen" to use it like a native app, with offline support.</p></details>
-  <details><summary>Where does my data go?</summary><p>Nowhere we control. There's no backend — your API key, chats, and memory live in your browser's local storage. The only network calls are to your AI provider and optional search/code-execution services.</p></details>
-  <details><summary>What can I actually build with it?</summary><p>Product launches, marketing campaigns, code and architecture, security reviews, GIS analysis, financial models, game design docs — anything the 247 specialists cover, often by chaining several together in a pipeline.</p></details>
-  <details><summary>Is the All-Access purchase a subscription?</summary><p>No. It's a one-time payment that unlocks every specialist plus lifetime updates.</p></details>
+  <div class="sec-head"><h2 data-i18n="faq_h2">Questions</h2></div>
+  <details><summary data-i18n="faq_q1">Is it really free?</summary><p data-i18n="faq_a1">Yes. The core app and 50+ specialists are free forever. You connect your own free Groq API key (no credit card) and you're running. Premium specialist packs are an optional one-time purchase.</p></details>
+  <details><summary data-i18n="faq_q2">Do I need to install anything?</summary><p data-i18n="faq_a2">No. AgentForge runs entirely in your browser. On mobile you can tap "Add to Home Screen" to use it like a native app, with offline support.</p></details>
+  <details><summary data-i18n="faq_q3">Where does my data go?</summary><p data-i18n="faq_a3">Nowhere we control. There's no backend — your API key, chats, and memory live in your browser's local storage. The only network calls are to your AI provider and optional search/code-execution services.</p></details>
+  <details><summary data-i18n="faq_q4">What can I actually build with it?</summary><p data-i18n="faq_a4">Product launches, marketing campaigns, code and architecture, security reviews, GIS analysis, financial models, game design docs — anything the 247 specialists cover, often by chaining several together in a pipeline.</p></details>
+  <details><summary data-i18n="faq_q5">Is the All-Access purchase a subscription?</summary><p data-i18n="faq_a5">No. It's a one-time payment that unlocks every specialist plus lifetime updates.</p></details>
 </div></section>
 
 <section><div class="wrap">
   <div class="final">
-    <h2>Build with a team of 247 experts — today.</h2>
-    <p>Free to start. Two minutes to your first result.</p>
-    <a class="btn btn-primary" href="index.html">Launch AgentForge →</a>
+    <h2 data-i18n="final_h2">Build with a team of 247 experts — today.</h2>
+    <p data-i18n="final_p">Free to start. Two minutes to your first result.</p>
+    <a class="btn btn-primary" href="index.html" data-i18n="final_cta">Launch AgentForge →</a>
   </div>
 </div></section>
 
 <footer><div class="wrap">
-  <div>© 2026 AgentForge · Built by mmuzammul</div>
+  <div data-i18n="footer_copyright">© 2026 AgentForge · Built by mmuzammul</div>
   <div style="display:flex;gap:18px">
-    <a href="index.html">App</a>
-    <a href="https://github.com/MMUZAMMUL/Agi-forge">GitHub</a>
-    <a href="docs/AGENTS.md">All specialists</a>
+    <a href="index.html" data-i18n="footer_app">App</a>
+    <a href="https://github.com/MMUZAMMUL/Agi-forge" data-i18n="footer_github">GitHub</a>
+    <a href="docs/AGENTS.md" data-i18n="footer_allspecialists">All specialists</a>
   </div>
 </div></footer>
 
+<script src="assets/js/landing-i18n.js"></script>
 <script>
 /* Wire purchase buttons to your storefront (Gumroad / Lemon Squeezy).
    Replace the URLs below with your real product links when ready. */
