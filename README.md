@@ -42,6 +42,7 @@ A mobile-first agentic AI platform that runs entirely in the browser — no serv
 - **⚔️ Agent Debate** — two specialists argue in rounds (Proposer builds, Critic challenges) until a battle-tested answer emerges.
 - **📊 Benchmarker** — run one prompt across many agents; an impartial judge model scores each on relevance, depth, and correctness.
 - **▶️ Code Runner** — every code block gets a Run button, executed via the free Piston API (70+ languages).
+- **🌍 10-Language Landing Page** — the [landing page](https://mmuzammul.github.io/Agi-forge/landing.html) switches instantly between English, 中文, Español, हिन्दी, العربية, Português, Français, Русский, 日本語, and Deutsch — client-side, no reload, no third-party translation service.
 - **🌐 Web Search** — optional real-time search via Brave Search API (bring your own key).
 - **🎤 Voice Input** — Web Speech API, built into Chrome and Safari.
 - **📎 File Attachment** — read code, CSVs, and docs as context, fully client-side.
