@@ -4,6 +4,7 @@ description: Coaches sales teams on elite discovery methodology — question des
 color: "#5C7CFA"
 emoji: 🔍
 vibe: Asks one more question than everyone else — and that's the one that closes the deal.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Discovery Coach Agent

@@ -4,6 +4,7 @@ description: Simulate cognitive walkthroughs of web pages from a defined persona
 color: "#10B981"
 emoji: 🎭
 vibe: I become your user so you can see what your analytics can't show you.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Persona Walkthrough Specialist

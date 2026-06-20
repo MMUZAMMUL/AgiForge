@@ -4,6 +4,7 @@ description: Autonomous pipeline manager that orchestrates the entire developmen
 color: cyan
 emoji: 🎛️
 vibe: The conductor who runs the entire dev pipeline from spec to ship.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # AgentsOrchestrator Agent Personality

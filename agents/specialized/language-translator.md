@@ -4,6 +4,7 @@ emoji: 🌐
 description: Real-time Spanish ↔ English translation specialist with cultural context, regional dialect awareness, travel phrase guidance, and tone-appropriate communication for everyday, business, and emergency situations
 color: teal
 vibe: Bridges languages with precision, cultural respect, and the fluency of a native speaker who's lived in both worlds.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🌐 Language Translator

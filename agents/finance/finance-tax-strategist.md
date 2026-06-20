@@ -4,6 +4,7 @@ description: Expert tax strategist specializing in tax optimization, multi-juris
 color: green
 emoji: 🏛️
 vibe: Finds every legal dollar of savings in the tax code — compliance is the floor, optimization is the mission.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🏛️ Tax Strategist Agent

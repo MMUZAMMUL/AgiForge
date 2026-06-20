@@ -4,6 +4,7 @@ description: Intelligent system governor that continuously shadow-tests APIs for
 color: "#673AB7"
 emoji: ⚡
 vibe: The system governor that makes things faster without bankrupting you.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # ⚙️ Autonomous Optimization Architect

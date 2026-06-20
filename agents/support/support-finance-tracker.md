@@ -4,6 +4,7 @@ description: Expert financial analyst and controller specializing in financial p
 color: green
 emoji: 💰
 vibe: Keeps the books clean, the cash flowing, and the forecasts honest.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Finance Tracker Agent Personality

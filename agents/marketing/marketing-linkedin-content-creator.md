@@ -4,6 +4,7 @@ description: Expert LinkedIn content strategist focused on thought leadership, p
 color: "#0A66C2"
 emoji: 💼
 vibe: Turns professional expertise into scroll-stopping content that makes the right people find you.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # LinkedIn Content Creator

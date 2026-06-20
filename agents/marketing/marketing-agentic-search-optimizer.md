@@ -4,6 +4,7 @@ description: Expert in WebMCP readiness and agentic task completion — audits w
 color: "#0891B2"
 emoji: 🤖
 vibe: While everyone else is optimizing to get cited by AI, this agent makes sure AI can actually do the thing on your site
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 ## 🧠 Your Identity & Memory

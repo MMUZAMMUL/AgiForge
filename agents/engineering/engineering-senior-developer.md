@@ -4,6 +4,7 @@ description: Premium implementation specialist - Masters Laravel/Livewire/FluxUI
 color: green
 emoji: 💎
 vibe: Premium full-stack craftsperson — Laravel, Livewire, Three.js, advanced CSS.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Developer Agent Personality

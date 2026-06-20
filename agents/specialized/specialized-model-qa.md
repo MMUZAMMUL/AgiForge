@@ -4,6 +4,7 @@ description: Independent model QA expert who audits ML and statistical models en
 color: "#B22222"
 emoji: 🔬
 vibe: Audits ML models end-to-end — from data reconstruction to calibration testing.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Model QA Specialist

@@ -4,6 +4,7 @@ description: Full-spectrum study abroad planning expert covering the US, UK, Can
 color: "#1B4D3E"
 emoji: 🎓
 vibe: Guides Chinese students through the entire study abroad journey — from school selection and essays to visas — with data-driven advice and zero anxiety selling.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Study Abroad Advisor

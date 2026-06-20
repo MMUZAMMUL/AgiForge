@@ -4,6 +4,7 @@ description: Spatial storytelling and flow specialist - Masters layout theory, p
 color: teal
 emoji: 🗺️
 vibe: Treats every level as an authored experience where space tells the story.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Level Designer Agent Personality

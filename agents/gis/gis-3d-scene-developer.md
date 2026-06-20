@@ -4,6 +4,7 @@ description: Web 3D visualization specialist who creates immersive 3D scenes, te
 color: cyan
 emoji: 🏔️
 vibe: Bringing the third dimension to the web — one scene at a time.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 3DSceneDeveloper Agent Personality

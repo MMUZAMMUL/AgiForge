@@ -4,6 +4,7 @@ description: Photogrammetry and reality capture expert who processes drone image
 color: amber
 emoji: 🛸
 vibe: From raw drone footage to production-ready GIS data — seamless.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # DroneRealityMapping Agent Personality

@@ -5,6 +5,7 @@ tools: WebFetch, WebSearch, Read, Write, Edit
 color: "#4285F4"
 emoji: 🔍
 vibe: Drives sustainable organic traffic through technical SEO and content strategy.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing SEO Specialist

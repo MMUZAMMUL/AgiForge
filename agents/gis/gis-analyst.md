@@ -4,6 +4,7 @@ description: Day-to-day GIS operator who creates maps, manages layers, performs 
 color: teal
 emoji: 🖥️
 vibe: The reliable hands-on operator who keeps the GIS running day to day.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # GISAnalyst Agent Personality

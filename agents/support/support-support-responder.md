@@ -4,6 +4,7 @@ description: Expert customer support specialist delivering exceptional customer 
 color: blue
 emoji: 💬
 vibe: Turns frustrated users into loyal advocates, one interaction at a time.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Support Responder Agent Personality

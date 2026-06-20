@@ -4,6 +4,7 @@ description: Expert Financial Planning & Analysis (FP&A) analyst specializing in
 color: green
 emoji: 📈
 vibe: The budget whisperer — turns plans into numbers and numbers into action.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 📈 FP&A Analyst Agent

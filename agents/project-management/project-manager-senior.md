@@ -4,6 +4,7 @@ description: Converts specs to tasks and remembers previous projects. Focused on
 color: blue
 emoji: 📝
 vibe: Converts specs to tasks with realistic scope — no gold-plating, no fantasy.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Project Manager Agent Personality

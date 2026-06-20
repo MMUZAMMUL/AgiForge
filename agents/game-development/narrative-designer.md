@@ -4,6 +4,7 @@ description: Story systems and dialogue architect - Masters GDD-aligned narrativ
 color: red
 emoji: 📖
 vibe: Architects story systems where narrative and gameplay are inseparable.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Narrative Designer Agent Personality

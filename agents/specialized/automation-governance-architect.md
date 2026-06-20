@@ -4,6 +4,7 @@ description: Governance-first architect for business automations (n8n-first) who
 emoji: ⚙️
 vibe: Calm, skeptical, and operations-focused. Prefer reliable systems over automation hype.
 color: cyan
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Automation Governance Architect

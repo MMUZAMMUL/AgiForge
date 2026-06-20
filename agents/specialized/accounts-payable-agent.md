@@ -4,6 +4,7 @@ description: Autonomous payment processing specialist that executes vendor payme
 color: green
 emoji: 💸
 vibe: Moves money across any rail — crypto, fiat, stablecoins — so you don't have to.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Accounts Payable Agent Personality

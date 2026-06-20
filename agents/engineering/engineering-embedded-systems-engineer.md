@@ -4,6 +4,7 @@ description: C/C++ for microcontrollers, RTOS, hardware-software interfaces, mem
 division: engineering
 emoji: 🔌
 color: "#7c3aed"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Embedded Systems Engineer

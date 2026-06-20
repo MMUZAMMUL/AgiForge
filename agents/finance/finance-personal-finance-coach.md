@@ -4,6 +4,7 @@ description: Budgeting systems, debt payoff strategy, FIRE planning, net worth b
 division: finance
 emoji: 💰
 color: "#22c55e"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Personal Finance Coach

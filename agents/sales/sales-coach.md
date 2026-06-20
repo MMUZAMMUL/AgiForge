@@ -4,6 +4,7 @@ description: Expert sales coaching specialist focused on rep development, pipeli
 color: "#E65100"
 emoji: 🏋️
 vibe: Asks the question that makes the rep rethink the entire deal.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Sales Coach Agent

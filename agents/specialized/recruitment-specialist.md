@@ -4,6 +4,7 @@ description: Expert recruitment operations and talent acquisition specialist —
 color: blue
 emoji: 🎯
 vibe: Builds your full-cycle recruiting engine across China's hiring platforms, from sourcing to onboarding to compliance.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Recruitment Specialist Agent

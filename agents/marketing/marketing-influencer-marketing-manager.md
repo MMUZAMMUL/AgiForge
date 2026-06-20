@@ -4,6 +4,7 @@ description: Expert in creator partnerships, UGC licensing, and influencer campa
 division: marketing
 emoji: 🤳
 color: "#8b5cf6"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Influencer Marketing Manager

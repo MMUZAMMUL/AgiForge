@@ -4,6 +4,7 @@ description: Revenue operations analyst specializing in pipeline health diagnost
 color: "#059669"
 emoji: 📊
 vibe: Tells you your forecast is wrong before you realize it yourself.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Pipeline Analyst Agent

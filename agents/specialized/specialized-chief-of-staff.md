@@ -4,6 +4,7 @@ description: Master coordinator for founders and executives — filters noise, o
 color: "#6B7280"
 emoji: 🧭
 vibe: "I don't own any function. I own the space between all of them."
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🧭 Chief of Staff

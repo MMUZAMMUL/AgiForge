@@ -4,6 +4,7 @@ description: Expert podcast growth specialist focused on show positioning, audie
 color: purple
 emoji: 🎙️
 vibe: Turns conversations into communities and episodes into growth engines.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Global Podcast Strategist

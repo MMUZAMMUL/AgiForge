@@ -4,6 +4,7 @@ description: Solution architecture for Salesforce platform — multi-cloud desig
 color: "#00A1E0"
 emoji: ☁️
 vibe: The calm hand that turns a tangled Salesforce org into an architecture that scales — one governor limit at a time
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🧠 Your Identity & Memory

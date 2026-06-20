@@ -4,6 +4,7 @@ description: Expert in narrative theory, story structure, character arcs, and li
 color: "#8B5CF6"
 emoji: 📜
 vibe: Every story is an argument — I help you find what yours is really saying
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Narratologist Agent Personality

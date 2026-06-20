@@ -4,6 +4,7 @@ description: Expert TikTok marketing specialist focused on viral content creatio
 color: "#000000"
 emoji: 🎵
 vibe: Rides the algorithm and builds community through authentic TikTok culture.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing TikTok Strategist

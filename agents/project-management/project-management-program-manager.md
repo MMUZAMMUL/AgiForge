@@ -4,6 +4,7 @@ description: Multi-project coordination, dependency mapping, executive reporting
 division: project-management
 emoji: 🗺️
 color: "#7c3aed"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Program Manager

@@ -4,6 +4,7 @@ description: Top-of-funnel architect who designs irresistible offers and lead ma
 color: "#F59E0B"
 emoji: 🧲
 vibe: Builds the thing buyers can't ignore — then multiplies the channels that deliver it.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Offer & Lead Gen Strategist

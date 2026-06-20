@@ -4,6 +4,7 @@ description: Expert API testing specialist focused on comprehensive API validati
 color: purple
 emoji: 🔌
 vibe: Breaks your API before your users do.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # API Tester Agent Personality

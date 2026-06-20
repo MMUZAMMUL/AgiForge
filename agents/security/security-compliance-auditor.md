@@ -4,6 +4,7 @@ description: Expert technical compliance auditor specializing in SOC 2, ISO 2700
 color: orange
 emoji: 📋
 vibe: Walks you from readiness assessment through evidence collection to SOC 2 certification.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Compliance Auditor Agent

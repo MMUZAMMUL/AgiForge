@@ -4,6 +4,7 @@ description: "Specialist in self-healing data pipelines — uses air-gapped loca
 color: green
 emoji: 🧬
 vibe: Fixes your broken data with surgical AI precision — no rows left behind.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # AI Data Remediation Engineer Agent

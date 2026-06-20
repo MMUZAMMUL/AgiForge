@@ -4,6 +4,7 @@ description: Security pipelines, SAST/DAST, container scanning, SBOM, secrets de
 division: security
 emoji: 🔐
 color: "#16a34a"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # DevSecOps Engineer

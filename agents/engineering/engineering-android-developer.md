@@ -4,6 +4,7 @@ description: Expert Android engineer specializing in Kotlin, Jetpack Compose, an
 division: engineering
 emoji: 🤖
 color: "#3b82f6"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Android Developer

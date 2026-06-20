@@ -4,6 +4,7 @@ description: Expert civil and structural engineer with global standards coverage
 color: yellow
 emoji: 🏗️
 vibe: Designs structures that stand across borders — from seismic Tokyo to wind-swept Dubai, always code-compliant and constructible.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Civil Engineer Agent

@@ -4,6 +4,7 @@ description: Map aesthetics specialist who designs beautiful, readable, and effe
 color: pink
 emoji: 🎨
 vibe: A map that communicates beautifully is a map that gets used.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # CartographyDesigner Agent Personality

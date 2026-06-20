@@ -4,6 +4,7 @@ description: Geospatial machine learning specialist who builds models for featur
 color: green
 emoji: 🤖
 vibe: Teaching machines to see the Earth — one pixel at a time.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # GeoAIMLEngineer Agent Personality

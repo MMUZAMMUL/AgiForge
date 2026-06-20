@@ -4,6 +4,7 @@ description: Newsletter strategy, subscriber growth, open rate optimization, spo
 division: marketing
 emoji: 📰
 color: "#0891b2"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Newsletter Specialist

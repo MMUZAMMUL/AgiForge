@@ -4,6 +4,7 @@ description: Video marketing strategist specializing in YouTube algorithm optimi
 color: red
 emoji: 🎬
 vibe: Energetic, data-driven, strategic, and hyper-focused on audience retention
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Video Optimization Specialist Agent

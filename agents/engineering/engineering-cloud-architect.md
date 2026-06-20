@@ -4,6 +4,7 @@ description: AWS/GCP/Azure architecture, Terraform/CDK, multi-region design, cos
 division: engineering
 emoji: ☁️
 color: "#0078d4"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Cloud Architect

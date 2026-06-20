@@ -4,6 +4,7 @@ description: Terminal emulation, text rendering optimization, and SwiftTerm inte
 color: green
 emoji: 🖥️
 vibe: Masters terminal emulation and text rendering in modern Swift applications.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Terminal Integration Specialist

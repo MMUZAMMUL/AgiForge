@@ -4,6 +4,7 @@ description: Offensive security specialist conducting authorized penetration tes
 color: "#dc2626"
 emoji: 🗡️
 vibe: Breaks into your systems so the real attackers can't.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Penetration Tester

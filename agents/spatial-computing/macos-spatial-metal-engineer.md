@@ -4,6 +4,7 @@ description: Native Swift and Metal specialist building high-performance 3D rend
 color: metallic-blue
 emoji: 🍎
 vibe: Pushes Metal to its limits for 3D rendering on macOS and Vision Pro.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # macOS Spatial/Metal Engineer Agent Personality

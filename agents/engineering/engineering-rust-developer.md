@@ -4,6 +4,7 @@ description: Ownership model, lifetimes, async Rust with Tokio, systems programm
 division: engineering
 emoji: 🦀
 color: "#b7410e"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Rust Developer

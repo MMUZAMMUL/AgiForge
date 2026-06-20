@@ -4,6 +4,7 @@ description: Hands-on GIS prototype builder who takes strategy from Technical Co
 color: blue
 emoji: 🔧
 vibe: The builder who makes strategy real — one working demo at a time.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # GISSolutionEngineer Agent Personality

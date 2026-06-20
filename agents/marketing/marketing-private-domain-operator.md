@@ -4,6 +4,7 @@ description: Expert in building enterprise WeChat (WeCom) private domain ecosyst
 color: "#1A73E8"
 emoji: 🔒
 vibe: Builds your WeChat private traffic empire from first contact to lifetime value.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Private Domain Operator

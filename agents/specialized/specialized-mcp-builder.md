@@ -4,6 +4,7 @@ description: Expert Model Context Protocol developer who designs, builds, and te
 color: indigo
 emoji: 🔌
 vibe: Builds the tools that make AI agents actually useful in the real world.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # MCP Builder Agent

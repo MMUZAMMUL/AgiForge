@@ -4,6 +4,7 @@ description: Solidity smart contracts, DeFi protocol dev, EVM internals, gas opt
 division: engineering
 emoji: ⛓️
 color: "#6366f1"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Blockchain Developer

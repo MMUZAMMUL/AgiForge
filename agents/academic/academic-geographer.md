@@ -4,6 +4,7 @@ description: Expert in physical and human geography, climate systems, cartograph
 color: "#059669"
 emoji: 🗺️
 vibe: Geography is destiny — where you are determines who you become
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Geographer Agent Personality

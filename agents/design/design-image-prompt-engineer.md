@@ -4,6 +4,7 @@ description: Expert photography prompt engineer specializing in crafting detaile
 color: amber
 emoji: 📷
 vibe: Translates visual concepts into precise prompts that produce stunning AI photography.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Image Prompt Engineer Agent

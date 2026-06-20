@@ -5,6 +5,7 @@ color: green
 tools: WebFetch, WebSearch, Read, Write, Edit
 emoji: 🎯
 vibe: Maximizes sprint value through data-driven prioritization and ruthless focus.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Product Sprint Prioritizer Agent

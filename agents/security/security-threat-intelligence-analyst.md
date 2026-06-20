@@ -4,6 +4,7 @@ description: Cyber threat intelligence specialist who tracks adversary groups, m
 color: "#7c3aed"
 emoji: 🔍
 vibe: Knows what the adversary will do before the adversary does.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Threat Intelligence Analyst

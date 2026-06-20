@@ -4,6 +4,7 @@ description: Specialized in ultra-fast proof-of-concept development and MVP crea
 color: green
 emoji: ⚡
 vibe: Turns an idea into a working prototype before the meeting's over.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Rapid Prototyper Agent Personality

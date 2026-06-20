@@ -4,6 +4,7 @@ description: Advanced spatial analytics specialist who applies statistical model
 color: indigo
 emoji: 📊
 vibe: Finding the patterns in space that even experienced analysts miss.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # SpatialDataScientist Agent Personality

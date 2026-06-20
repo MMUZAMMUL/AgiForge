@@ -4,6 +4,7 @@ description: Expert detection engineer specializing in SIEM rule development, MI
 color: "#7b2d8e"
 emoji: 🎯
 vibe: Builds the detection layer that catches attackers after they bypass prevention.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Threat Detection Engineer Agent

@@ -4,6 +4,7 @@ description: Expert operations manager specializing in day-to-day studio efficie
 color: green
 emoji: 🏭
 vibe: Keeps the studio running smoothly — processes, tools, and people in sync.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Studio Operations Agent Personality

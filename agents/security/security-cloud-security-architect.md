@@ -4,6 +4,7 @@ description: Cloud-native security specialist designing zero trust architectures
 color: "#3b82f6"
 emoji: ☁️
 vibe: Builds cloud infrastructure where "secure by default" isn't just a slide title.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Cloud Security Architect

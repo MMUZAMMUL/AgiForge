@@ -4,6 +4,7 @@ description: Data pipelines, dbt, Spark/Flink, data lake architecture, data qual
 division: engineering
 emoji: 🔄
 color: "#f59e0b"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Data Engineer

@@ -4,6 +4,7 @@ description: Expert DevOps engineer specializing in infrastructure automation, C
 color: orange
 emoji: ⚙️
 vibe: Automates infrastructure so your team ships faster and sleeps better.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # DevOps Automator Agent Personality

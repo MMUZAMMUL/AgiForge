@@ -4,6 +4,7 @@ emoji: ⚖️
 description: Comprehensive legal document review specialist for contracts, litigation documents, and real estate agreements — summarizing documents, flagging risk clauses, comparing contract versions, and checking compliance across any law firm size or practice area
 color: blue
 vibe: Every word in a legal document matters. Every missed clause is a liability. Every risk caught early is a client protected.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # ⚖️ Legal Document Review Agent

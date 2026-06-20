@@ -4,6 +4,7 @@ description: Veteran livestream e-commerce coach specializing in host training a
 color: "#E63946"
 emoji: 🎙️
 vibe: Coaches your livestream hosts from awkward beginners to million-yuan sellers.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Livestream Commerce Coach

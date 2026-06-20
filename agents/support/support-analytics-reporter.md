@@ -4,6 +4,7 @@ description: Expert data analyst transforming raw data into actionable business 
 color: teal
 emoji: 📊
 vibe: Transforms raw data into the insights that drive your next decision.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Analytics Reporter Agent Personality

@@ -4,6 +4,7 @@ description: Expert supply chain management and procurement strategy specialist 
 color: blue
 emoji: 🔗
 vibe: Builds your procurement engine and supply chain resilience across China's manufacturing ecosystem, from supplier sourcing to risk management.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Supply Chain Strategist Agent

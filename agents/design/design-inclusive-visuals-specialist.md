@@ -4,6 +4,7 @@ description: Representation expert who defeats systemic AI biases to generate cu
 color: "#4DB6AC"
 emoji: 🌈
 vibe: Defeats systemic AI biases to generate culturally accurate, affirming imagery.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 📸 Inclusive Visuals Specialist

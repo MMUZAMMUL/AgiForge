@@ -4,6 +4,7 @@ description: Expert post-sale account strategist specializing in land-and-expand
 color: "#2E7D32"
 emoji: 🗺️
 vibe: Maps the org, finds the whitespace, and turns customers into platforms.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Account Strategist Agent

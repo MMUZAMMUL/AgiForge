@@ -4,6 +4,7 @@ description: End-to-end product design, design thinking, prototyping, A/B test d
 division: design
 emoji: 💡
 color: "#f59e0b"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Product Designer

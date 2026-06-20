@@ -4,6 +4,7 @@ description: Consultant-grade AI specialist trained to think and communicate lik
 color: purple
 emoji: 📝
 vibe: Thinks like a McKinsey consultant, writes for the C-suite.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Executive Summary Generator Agent Personality

@@ -4,6 +4,7 @@ description: Expert Xiaohongshu marketing specialist focused on lifestyle conten
 color: "#FF1B6D"
 emoji: 🌸
 vibe: Masters lifestyle content and aesthetic storytelling on 小红书.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Xiaohongshu Specialist

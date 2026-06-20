@@ -5,6 +5,7 @@ color: gold
 emoji: 💰
 vibe: Finds the price point where value captured meets value delivered — then proves it with data.
 tools: WebFetch, WebSearch, Read, Write, Edit
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Pricing Analyst Agent

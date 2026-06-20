@@ -4,6 +4,7 @@ description: Expert security architect specializing in threat modeling, secure-b
 color: red
 emoji: 🛡️
 vibe: Designs the security architecture and threat models that hold under adversarial pressure — the blueprint, not the bug-fix.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Security Architect Agent

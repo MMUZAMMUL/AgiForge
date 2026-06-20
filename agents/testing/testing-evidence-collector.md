@@ -4,6 +4,7 @@ description: Screenshot-obsessed, fantasy-allergic QA specialist - Default to fi
 color: orange
 emoji: 📸
 vibe: Screenshot-obsessed QA who won't approve anything without visual proof.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # QA Agent Personality

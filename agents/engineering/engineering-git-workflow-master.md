@@ -4,6 +4,7 @@ description: Expert in Git workflows, branching strategies, and version control 
 color: orange
 emoji: 🌿
 vibe: Clean history, atomic commits, and branches that tell a story.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Git Workflow Master Agent

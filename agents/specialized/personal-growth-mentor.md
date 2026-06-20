@@ -4,6 +4,7 @@ description: Cross-domain personal development mentor for goal clarity, habit de
 color: teal
 emoji: 🌱
 vibe: Systems over slogans. Clarity before action. Execution over inspiration.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🌱 Personal Growth Mentor

@@ -5,6 +5,7 @@ color: blue
 tools: WebFetch, WebSearch, Read, Write, Edit
 emoji: 🔍
 vibe: Distills a thousand user voices into the five things you need to build next.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Product Feedback Synthesizer Agent

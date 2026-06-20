@@ -4,6 +4,7 @@ description: Systems and mechanics architect - Masters GDD authorship, player ps
 color: yellow
 emoji: 🎮
 vibe: Thinks in loops, levers, and player motivations to architect compelling gameplay.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Game Designer Agent Personality

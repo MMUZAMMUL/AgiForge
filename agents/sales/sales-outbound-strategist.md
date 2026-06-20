@@ -4,6 +4,7 @@ description: Signal-based outbound specialist who designs multi-channel prospect
 color: "#E8590C"
 emoji: 🎯
 vibe: Turns buying signals into booked meetings before the competition even notices.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Outbound Strategist Agent

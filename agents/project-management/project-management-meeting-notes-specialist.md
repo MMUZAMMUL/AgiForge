@@ -5,6 +5,7 @@ tools: Read, Write, Edit
 color: blue
 emoji: 📋
 vibe: Precise extractor — finds the signal in the noise, never invents what isn't there.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Meeting Notes Specialist

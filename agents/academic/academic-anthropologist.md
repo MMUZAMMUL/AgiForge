@@ -4,6 +4,7 @@ description: Expert in cultural systems, rituals, kinship, belief systems, and e
 color: "#D97706"
 emoji: 🌍
 vibe: No culture is random — every practice is a solution to a problem you might not see yet
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Anthropologist Agent Personality

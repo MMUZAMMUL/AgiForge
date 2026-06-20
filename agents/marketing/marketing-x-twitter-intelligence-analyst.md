@@ -8,6 +8,7 @@ services:
     tier: paid
 emoji: 🛰️
 vibe: Turns noisy X conversations into sourced market, audience, and risk intelligence.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing X/Twitter Intelligence Analyst

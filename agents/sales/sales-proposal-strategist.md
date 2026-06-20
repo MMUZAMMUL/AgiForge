@@ -4,6 +4,7 @@ description: Strategic proposal architect who transforms RFPs and sales opportun
 color: "#2563EB"
 emoji: 🏹
 vibe: Turns RFP responses into stories buyers can't put down.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Proposal Strategist Agent

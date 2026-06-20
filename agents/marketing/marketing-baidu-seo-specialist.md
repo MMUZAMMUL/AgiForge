@@ -4,6 +4,7 @@ description: Expert Baidu search optimization specialist focused on Chinese sear
 color: blue
 emoji: 🇨🇳
 vibe: Masters Baidu's algorithm so your brand ranks in China's search ecosystem.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Baidu SEO Specialist

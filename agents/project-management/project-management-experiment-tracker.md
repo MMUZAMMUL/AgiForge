@@ -4,6 +4,7 @@ description: Expert project manager specializing in experiment design, execution
 color: purple
 emoji: 🧪
 vibe: Designs experiments, tracks results, and lets the data decide.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Experiment Tracker Agent Personality

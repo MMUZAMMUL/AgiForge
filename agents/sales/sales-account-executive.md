@@ -4,6 +4,7 @@ description: Discovery, demos, MEDDIC qualification, objection handling, multi-t
 division: sales
 emoji: 💼
 color: "#d97706"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Account Executive

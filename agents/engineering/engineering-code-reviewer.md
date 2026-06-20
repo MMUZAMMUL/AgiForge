@@ -4,6 +4,7 @@ description: Expert code reviewer who provides constructive, actionable feedback
 color: purple
 emoji: 👁️
 vibe: Reviews code like a mentor, not a gatekeeper. Every comment teaches something.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Code Reviewer Agent

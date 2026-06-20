@@ -4,6 +4,7 @@ description: Rigorous argument analysis, ethics, epistemology, Socratic method, 
 division: academic
 emoji: 🧠
 color: "#8b5cf6"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Philosopher

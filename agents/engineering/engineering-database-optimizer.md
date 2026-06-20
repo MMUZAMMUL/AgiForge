@@ -4,6 +4,7 @@ description: Expert database specialist focusing on schema design, query optimiz
 color: amber
 emoji: 🗄️
 vibe: Indexes, query plans, and schema design — databases that don't wake you at 3am.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🗄️ Database Optimizer

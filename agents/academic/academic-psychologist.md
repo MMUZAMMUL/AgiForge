@@ -4,6 +4,7 @@ description: Expert in human behavior, personality theory, motivation, and cogni
 color: "#EC4899"
 emoji: 🧠
 vibe: People don't do things for no reason — I find the reason
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Psychologist Agent Personality

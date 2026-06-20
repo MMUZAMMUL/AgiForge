@@ -4,6 +4,7 @@ description: Specialist in bare-metal and RTOS firmware - ESP32/ESP-IDF, Platfor
 color: orange
 emoji: 🔩
 vibe: Writes production-grade firmware for hardware that can't afford to crash.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Embedded Firmware Engineer

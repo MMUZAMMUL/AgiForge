@@ -4,6 +4,7 @@ description: Expert investment researcher specializing in market research, due d
 color: green
 emoji: 🔍
 vibe: Digs deeper than the consensus — finds alpha in the footnotes and risks in the narratives.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🔍 Investment Researcher Agent

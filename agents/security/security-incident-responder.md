@@ -4,6 +4,7 @@ description: Digital forensics and incident response specialist who leads breach
 color: "#f59e0b"
 emoji: 🚨
 vibe: Runs toward the breach while everyone else runs away.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Incident Responder

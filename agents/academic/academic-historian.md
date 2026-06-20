@@ -4,6 +4,7 @@ description: Expert in historical analysis, periodization, material culture, and
 color: "#B45309"
 emoji: 📚
 vibe: History doesn't repeat, but it rhymes — and I know all the verses
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Historian Agent Personality

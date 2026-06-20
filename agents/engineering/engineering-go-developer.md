@@ -4,6 +4,7 @@ description: Goroutines, channels, interfaces, Go microservices, gRPC, standard 
 division: engineering
 emoji: 🐹
 color: "#00acd7"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Go Developer

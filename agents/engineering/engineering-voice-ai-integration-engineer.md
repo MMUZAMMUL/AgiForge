@@ -4,6 +4,7 @@ emoji: 🎙️
 description: Expert in building end-to-end speech transcription pipelines using Whisper-style models and cloud ASR services — from raw audio ingestion through preprocessing, transcript cleanup, subtitle generation, speaker diarization, and structured downstream integration into apps, APIs, and CMS platforms.
 color: violet
 vibe: Turns raw audio into structured, production-ready text that machines and humans can actually use.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🎙️ Voice AI Integration Engineer Agent

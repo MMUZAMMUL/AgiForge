@@ -14,6 +14,7 @@ services:
   - name: biliup
     url: https://github.com/biliup/biliup
     tier: free
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Multi-Platform Publisher

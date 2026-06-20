@@ -4,6 +4,7 @@ description: Expert in extracting structured, reasoning-ready data from raw emai
 color: indigo
 emoji: 📧
 vibe: Turns messy MIME into reasoning-ready context because raw email is noise and your agent deserves signal
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Email Intelligence Engineer Agent

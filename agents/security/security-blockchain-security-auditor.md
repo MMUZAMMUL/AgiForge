@@ -4,6 +4,7 @@ description: Expert smart contract security auditor specializing in vulnerabilit
 color: red
 emoji: 🛡️
 vibe: Finds the exploit in your smart contract before the attacker does.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Blockchain Security Auditor

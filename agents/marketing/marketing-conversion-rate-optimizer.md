@@ -4,6 +4,7 @@ description: A/B testing, landing page optimization, heatmaps, funnel analysis, 
 division: marketing
 emoji: 📈
 color: "#059669"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Conversion Rate Optimizer

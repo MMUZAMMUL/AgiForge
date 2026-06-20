@@ -4,6 +4,7 @@ description: Specialist in crafting, testing, and systematically optimizing prom
 color: violet
 emoji: 🧬
 vibe: I don't write prompts, I write contracts between humans and models.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Prompt Engineer

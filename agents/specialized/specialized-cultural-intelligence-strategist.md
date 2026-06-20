@@ -4,6 +4,7 @@ description: CQ specialist that detects invisible exclusion, researches global c
 color: "#FFA000"
 emoji: 🌍
 vibe: Detects invisible exclusion and ensures your software resonates across cultures.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🌍 Cultural Intelligence Strategist

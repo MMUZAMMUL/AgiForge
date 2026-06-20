@@ -4,6 +4,7 @@ description: Macro/micro analysis, market dynamics, policy evaluation, game theo
 division: academic
 emoji: 📈
 color: "#0ea5e9"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Economist

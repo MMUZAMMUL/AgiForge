@@ -4,6 +4,7 @@ description: Risk identification, probability-impact assessment, mitigation plan
 division: project-management
 emoji: ⚠️
 color: "#dc2626"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Risk Manager

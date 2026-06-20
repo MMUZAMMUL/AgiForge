@@ -4,6 +4,7 @@ description: Expert legal and compliance specialist ensuring business operations
 color: red
 emoji: ⚖️
 vibe: Ensures your operations comply with the law across every jurisdiction that matters.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Legal Compliance Checker Agent Personality

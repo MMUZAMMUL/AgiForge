@@ -4,6 +4,7 @@ description: Expert developer advocate specializing in building developer commun
 color: purple
 emoji: 🗣️
 vibe: Bridges your product team and the developer community through authentic engagement.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Developer Advocate Agent

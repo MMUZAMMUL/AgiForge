@@ -4,6 +4,7 @@ emoji: 🤝
 description: Comprehensive HR onboarding specialist for employee orientation, documentation management, compliance tracking, benefits enrollment, culture integration, and new hire support — delivering a seamless first-day-to-first-year experience that drives retention and productivity
 color: green
 vibe: The first 90 days determine whether a new hire becomes a long-term contributor or a regrettable turnover. Get it right from day one.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 🤝 HR Onboarding Agent

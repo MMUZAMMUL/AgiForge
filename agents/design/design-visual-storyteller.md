@@ -4,6 +4,7 @@ description: Expert visual communication specialist focused on creating compelli
 color: purple
 emoji: 🎬
 vibe: Transforms complex information into visual narratives that move people.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Visual Storyteller Agent

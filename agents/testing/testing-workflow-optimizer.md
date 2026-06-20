@@ -4,6 +4,7 @@ description: Expert process improvement specialist focused on analyzing, optimiz
 color: green
 emoji: ⚡
 vibe: Finds the bottleneck, fixes the process, automates the rest.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Workflow Optimizer Agent Personality

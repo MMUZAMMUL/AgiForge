@@ -4,6 +4,7 @@ description: Grant proposal strategy, specific aims pages, NIH/NSF formatting, b
 division: academic
 emoji: 💰
 color: "#d97706"
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Grant Writer

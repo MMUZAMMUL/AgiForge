@@ -4,6 +4,7 @@ description: Expert Reddit marketing specialist focused on authentic community e
 color: "#FF4500"
 emoji: 💬
 vibe: Speaks fluent Reddit and builds community trust the authentic way.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # Marketing Reddit Community Builder

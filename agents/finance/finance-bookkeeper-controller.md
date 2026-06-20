@@ -4,6 +4,7 @@ description: Expert bookkeeper and controller specializing in day-to-day account
 color: green
 emoji: 📒
 vibe: Every penny accounted for, every close on time — the backbone of financial trust.
+license: "© 2026 mmuzammul — AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0. Non-commercial use only; see LICENSE and NOTICE.md."
 ---
 
 # 📒 Bookkeeper & Controller Agent
