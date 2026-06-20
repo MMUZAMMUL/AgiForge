@@ -15,6 +15,8 @@ A mobile-first agentic AI platform that runs entirely in the browser — no serv
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#architecture)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
+🌐 **English** · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+
 </div>
 
 ---
@@ -43,6 +45,7 @@ A mobile-first agentic AI platform that runs entirely in the browser — no serv
 - **📊 Benchmarker** — run one prompt across many agents; an impartial judge model scores each on relevance, depth, and correctness.
 - **▶️ Code Runner** — every code block gets a Run button, executed via the free Piston API (70+ languages).
 - **🌍 10-Language Landing Page** — the [landing page](https://mmuzammul.github.io/AgiForge/landing.html) switches instantly between English, 中文, Español, हिन्दी, العربية, Português, Français, Русский, 日本語, and Deutsch — client-side, no reload, no third-party translation service.
+- **📖 README in 10 languages** — this documentation is also available in [中文](README.zh.md), [Español](README.es.md), [हिन्दी](README.hi.md), [العربية](README.ar.md), [Português](README.pt.md), [Français](README.fr.md), [Русский](README.ru.md), [日本語](README.ja.md), and [Deutsch](README.de.md), with English as the canonical version.
 - **🌐 Web Search** — optional real-time search via Brave Search API (bring your own key).
 - **🎤 Voice Input** — Web Speech API, built into Chrome and Safari.
 - **📎 File Attachment** — read code, CSVs, and docs as context, fully client-side.
