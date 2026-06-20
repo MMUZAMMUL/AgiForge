@@ -1,21 +1,69 @@
-MIT License
+AgentForge Non-Commercial Source-Available License (ANCSAL) v1.0
 
-Copyright (c) 2026 mmuzammul
+Copyright (c) 2026 mmuzammul. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This is not an OSI-approved open-source license. The source code of this
+repository ("the Software") is published publicly for transparency,
+learning, and personal use, subject to the terms below. All rights not
+expressly granted to you are reserved by the author.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Permitted use (non-commercial)
+   You may, free of charge:
+   a. view, download, and run the Software for personal, educational,
+      academic, or other non-commercial purposes, including self-hosting
+      a private instance for your own non-commercial use;
+   b. modify the Software for the same non-commercial purposes; and
+   c. submit modifications back to the original repository as a
+      contribution (e.g. a pull request), under these same terms.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. Commercial use requires permission
+   "Commercial use" means any use of the Software, in whole or in part,
+   modified or unmodified, that is intended for or directed toward
+   commercial advantage or monetary compensation — including but not
+   limited to selling it, sublicensing it, bundling it into a paid
+   product or service, offering it as a hosted/SaaS product, or using it
+   in the operation of a revenue-generating business (including
+   advertising-supported deployments).
+
+   Commercial use is NOT permitted under this license. To obtain a
+   commercial license, contact the author at the GitHub profile below
+   before any commercial use begins:
+   https://github.com/mmuzammul
+
+3. Redistribution
+   You may redistribute unmodified or modified copies of the Software
+   only if you:
+   a. retain this license file and the copyright notice in full;
+   b. retain attribution to "AgentForge by mmuzammul" in any copy,
+      fork, or derivative; and
+   c. do not present the redistribution as your own original work.
+
+4. Branding
+   The names "AgentForge" and any associated logos are not licensed for
+   use on derivative or competing products, services, or repositories
+   without the author's prior written permission. You may refer to the
+   original project by name when linking back to it (e.g. "based on
+   AgentForge").
+
+5. No trademark or patent license
+   Nothing in this license grants you any rights to the author's
+   trademarks, service marks, or any patents.
+
+6. Termination
+   Any use in violation of this license automatically terminates your
+   rights under it. The author may also grant additional permissions
+   (including commercial licenses) on a case-by-case basis at their
+   sole discretion.
+
+7. Disclaimer of warranty
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+   CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN
+   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+For commercial licensing inquiries, open an issue at
+https://github.com/mmuzammul/Agi-forge or contact the author directly
+through their GitHub profile.

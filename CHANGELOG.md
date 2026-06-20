@@ -27,6 +27,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
   O(n²) re-parse on long outputs (audit §6).
 
 ### Changed
+- **Relicensed from MIT to a custom non-commercial source-available license.**
+  The project is now free for personal, educational, and non-commercial use
+  (including self-hosting and modification); commercial use requires the
+  author's written permission. See `LICENSE`.
 - **Collapsed the five provider connectivity tests** into one `testEndpoint()`
   helper (audit §4); behavior unchanged, and the Gemini key is now URL-encoded
   in its query string.

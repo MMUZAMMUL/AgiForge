@@ -13,7 +13,7 @@ A mobile-first agentic AI platform that runs entirely in the browser — no serv
 [![Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-121013?logo=github)](https://mmuzammul.github.io/Agi-forge/)
 [![No build](https://img.shields.io/badge/build-none-success)](#self-host)
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#architecture)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
 </div>
 
@@ -151,4 +151,4 @@ No analytics, no tracking, no backend. The only network calls are to your chosen
 
 ## License
 
-[MIT](LICENSE) © mmuzammul
+Free for personal, educational, and non-commercial use — modify and self-host all you like. Commercial use (selling, sublicensing, hosting as a paid product/service, or any revenue-generating use) requires the author's written permission. See [LICENSE](LICENSE) for the full terms. © 2026 mmuzammul, all rights reserved except as granted there.
