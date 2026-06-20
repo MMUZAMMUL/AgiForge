@@ -15,13 +15,13 @@ Una plataforma de IA agéntica mobile-first que se ejecuta enteramente en el nav
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#arquitectura)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · **Español** · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · **Español** · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> Esta es una traducción mantenida por la comunidad. Ante cualquier discrepancia, el [README en inglés](README.md) es la versión de referencia.
+> Esta es una traducción mantenida por la comunidad. Ante cualquier discrepancia, el [README en inglés](../../README.md) es la versión de referencia.
 
 ## Por qué AgentForge
 

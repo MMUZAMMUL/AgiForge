@@ -15,13 +15,13 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#архитектура)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · **Русский** · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · **Русский** · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> Это перевод, поддерживаемый сообществом. В случае расхождений приоритет имеет [README на английском](README.md).
+> Это перевод, поддерживаемый сообществом. В случае расхождений приоритет имеет [README на английском](../../README.md).
 
 ## Почему AgentForge
 

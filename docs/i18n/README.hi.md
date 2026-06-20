@@ -15,13 +15,13 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#आर्किटेक्चर)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · [Español](README.es.md) · **हिन्दी** · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · [Español](README.es.md) · **हिन्दी** · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> यह एक समुदाय द्वारा बनाया गया अनुवाद है। किसी भी अंतर की स्थिति में, [अंग्रेज़ी README](README.md) ही आधिकारिक संस्करण है।
+> यह एक समुदाय द्वारा बनाया गया अनुवाद है। किसी भी अंतर की स्थिति में, [अंग्रेज़ी README](../../README.md) ही आधिकारिक संस्करण है।
 
 ## AgentForge क्यों
 
