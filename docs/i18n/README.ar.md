@@ -15,13 +15,13 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#البنية)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · **العربية** · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · **العربية** · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> هذه ترجمة يقوم المجتمع بصيانتها. عند وجود أي اختلاف، يُعتمد [README بالإنجليزية](README.md) كالمرجع الرسمي.
+> هذه ترجمة يقوم المجتمع بصيانتها. عند وجود أي اختلاف، يُعتمد [README بالإنجليزية](../../README.md) كالمرجع الرسمي.
 
 ## لماذا AgentForge
 

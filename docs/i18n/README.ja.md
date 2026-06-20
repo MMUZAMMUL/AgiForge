@@ -15,13 +15,13 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#アーキテクチャ)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · **日本語** · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · **日本語** · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> これはコミュニティによって保守されている翻訳です。内容に相違がある場合は [英語版README](README.md) が正式版となります。
+> これはコミュニティによって保守されている翻訳です。内容に相違がある場合は [英語版README](../../README.md) が正式版となります。
 
 ## なぜAgentForgeなのか
 

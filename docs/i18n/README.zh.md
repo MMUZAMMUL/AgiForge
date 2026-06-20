@@ -15,13 +15,13 @@
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#架构)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · **中文** · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · **中文** · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · [Français](README.fr.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> 本文档为社区翻译版本，如有出入请以 [英文版 README](README.md) 为准。
+> 本文档为社区翻译版本，如有出入请以 [英文版 README](../../README.md) 为准。
 
 ## 为什么选择 AgentForge
 

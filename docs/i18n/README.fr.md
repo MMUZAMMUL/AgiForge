@@ -15,13 +15,13 @@ Une plateforme d'IA agentique mobile-first qui s'exécute entièrement dans le n
 [![Dependencies](https://img.shields.io/badge/dependencies-zero-success)](#architecture)
 [![License](https://img.shields.io/badge/license-Non--Commercial-orange)](LICENSE)
 
-🌐 [English](README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · **Français** · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
+🌐 [English](../../README.md) · [中文](README.zh.md) · [Español](README.es.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md) · [Português](README.pt.md) · **Français** · [Русский](README.ru.md) · [日本語](README.ja.md) · [Deutsch](README.de.md)
 
 </div>
 
 ---
 
-> Ceci est une traduction maintenue par la communauté. En cas de divergence, le [README en anglais](README.md) fait foi.
+> Ceci est une traduction maintenue par la communauté. En cas de divergence, le [README en anglais](../../README.md) fait foi.
 
 ## Pourquoi AgentForge
 
