@@ -8,7 +8,7 @@
 
 A mobile-first agentic AI platform that runs entirely in the browser — no server, no install, no build step, no cost. Powered by free [Groq](https://console.groq.com) cloud inference or a local [Ollama](https://ollama.com) model.
 
-[**🌐 Open the live app →**](https://mmuzammul.github.io/AgiForge/)
+[**🌐 Open the live app →**](https://mmuzammul.github.io/AgiForge/) · [**📄 Project Overview PDF →**](docs/AgentForge-Project-Overview.pdf)
 
 [![Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-121013?logo=github)](https://mmuzammul.github.io/AgiForge/)
 [![No build](https://img.shields.io/badge/build-none-success)](#self-host)
