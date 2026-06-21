@@ -82,7 +82,10 @@ function initDebateSelects(){
   const opts=AGENTS.map(a=>`<option value="${a.id}">${a.emoji} ${a.name} · ${a.division}</option>`).join('');
   ['debate-a','debate-b'].forEach(id=>{
     const el=document.getElementById(id);
-    if(el&&el.options.length<=1){el.innerHTML='<option value="">Select agent…</option>'+opts;}
+    if(el&&el.options.length<=1){
+      const placeholder=el.options[0]?el.options[0].outerHTML:'<option value="">Select agent…</option>';
+      el.innerHTML=placeholder+opts;
+    }
   });
 }
 
