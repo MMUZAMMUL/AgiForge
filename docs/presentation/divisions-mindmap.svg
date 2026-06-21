@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 1080" width="1160" height="1080">
+<rect x="0" y="0" width="1160" height="1080" rx="28" fill="#0f1117"/>
+<path d="M580,540 Q580,375 580,210" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q643.1427663402399,387.5598771356377 706.2855326804796,235.11975427127538" stroke="#3b82f6" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q696.6726188957804,423.3273811042197 813.3452377915607,306.65476220843937" stroke="#a855f7" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q732.4401228643624,476.8572336597602 884.8802457287246,413.7144673195204" stroke="#ec4899" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q745,540 910,540" stroke="#22c55e" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q732.4401228643624,603.1427663402399 884.8802457287246,666.2855326804796" stroke="#ef4444" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q696.6726188957804,656.6726188957804 813.3452377915607,773.3452377915606" stroke="#06b6d4" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q643.1427663402399,692.4401228643624 706.2855326804796,844.8802457287246" stroke="#eab308" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q580,705 580,870" stroke="#8b5cf6" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q516.8572336597601,692.4401228643624 453.7144673195204,844.8802457287246" stroke="#14b8a6" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q463.3273811042197,656.6726188957804 346.65476220843937,773.3452377915607" stroke="#f97316" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q427.55987713563775,603.1427663402399 275.11975427127544,666.2855326804798" stroke="#84cc16" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q415,540 250,540" stroke="#e11d48" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q427.55987713563775,476.85723365976014 275.11975427127544,413.7144673195203" stroke="#6366f1" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q463.3273811042196,423.3273811042197 346.65476220843925,306.65476220843937" stroke="#0ea5e9" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+<path d="M580,540 Q516.8572336597601,387.55987713563775 453.71446731952017,235.11975427127544" stroke="#d946ef" stroke-opacity="0.45" stroke-width="2.5" fill="none"/>
+
+<circle cx="580" cy="210" r="49.650000000000006" fill="#f59e0b" fill-opacity="0.16" stroke="#f59e0b" stroke-width="2.5"/>
+<text x="580" y="204" text-anchor="middle" font-size="22" font-family="sans-serif">🏗️</text>
+<circle cx="706.2855326804796" cy="235.11975427127538" r="50.75" fill="#3b82f6" fill-opacity="0.16" stroke="#3b82f6" stroke-width="2.5"/>
+<text x="706.2855326804796" y="229.11975427127538" text-anchor="middle" font-size="22" font-family="sans-serif">⭐</text>
+<circle cx="813.3452377915607" cy="306.65476220843937" r="43.6" fill="#a855f7" fill-opacity="0.16" stroke="#a855f7" stroke-width="2.5"/>
+<text x="813.3452377915607" y="300.65476220843937" text-anchor="middle" font-size="22" font-family="sans-serif">📣</text>
+<circle cx="884.8802457287246" cy="413.7144673195204" r="34.8" fill="#ec4899" fill-opacity="0.16" stroke="#ec4899" stroke-width="2.5"/>
+<text x="884.8802457287246" y="407.7144673195204" text-anchor="middle" font-size="22" font-family="sans-serif">🎨</text>
+<circle cx="910" cy="540" r="33.15" fill="#22c55e" fill-opacity="0.16" stroke="#22c55e" stroke-width="2.5"/>
+<text x="910" y="534" text-anchor="middle" font-size="22" font-family="sans-serif">🎓</text>
+<circle cx="884.8802457287246" cy="666.2855326804796" r="32.6" fill="#ef4444" fill-opacity="0.16" stroke="#ef4444" stroke-width="2.5"/>
+<text x="884.8802457287246" y="660.2855326804796" text-anchor="middle" font-size="22" font-family="sans-serif">🛡️</text>
+<circle cx="813.3452377915607" cy="773.3452377915606" r="32.6" fill="#06b6d4" fill-opacity="0.16" stroke="#06b6d4" stroke-width="2.5"/>
+<text x="813.3452377915607" y="767.3452377915606" text-anchor="middle" font-size="22" font-family="sans-serif">💼</text>
+<circle cx="706.2855326804796" cy="844.8802457287246" r="31.5" fill="#eab308" fill-opacity="0.16" stroke="#eab308" stroke-width="2.5"/>
+<text x="706.2855326804796" y="838.8802457287246" text-anchor="middle" font-size="22" font-family="sans-serif">💰</text>
+<circle cx="580" cy="870" r="31.5" fill="#8b5cf6" fill-opacity="0.16" stroke="#8b5cf6" stroke-width="2.5"/>
+<text x="580" y="864" text-anchor="middle" font-size="22" font-family="sans-serif">🗺️</text>
+<circle cx="453.7144673195204" cy="844.8802457287246" r="31.5" fill="#14b8a6" fill-opacity="0.16" stroke="#14b8a6" stroke-width="2.5"/>
+<text x="453.7144673195204" y="838.8802457287246" text-anchor="middle" font-size="22" font-family="sans-serif">📋</text>
+<circle cx="346.65476220843937" cy="773.3452377915607" r="31.5" fill="#f97316" fill-opacity="0.16" stroke="#f97316" stroke-width="2.5"/>
+<text x="346.65476220843937" y="767.3452377915607" text-anchor="middle" font-size="22" font-family="sans-serif">🎧</text>
+<circle cx="275.11975427127544" cy="666.2855326804798" r="31.5" fill="#84cc16" fill-opacity="0.16" stroke="#84cc16" stroke-width="2.5"/>
+<text x="275.11975427127544" y="660.2855326804798" text-anchor="middle" font-size="22" font-family="sans-serif">🧪</text>
+<circle cx="250" cy="540" r="30.95" fill="#e11d48" fill-opacity="0.16" stroke="#e11d48" stroke-width="2.5"/>
+<text x="250" y="534" text-anchor="middle" font-size="22" font-family="sans-serif">🧭</text>
+<circle cx="275.11975427127544" cy="413.7144673195203" r="29.85" fill="#6366f1" fill-opacity="0.16" stroke="#6366f1" stroke-width="2.5"/>
+<text x="275.11975427127544" y="407.7144673195203" text-anchor="middle" font-size="22" font-family="sans-serif">📢</text>
+<circle cx="346.65476220843925" cy="306.65476220843937" r="28.75" fill="#0ea5e9" fill-opacity="0.16" stroke="#0ea5e9" stroke-width="2.5"/>
+<text x="346.65476220843925" y="300.65476220843937" text-anchor="middle" font-size="22" font-family="sans-serif">🎮</text>
+<circle cx="453.71446731952017" cy="235.11975427127544" r="27.65" fill="#d946ef" fill-opacity="0.16" stroke="#d946ef" stroke-width="2.5"/>
+<text x="453.71446731952017" y="229.11975427127544" text-anchor="middle" font-size="22" font-family="sans-serif">🥽</text>
+
+<circle cx="580" cy="540" r="86" fill="#161b27" stroke="#f59e0b" stroke-width="3"/>
+<text x="580" y="526" text-anchor="middle" font-size="26" font-weight="800" fill="#f59e0b" font-family="-apple-system,sans-serif">AgentForge</text>
+<text x="580" y="556" text-anchor="middle" font-size="34" font-weight="800" fill="#fff" font-family="-apple-system,sans-serif">247</text>
+<text x="580" y="578" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="-apple-system,sans-serif">AI specialists</text>
+<text x="580" y="122.35000000000002" text-anchor="middle" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Engineering</text>
+<text x="580" y="144.35000000000002" text-anchor="middle" font-size="16" fill="#f59e0b" font-weight="700" font-family="-apple-system,sans-serif">43 agents</text>
+<text x="738.717953573421" y="152.8209638909438" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Specialized</text>
+<text x="738.717953573421" y="174.8209638909438" text-anchor="start" font-size="16" fill="#3b82f6" font-weight="700" font-family="-apple-system,sans-serif">45 agents</text>
+<text x="868.2167240116369" y="247.78327598836324" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Marketing</text>
+<text x="868.2167240116369" y="269.78327598836324" text-anchor="start" font-size="16" fill="#a855f7" font-weight="700" font-family="-apple-system,sans-serif">32 agents</text>
+<text x="948.4431575655012" y="383.3858471728022" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Design</text>
+<text x="948.4431575655012" y="405.3858471728022" text-anchor="start" font-size="16" fill="#ec4899" font-weight="700" font-family="-apple-system,sans-serif">16 agents</text>
+<text x="977.15" y="536" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Academic</text>
+<text x="977.15" y="558" text-anchor="start" font-size="16" fill="#22c55e" font-weight="700" font-family="-apple-system,sans-serif">13 agents</text>
+<text x="946.4106225939763" y="687.7722492759947" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Security</text>
+<text x="946.4106225939763" y="709.7722492759947" text-anchor="start" font-size="16" fill="#ef4444" font-weight="700" font-family="-apple-system,sans-serif">12 agents</text>
+<text x="860.4385494185848" y="816.4385494185847" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Sales</text>
+<text x="860.4385494185848" y="838.4385494185847" text-anchor="start" font-size="16" fill="#06b6d4" font-weight="700" font-family="-apple-system,sans-serif">12 agents</text>
+<text x="731.351297500393" y="901.3943551082139" text-anchor="start" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Finance</text>
+<text x="731.351297500393" y="923.3943551082139" text-anchor="start" font-size="16" fill="#eab308" font-weight="700" font-family="-apple-system,sans-serif">10 agents</text>
+<text x="580" y="931.5" text-anchor="middle" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">GIS &amp; Spatial</text>
+<text x="580" y="953.5" text-anchor="middle" font-size="16" fill="#8b5cf6" font-weight="700" font-family="-apple-system,sans-serif">10 agents</text>
+<text x="428.648702499607" y="901.3943551082139" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Project Mgmt</text>
+<text x="428.648702499607" y="923.3943551082139" text-anchor="end" font-size="16" fill="#14b8a6" font-weight="700" font-family="-apple-system,sans-serif">10 agents</text>
+<text x="300.33926804072047" y="815.6607319592796" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Support</text>
+<text x="300.33926804072047" y="837.6607319592796" text-anchor="end" font-size="16" fill="#f97316" font-weight="700" font-family="-apple-system,sans-serif">10 agents</text>
+<text x="214.6056448917862" y="687.3512975003932" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Testing</text>
+<text x="214.6056448917862" y="709.3512975003932" text-anchor="end" font-size="16" fill="#84cc16" font-weight="700" font-family="-apple-system,sans-serif">10 agents</text>
+<text x="185.05" y="536" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Product</text>
+<text x="185.05" y="558" text-anchor="end" font-size="16" fill="#e11d48" font-weight="700" font-family="-apple-system,sans-serif">9 agents</text>
+<text x="216.13004612042977" y="385.2801301630093" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Paid Media</text>
+<text x="216.13004612042977" y="407.2801301630093" text-anchor="end" font-size="16" fill="#6366f1" font-weight="700" font-family="-apple-system,sans-serif">7 agents</text>
+<text x="302.2838116889834" y="258.28381168898346" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Game Dev</text>
+<text x="302.2838116889834" y="280.28381168898346" text-anchor="end" font-size="16" fill="#0ea5e9" font-weight="700" font-family="-apple-system,sans-serif">5 agents</text>
+<text x="430.1220337142124" y="174.16258109195468" text-anchor="end" font-size="20" font-weight="700" fill="#e2e8f0" font-family="-apple-system,sans-serif">Spatial Computing</text>
+<text x="430.1220337142124" y="196.16258109195468" text-anchor="end" font-size="16" fill="#d946ef" font-weight="700" font-family="-apple-system,sans-serif">3 agents</text>
+
+</svg>
