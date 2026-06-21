@@ -78,7 +78,6 @@ en: {
   set_legal_desc: "Document review, compliance, client intake",
   set_finance_desc: "Bookkeeping, investment, tax, crypto, risk",
   set_health_desc: "Patient services, billing, compliance, HR",
-  set_back_full: "← Back to full AgentForge (all 247 specialists)",
   set_automations_title: "⚡ Automations (optional)",
   set_webhook_hint: 'Paste any Zapier, Make, or webhook URL. Pipeline/debate/benchmark output is POSTed as JSON so you can route it to Notion, Slack, email, or any app. <a href="https://zapier.com/apps/webhook/integrations" target="_blank" rel="noopener">Create a Zapier webhook ↗</a>',
   set_save_webhook_btn: "Save Webhook URL",
